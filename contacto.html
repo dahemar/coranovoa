@@ -140,6 +140,12 @@
             .overlay-header {
                 padding: 10px !important;
                 margin-top: 30px !important;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                z-index: 100;
             }
 
             .overlay-header nav {
@@ -169,6 +175,16 @@
             .contact-container {
                 margin-top: 120px;
                 padding: 0 15px;
+            }
+
+            .language-switcher {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                font-size: 16px;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                z-index: 2000 !important;
             }
         }
 

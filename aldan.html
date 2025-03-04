@@ -50,7 +50,20 @@
         }
 
         .overlay-header {
-            text-align: left;
+            padding: 12px 0 !important;
+            margin-top: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            z-index: 100;
+            text-align: center;
+        }
+
+        .overlay-header nav {
+            justify-content: center;
+            margin-top: 5px;
         }
 
         /* Styles for navigation links */
@@ -118,16 +131,18 @@
         @media (max-width: 768px) {
             .overlay-header {
                 padding: 10px !important;
-                margin-top: 30px !important;
+                margin-top: 0;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                z-index: 100;
             }
 
             .overlay-header nav {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 4px;
-                width: 100%;
-                margin-top: 15px;
+                margin-top: 0;
+                padding: 0;
             }
 
             .overlay-header nav a {
@@ -146,8 +161,23 @@
             }
 
             .aldan-container {
-                margin-top: 120px;
-                padding: 0 15px;
+                position: fixed;
+                top: 50px;
+                width: 100%;
+                height: calc(100% - 50px);
+                overflow-y: auto;
+                z-index: 1;
+                padding-top: 20px;
+            }
+
+            .language-switcher {
+                position: fixed;
+                top: 10px;
+                right: 10px;
+                font-size: 16px;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                z-index: 2000 !important;
             }
         }
 
