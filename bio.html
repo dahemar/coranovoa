@@ -113,6 +113,21 @@
 
         /* Mobile responsive styles */
         @media (max-width: 768px) {
+            body {
+                overflow: hidden; /* Prevent scrolling on the entire page */
+                position: fixed;
+                width: 100%;
+                height: 100%;
+            }
+            
+            .overlay-content {
+                padding: 10px;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+
             .overlay-header {
                 padding: 10px !important;
                 margin-top: 30px !important;
@@ -122,6 +137,16 @@
                 width: 100%;
                 background-color: white;
                 z-index: 100;
+            }
+            
+            .bio-container {
+                position: fixed;
+                top: 120px;
+                width: 100%;
+                height: calc(100% - 120px);
+                overflow-y: auto;
+                z-index: 1;
+                padding: 0 15px;
             }
 
             .overlay-header nav {
@@ -146,11 +171,6 @@
                 margin-bottom: 12px;
                 text-align: left;
                 width: 100%;
-            }
-
-            .bio-container {
-                margin-top: 120px;
-                padding: 0 15px;
             }
 
             .language-switcher {

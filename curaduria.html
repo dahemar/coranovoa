@@ -258,10 +258,13 @@
             }
 
             .language-switcher {
-                position: fixed;
+                position: absolute;
                 top: 10px;
                 right: 10px;
-                z-index: 2000;
+                font-size: 16px;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                z-index: 2000 !important;
             }
             
             /* For detail pages only */
@@ -664,42 +667,29 @@
             });
 
             // Funciones para manejar las transiciones de página en móvil
-            function openMobileDetail(id) {
-                // Enable scrolling for detail page
-                document.body.style.overflow = 'auto';
-                document.body.style.position = 'static';
-                
-                // Iniciar la transición de deslizamiento
+            function openMobileDetail(detailId) {
+                // Hide the main content
                 document.querySelector('.overlay-content').classList.add('sliding-left');
                 
-                // Ocultar el selector de idioma global
+                // Hide the global language switcher
                 document.querySelector('.page-container > .language-switcher').style.display = 'none';
                 
-                // Mostrar y animar la página de detalle
-                const detailPage = document.getElementById(id + '-detail');
-                detailPage.style.visibility = 'visible';
-                
-                // Pequeño retraso para asegurar que la transición se vea bien
-                setTimeout(() => {
+                // Show the specific detail page
+                const detailPage = document.getElementById(detailId + '-detail');
+                if (detailPage) {
+                    detailPage.style.visibility = 'visible';
                     detailPage.classList.add('active');
-                }, 50);
+                }
                 
-                // Actualizar el historial del navegador
-                history.pushState({page: 'detail', id: id}, '', '#' + id);
-                
-                // Scroll al inicio
-                window.scrollTo(0, 0);
+                // Update browser history
+                history.pushState({page: detailId}, '', 'curaduria.html?detail=' + detailId);
             }
             
             function closeMobileDetail() {
-                // Disable scrolling for main page
-                document.body.style.overflow = 'hidden';
-                document.body.style.position = 'fixed';
-                
-                // Revertir la transición de deslizamiento
+                // Show the obra grid
                 document.querySelector('.overlay-content').classList.remove('sliding-left');
                 
-                // Mostrar el selector de idioma global
+                // Show the selector de idioma global
                 document.querySelector('.page-container > .language-switcher').style.display = '';
                 
                 // Animar la salida de la página de detalle

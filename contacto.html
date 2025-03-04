@@ -50,7 +50,36 @@
         }
 
         .overlay-header {
+            background-color: rgba(255, 255, 255, 0.9);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .overlay-header nav {
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 4px;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .overlay-header nav a {
+            margin-bottom: 0;
+            margin-right: 0;
+            font-size: 18px;
+            letter-spacing: -0.5px;
+            padding: 0 1px;
+        }
+
+        .overlay-header h1 {
+            font-size: 20px;
+            margin-bottom: 12px;
             text-align: left;
+            width: 100%;
         }
 
         /* Styles for navigation links */
@@ -81,8 +110,6 @@
             top: 10px;
             right: 10px;
             z-index: 2000;
-            color: black;
-            font-size: 14px;
         }
 
         .language-switcher a {
