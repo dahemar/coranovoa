@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cora Novoa - Curaduría</title>
+    
+    <!-- Preload fonts -->
+    <link rel="preload" href="junicode.webfont/junicode_regular.woff" as="font" type="font/woff" crossorigin="anonymous">
+    <link rel="preload" href="junicode.webfont/junicode_bold.woff" as="font" type="font/woff" crossorigin="anonymous">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Font Definitions */
+        @font-face {
+            font-family: 'Junicode';
+            src: url('junicode.webfont/junicode_regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Junicode';
+            src: url('junicode.webfont/junicode_bold.woff') format('woff');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        body {
+            font-family: 'Junicode', sans-serif;
+            margin: 0;
+            background-color: white;
+            color: black;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Junicode', sans-serif;
+            font-weight: bold;
+        }
+
+        .overlay-content {
+            position: relative;
+            z-index: 10;
+            padding: 20px;
+        }
+
+        .overlay-header {
+            text-align: left;
+        }
+
+        .no-underline-link {
+            text-decoration: none;
+            transition: color 0.2s ease-in-out;
+            color: black;
+        }
+
+        .no-underline-link:hover {
+            color: #a0a0a0;
+        }
+
+        .no-underline-link.active {
+            color: #a0a0a0;
+        }
+
+        .hover-light-grey {
+            transition: color 0.2s ease-in-out;
+        }
+
+        .hover-light-grey:hover {
+            color: #a0a0a0;
+        }
+
+        .language-switcher {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 2000;
+            color: black;
+            font-size: 14px;
+        }
+
+        .language-switcher a {
+            text-decoration: none;
+            margin-right: 5px;
+            color: black;
+        }
+
+        .language-switcher a:hover {
+            color: #a0a0a0;
+        }
+
+        .language-switcher a.active-lang {
+            color: #a0a0a0 !important;
+        }
+
+        .curaduria-container {
+            position: relative;
+            margin-top: 100px;
+            min-height: 500px;
+        }
+
+        .curaduria-list {
+            margin-top: 20px;
+            padding-left: 20px;
+            position: relative;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .curaduria-list.shifted {
+            transform: translateY(-50px);
+        }
+
+        .curaduria-list li {
+            margin-bottom: 15px;
+            transition: margin-bottom 0.8s ease-in-out, transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+        }
+
+        .expanded-content {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease-in-out;
+            z-index: 0;
+        }
+
+        #algo-de-veran-li.active .expanded-content,
+        #a-que-me-refiro-li.active .expanded-content {
+            height: 400px;
+            opacity: 1;
+        }
+
+        #algo-de-veran-li.active ~ li,
+        #a-que-me-refiro-li.active ~ li {
+            transform: translateY(400px);
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hover-image {
+            position: absolute;
+            left: 0;
+            width: 700px;
+            height: 400px;
+            opacity: 0;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: left center;
+        }
+
+        .hover-text {
+            position: absolute;
+            left: 710px;
+            width: 480px;
+            color: #a0a0a0;
+            font-size: 14px;
+            line-height: 1.4;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        #algo-de-veran-li.active .hover-image,
+        #a-que-me-refiro-li.active .hover-image,
+        #algo-de-veran-li.active .hover-text,
+        #a-que-me-refiro-li.active .hover-text {
+            opacity: 1;
+        }
+
+        .curaduria-list li span {
+            cursor: pointer;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .curaduria-list li span:hover {
+            text-decoration: underline;
+        }
+
+        /* Mobile responsive styles */
+        @media (max-width: 768px) {
+            body {
+                overflow: hidden; /* Prevent scrolling on the entire page */
+                position: fixed;
+                width: 100%;
+                height: 100%;
+            }
+            
+            .overlay-content {
+                padding: 10px;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+
+            .overlay-header {
+                padding: 10px !important;
+                margin-top: 30px !important;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                z-index: 100;
+            }
+
+            .overlay-header nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 4px;
+                width: 100%;
+                margin-top: 15px;
+            }
+
+            .overlay-header nav a {
+                margin-bottom: 0;
+                margin-right: 0;
+                font-size: 18px;
+                letter-spacing: -0.5px;
+                padding: 0 1px;
+            }
+
+            .overlay-header h1 {
+                font-size: 20px;
+                margin-bottom: 12px;
+                text-align: left;
+                width: 100%;
+            }
+
+            .curaduria-list {
+                padding-left: 10px;
+                position: fixed;
+                top: 50%;
+                left: 0;
+                width: 100%;
+                transform: translateY(-50%);
+                margin-top: 40px; /* Offset to account for header */
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 8px; /* Reduced spacing between items */
+            }
+
+            .curaduria-list li {
+                margin-bottom: 0;
+                padding: 3px 0; /* Reduced padding */
+            }
+
+            .language-switcher {
+                position: fixed;
+                top: 10px;
+                right: 10px;
+                z-index: 2000;
+            }
+            
+            /* For detail pages only */
+            .mobile-detail-page {
+                overflow-y: auto;
+            }
+            
+            .mobile-detail-page .overlay-content,
+            .mobile-detail-page .curaduria-list,
+            .mobile-detail-page body {
+                overflow: auto;
+                position: static;
+            }
+
+            #algo-de-veran-li.active ~ li,
+            #a-que-me-refiro-li.active ~ li {
+                transform: none;
+            }
+
+            #algo-de-veran-li.active .expanded-content,
+            #a-que-me-refiro-li.active .expanded-content {
+                height: auto;
+            }
+
+            .curaduria-list.shifted {
+                transform: none;
+            }
+            
+            .curaduria-list li {
+                transition: none;
+            }
+            
+            .expanded-content {
+                transition: none;
+            }
+
+            .hover-image {
+                position: relative;
+                width: 100%;
+                height: 250px;
+            }
+
+            .hover-text {
+                position: relative;
+                left: 0;
+                width: 100%;
+                padding: 10px;
+                margin-top: 10px;
+            }
+
+            .language-switcher {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                font-size: 16px;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                z-index: 2000 !important;
+            }
+            
+            /* Para las páginas de detalle móvil */
+            .mobile-detail-page .language-switcher {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                text-align: right;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .overlay-header {
+                margin-top: 25px !important;
+            }
+
+            .overlay-header h1 {
+                font-size: 19px;
+                margin-bottom: 10px;
+            }
+
+            .overlay-header nav {
+                gap: 2px;
+            }
+
+            .overlay-header nav a {
+                font-size: 17px;
+                letter-spacing: -0.6px;
+            }
+
+            .curaduria-list {
+                margin-top: 50px;
+            }
+
+            .curaduria-list li {
+                margin-bottom: 20px;
+                line-height: 1.3;
+            }
+
+            #algo-de-veran-li.active ~ li,
+            #a-que-me-refiro-li.active ~ li {
+                transform: translateY(450px);
+            }
+
+            #algo-de-veran-li.active .expanded-content,
+            #a-que-me-refiro-li.active .expanded-content {
+                height: 450px;
+            }
+
+            .hover-image {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .overlay-header nav {
+                gap: 2px;
+            }
+
+            .overlay-header nav a {
+                font-size: 14px;
+                letter-spacing: -0.8px;
+            }
+        }
+
+        /* Estilos para las transiciones de página en móvil */
+        body {
+            overflow-x: hidden;
+        }
+
+        .page-container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        .overlay-content {
+            position: relative;
+            z-index: 10;
+            padding: 20px;
+            transition: transform 0.5s ease-out;
+            width: 100%;
+        }
+
+        .overlay-content.sliding-left {
+            transform: translateX(-100%);
+        }
+
+        /* Estilos para las páginas de detalle móvil */
+        .mobile-detail-page {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+            transform: translateX(100%);
+            transition: transform 0.5s ease-out;
+            visibility: hidden;
+        }
+
+        .mobile-detail-page.active {
+            transform: translateX(0);
+            visibility: visible;
+        }
+
+        .mobile-back-button {
+            display: inline-block;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            color: black;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .mobile-detail-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .mobile-detail-image {
+            width: 100%;
+            height: auto;
+            margin-bottom: 25px;
+        }
+
+        .mobile-detail-text {
+            color: #a0a0a0;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* Asegurar que el language switcher permanezca visible */
+        .language-switcher {
+            transition: opacity 0.3s ease-out;
+        }
+
+        .language-switcher.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            .language-switcher {
+                font-size: 16px;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                z-index: 2000 !important;
+            }
+        }
+    </style>
+
+    <script>
+        let currentLanguage = 'gal';
+
+        function setCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                let date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
+        function getCookie(name) {
+            let nameEQ = name + "=";
+            let ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+
+            const translations = {
+                "gal": {
+                    "obra": "obra",
+                    "bio": "bio",
+                    "curaduria": "curaduría",
+                    "aldan": "aldán",
+                    "contacto": "contacto",
+                    "nomesPropios": "Nomes Propios | Galiza, 2019-2023",
+                    "algoDeVeran": "Algo de verán | Aldán, 2022-2024",
+                    "algoDeVeranText": "Algo de verán es un encuentro anual autogestionado, donde las únicas certezas son donde y cuando : Aldán (Cangas do Morrazo, Galicia), en verano. El qué es indefinido, está por construir mediante el hacer —como la propia práctica—, cambia cada vez. Un dispositivo relacional y práctica por y para artistas, sobre y desde el presente y su autonomía.",
+                    "aQueMeRefiroTitle": "A que me refiro cando falo de corpo | exposición - Galería Sarao, Ferrol, 2025",
+                    "aQueMeRefiroText": "«Hai un cuerpo humano cando entre vidente e visible, entre o que toca e o que é tocado, entre un ollo e outro, entre man e man faise unha especie de cruce, cando se acende a chispa do sentinte sensible, cando prende o lume que non cesará de arder, ata que tal accidente do corpo desfaga o que ningún accidente bastara a facer...» Maurice Merleau-Ponty.<br><br>De que falo cando falo de corpo? Que significa ser un corpo? É posible non implicalo? Como se vive a súa experiencia? Que entende un corpo en relación a outros corpos? Que distancia hai entre dous corpos? É corpo o que nos atravesa os corpos?",
+                    "ciclosDeAcciones": "Ciclos de acciones | Valencia, 2024-2026",
+                    "candoFaloDeCorpo": "Cando falo de corpo | exposición - Sala Manuel Moldes, Pontevedra, 2026"
+                },
+                "esp": {
+                    "obra": "obra",
+                    "bio": "bio",
+                    "curaduria": "curaduría",
+                    "aldan": "aldán",
+                    "contacto": "contacto",
+                    "nomesPropios": "Nomes Propios | Galiza, 2019-2023",
+                    "algoDeVeran": "Algo de verán | Aldán, 2022-2024",
+                    "algoDeVeranText": "Algo de verán es un encuentro anual autogestionado, donde las únicas certezas son donde y cuando : Aldán (Cangas do Morrazo, Galicia), en verano. El qué es indefinido, está por construir mediante el hacer —como la propia práctica—, cambia cada vez. Un dispositivo relacional y práctica por y para artistas, sobre y desde el presente y su autonomía.",
+                    "aQueMeRefiroTitle": "A que me refiro cando falo de corpo | exposición - Galería Sarao, Ferrol, 2025",
+                    "aQueMeRefiroText": "«Hay un cuerpo humano cuando entre vidente y visible, entre el que toca y el que es tocado, entre un ojo y otro, entre mano y mano se hace una especie de cruce, cuando se enciende la chispa del sintiente sensible, cuando prende el fuego que no cesará de arder, hasta que tal accidente del cuerpo deshaga lo que ningún accidente hubiera bastado a hacer...» Maurice Merleau-Ponty.<br><br>¿De qué hablo cuando hablo de cuerpo? ¿Qué significa ser un cuerpo? ¿Es posible no implicarlo? ¿Cómo se vive su experiencia? ¿Qué entiende un cuerpo en relación a otros cuerpos? ¿Qué distancia hay entre dos cuerpos? ¿Es cuerpo lo que nos atraviesa los cuerpos?",
+                    "ciclosDeAcciones": "Ciclos de acciones | Valencia, 2024-2026",
+                    "candoFaloDeCorpo": "Cando falo de corpo | exposición - Sala Manuel Moldes, Pontevedra, 2026"
+                },
+                "en": {
+                    "obra": "work",
+                    "bio": "bio",
+                    "curaduria": "curatorship",
+                    "aldan": "aldán",
+                    "contacto": "contact",
+                    "nomesPropios": "Nomes Propios | Galiza, 2019-2023",
+                    "algoDeVeran": "Algo de verán | Aldán, 2022-2024",
+                    "algoDeVeranText": "Something of Summer is a self-managed annual meeting, where the only certainties are where and when: Al-dán (Cangas do Morrazo, Galicia), in the summer. The what is undefined, to be built through doing – like the practice itself – changing each time. A relational device and practice by and for artists, about and from the present and its autonomy.",
+                    "aQueMeRefiroTitle": "What I mean when I talk about the body | exhibition - Galería Sarao, Ferrol, 2025",
+                    "aQueMeRefiroText": "«There is a human body when between seer and visible, between who touches and what is touched, between one eye and another, between hand and hand a kind of crossing is made, when the spark of the sensitive sentient ignites, when the fire starts to burn, until such an accident of the body undoes what no accident would have been enough to do...» Maurice Merleau-Ponty.<br><br>What am I talking about when I talk about the body? What does it mean to be a body? Is it possible not to involve it? How is its experience lived? What does a body understand in relation to other bodies? How much distance is there between two bodies? Is the body what crosses our bodies?",
+                    "ciclosDeAcciones": "Ciclos de acciones | Valencia, 2024-2026",
+                    "candoFaloDeCorpo": "Cando falo de corpo | exposición - Sala Manuel Moldes, Pontevedra, 2026"
+                }
+            };
+
+            let selectedTranslations = translations[lang];
+
+            document.querySelector(".overlay-header nav a:nth-child(1)").textContent = selectedTranslations.obra;
+            document.querySelector(".overlay-header nav a:nth-child(2)").textContent = selectedTranslations.bio;
+            document.querySelector(".overlay-header nav a:nth-child(4)").textContent = selectedTranslations.curaduria;
+            document.querySelector(".overlay-header nav a:nth-child(3)").textContent = selectedTranslations.aldan;
+            document.querySelector(".overlay-header nav a:nth-child(5)").textContent = selectedTranslations.contacto;
+
+            document.querySelector(".curaduria-list li:nth-child(1)").textContent = selectedTranslations.nomesPropios;
+            document.querySelector("#algo-de-veran-li span").textContent = selectedTranslations.algoDeVeran;
+            document.querySelector("#a-que-me-refiro-li span").textContent = selectedTranslations.aQueMeRefiroTitle;
+            document.querySelector("#a-que-me-refiro-li .hover-text").innerHTML = selectedTranslations.aQueMeRefiroText;
+            document.querySelector("#algo-de-veran-li .hover-text").innerHTML = selectedTranslations.algoDeVeranText;
+            document.querySelector(".curaduria-list li:nth-child(4)").textContent = selectedTranslations.ciclosDeAcciones;
+            document.querySelector(".curaduria-list li:nth-child(5)").textContent = selectedTranslations.candoFaloDeCorpo;
+
+            // También actualizar los textos en las páginas de detalle móvil
+            if (document.getElementById('algo-de-veran-detail')) {
+                document.querySelector('#algo-de-veran-detail .mobile-detail-title').textContent = selectedTranslations.algoDeVeran;
+                document.querySelector('#algo-de-veran-detail .mobile-detail-text').innerHTML = selectedTranslations.algoDeVeranText;
+            }
+            
+            if (document.getElementById('a-que-me-refiro-detail')) {
+                document.querySelector('#a-que-me-refiro-detail .mobile-detail-title').textContent = selectedTranslations.aQueMeRefiroTitle;
+                document.querySelector('#a-que-me-refiro-detail .mobile-detail-text').innerHTML = selectedTranslations.aQueMeRefiroText;
+            }
+
+            // Actualizar el texto del botón de volver
+            const backButtons = document.querySelectorAll('.mobile-back-button');
+            const backText = lang === 'en' ? '← Back' : '← Volver';
+            backButtons.forEach(button => {
+                button.textContent = backText;
+            });
+
+            document.documentElement.setAttribute("lang", lang);
+
+            document.querySelectorAll('.language-switcher a').forEach(link => {
+                if (link.getAttribute('data-lang') === lang) {
+                    link.classList.add('active-lang');
+                } else {
+                    link.classList.remove('active-lang');
+                }
+            });
+
+            setCookie('selectedLanguage', lang, 30);
+            
+            // Prevenir el comportamiento predeterminado del enlace
+            return false;
+        }
+
+        window.onload = function() {
+            let savedLanguage = getCookie('selectedLanguage');
+            if (savedLanguage) {
+                currentLanguage = savedLanguage;
+            }
+            changeLanguage(currentLanguage);
+
+            const curaduriaList = document.querySelector('.curaduria-list');
+            const listItems = document.querySelectorAll('.curaduria-list li');
+
+            // Manejar el botón de retroceso del navegador
+            window.addEventListener('popstate', function(event) {
+                if (!event.state || event.state.page === 'main') {
+                    closeMobileDetail();
+                }
+            });
+
+            // Botones de retroceso en las páginas de detalle
+            document.querySelectorAll('.mobile-back-button').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    closeMobileDetail();
+                });
+            });
+
+            listItems.forEach(item => {
+                item.addEventListener('click', function(event) {
+                    if (event.target.tagName === 'SPAN' || event.target === this) {
+                        event.preventDefault();
+
+                        // Comportamiento diferente para móvil y escritorio
+                        if (window.innerWidth <= 768) {
+                            // En móvil, abrir página de detalle con transición
+                            if (this.id === 'algo-de-veran-li') {
+                                openMobileDetail('algo-de-veran');
+                            } else if (this.id === 'a-que-me-refiro-li') {
+                                openMobileDetail('a-que-me-refiro');
+                            }
+                        } else {
+                            // En escritorio, comportamiento original
+                            // Si ya está activo, desactivar todo
+                            if (this.classList.contains('active')) {
+                                this.classList.remove('active');
+                                curaduriaList.classList.remove('shifted');
+                                return;
+                            }
+
+                            // Desactivar otros elementos
+                            listItems.forEach(otherItem => {
+                                otherItem.classList.remove('active');
+                            });
+
+                            // Activar el elemento actual si tiene ID
+                            if(this.id === 'algo-de-veran-li' || this.id === 'a-que-me-refiro-li') {
+                                this.classList.add('active');
+                                
+                                // Añadir la clase shifted a la lista
+                                curaduriaList.classList.add('shifted');
+                            }
+                        }
+                    }
+                });
+            });
+
+            // Funciones para manejar las transiciones de página en móvil
+            function openMobileDetail(id) {
+                // Enable scrolling for detail page
+                document.body.style.overflow = 'auto';
+                document.body.style.position = 'static';
+                
+                // Iniciar la transición de deslizamiento
+                document.querySelector('.overlay-content').classList.add('sliding-left');
+                
+                // Ocultar el selector de idioma global
+                document.querySelector('.page-container > .language-switcher').style.display = 'none';
+                
+                // Mostrar y animar la página de detalle
+                const detailPage = document.getElementById(id + '-detail');
+                detailPage.style.visibility = 'visible';
+                
+                // Pequeño retraso para asegurar que la transición se vea bien
+                setTimeout(() => {
+                    detailPage.classList.add('active');
+                }, 50);
+                
+                // Actualizar el historial del navegador
+                history.pushState({page: 'detail', id: id}, '', '#' + id);
+                
+                // Scroll al inicio
+                window.scrollTo(0, 0);
+            }
+            
+            function closeMobileDetail() {
+                // Disable scrolling for main page
+                document.body.style.overflow = 'hidden';
+                document.body.style.position = 'fixed';
+                
+                // Revertir la transición de deslizamiento
+                document.querySelector('.overlay-content').classList.remove('sliding-left');
+                
+                // Mostrar el selector de idioma global
+                document.querySelector('.page-container > .language-switcher').style.display = '';
+                
+                // Animar la salida de la página de detalle
+                const activePage = document.querySelector('.mobile-detail-page.active');
+                if (activePage) {
+                    activePage.classList.remove('active');
+                    
+                    // Esperar a que termine la transición antes de ocultar completamente
+                    setTimeout(() => {
+                        activePage.style.visibility = 'hidden';
+                    }, 500); // Mismo tiempo que la duración de la transición
+                }
+                
+                // Actualizar el historial del navegador
+                history.pushState({page: 'main'}, '', 'curaduria.html');
+            }
+
+            // For mobile view adjustments
+            function adjustForMobile() {
+                if (window.innerWidth <= 768) {
+                    // Ajustes específicos para móvil
+                } else {
+                    // Ajustes específicos para escritorio
+                    const hoverImages = document.querySelectorAll('.hover-image');
+                    const hoverTexts = document.querySelectorAll('.hover-text');
+                    
+                    hoverImages.forEach(img => {
+                        img.style.position = 'absolute';
+                    });
+                    
+                    hoverTexts.forEach(text => {
+                        text.style.position = 'absolute';
+                        text.style.left = '710px';
+                    });
+                }
+                
+                // Force equal spacing between list items
+                document.querySelectorAll('.curaduria-list li').forEach(item => {
+                    if (!item.classList.contains('active')) {
+                        if (window.innerWidth <= 480) {
+                            item.style.marginBottom = '20px';
+                        } else if (window.innerWidth <= 768) {
+                            item.style.marginBottom = '22px';
+                        } else {
+                            item.style.marginBottom = '15px';
+                        }
+                    }
+                });
+            }
+            
+            // Run on load and resize
+            adjustForMobile();
+            window.addEventListener('resize', adjustForMobile);
+        };
+    </script>
+</head>
+
+<body>
+    <div class="page-container">
+        <div class="overlay-content">
+            <header class="p-6 overlay-header">
+                <h1 class="text-lg font-bold hover-light-grey"><a href="index.html" class="no-underline-link">Cora Novoa</a></h1>
+                <nav class="mt-3 flex space-x-6 text-lg">
+                    <a href="obra.html" class="no-underline-link">obra</a>
+                    <a href="bio.html" class="no-underline-link">bio</a>
+                    <a href="aldan.html" class="no-underline-link">aldán</a>
+                    <a href="curaduria.html" class="no-underline-link active">curaduría</a>
+                    <a href="contacto.html" class="no-underline-link">contacto</a>
+                </nav>
+            </header>
+
+            <div class="curaduria-container">
+                <ul class="curaduria-list">
+                    <li>Nomes Propios | Galiza, 2019-2023</li>
+                    <li id="algo-de-veran-li">
+                        <span>Algo de verán | Aldán, 2022-2024</span>
+                        <div class="expanded-content">
+                            <div class="hover-image" style="background-image: url('images/veran.jpg');"></div>
+                            <div class="hover-text">
+                                Algo de verán es un encuentro anual autogestionado, donde las únicas certezas son donde y cuando : Aldán (Cangas do Morrazo, Galicia), en verano. El qué es indefinido, está por construir mediante el hacer —como la propia práctica—, cambia cada vez. Un dispositivo relacional y práctica por y para artistas, sobre y desde el presente y su autonomía.
+                            </div>
+                        </div>
+                    </li>
+                    <li id="a-que-me-refiro-li">
+                        <span>A que me refiro cando falo de corpo | exposición - Galería Sarao, Ferrol, 2025</span>
+                        <div class="expanded-content">
+                            <div class="hover-image" style="background-image: url('images/corpo1.jpg');"></div>
+                            <div class="hover-text">
+                                «Hai un cuerpo humano cando entre vidente e visible, entre o que toca e o que é tocado, entre un ollo e outro, entre man e man faise unha especie de cruce, cando se acende a chispa do sentinte sensible, cando prende o lume que non cesará de arder, ata que tal accidente do corpo desfaga o que ningún accidente bastara a facer...» Maurice Merleau-Ponty.<br><br>De que falo cando falo de corpo? Que significa ser un corpo? É posible non implicalo? Como se vive a súa experiencia? Que entende un corpo en relación a outros corpos? Que distancia hai entre dous corpos? É corpo o que nos atravesa os corpos?
+                            </div>
+                        </div>
+                    </li>
+                    <li>Ciclos de acciones | Valencia, 2024-2026</li>
+                    <li>Cando falo de corpo | exposición - Sala Manuel Moldes, Pontevedra, 2026</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Páginas de detalle para móvil -->
+        <div id="algo-de-veran-detail" class="mobile-detail-page mobile-detail-page">
+            <div class="language-switcher">
+                <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
+                <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
+                <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
+            </div>
+            <a href="#" class="mobile-back-button">← Volver</a>
+            <h2 class="mobile-detail-title">Algo de verán | Aldán, 2022-2024</h2>
+            <img src="images/veran.jpg" alt="Algo de verán" class="mobile-detail-image">
+            <div class="mobile-detail-text">
+                Algo de verán es un encuentro anual autogestionado, donde las únicas certezas son donde y cuando : Aldán (Cangas do Morrazo, Galicia), en verano. El qué es indefinido, está por construir mediante el hacer —como la propia práctica—, cambia cada vez. Un dispositivo relacional y práctica por y para artistas, sobre y desde el presente y su autonomía.
+            </div>
+        </div>
+
+        <div id="a-que-me-refiro-detail" class="mobile-detail-page">
+            <div class="language-switcher">
+                <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
+                <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
+                <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
+            </div>
+            <a href="#" class="mobile-back-button">← Volver</a>
+            <h2 class="mobile-detail-title">A que me refiro cando falo de corpo | exposición - Galería Sarao, Ferrol, 2025</h2>
+            <img src="images/corpo1.jpg" alt="A que me refiro cando falo de corpo" class="mobile-detail-image">
+            <div class="mobile-detail-text">
+                «Hai un cuerpo humano cando entre vidente e visible, entre o que toca e o que é tocado, entre un ollo e outro, entre man e man faise unha especie de cruce, cando se acende a chispa do sentinte sensible, cando prende o lume que non cesará de arder, ata que tal accidente do corpo desfaga o que ningún accidente bastara a facer...» Maurice Merleau-Ponty.<br><br>De que falo cando falo de corpo? Que significa ser un corpo? É posible non implicalo? Como se vive a súa experiencia? Que entende un corpo en relación a outros corpos? Que distancia hai entre dous corpos? É corpo o que nos atravesa os corpos?
+            </div>
+        </div>
+
+        <!-- Mantener el selector de idioma global para la página principal -->
+        <div class="language-switcher">
+            <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
+            <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
+            <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
+        </div>
+    </div>
+</body>
+
+</html>

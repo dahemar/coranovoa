@@ -1,0 +1,36 @@
+@font-face {
+    font-family: 'junicode';
+    src: url('junicode_regular.eot');
+    src: url('junicode_regular.eot?#iefix') format('embedded-opentype'),
+         url('junicode_regular.woff') format('woff'),
+         url('junicode_regular.ttf') format('truetype'),
+         url('junicode_regular.svg#junicode') format('svg');
+}
+
+@font-face {
+    font-family: 'junicode-italic';
+    src: url('junicode_italic.eot');
+    src: url('junicode_italic.eot?#iefix') format('embedded-opentype'),
+         url('junicode_italic.woff') format('woff'),
+         url('junicode_italic.ttf') format('truetype'),
+         url('junicode_italic.svg#junicode-italic') format('svg');
+}
+
+@font-face {
+    font-family: 'junicode-bold-italic';
+    src: url('junicode_bold-italic.eot');
+    src: url('junicode_bold-italic.eot?#iefix') format('embedded-opentype'),
+         url('junicode_bold-italic.woff') format('woff'),
+         url('junicode_bold-italic.ttf') format('truetype'),
+         url('junicode_bold-italic.svg#junicode-bold-italic') format('svg');
+}
+
+@font-face {
+    font-family: 'junicode-bold';
+    src: url('junicode_bold.eot');
+    src: url('junicode_bold.eot?#iefix') format('embedded-opentype'),
+         url('junicode_bold.woff') format('woff'),
+         url('junicode_bold.ttf') format('truetype'),
+         url('junicode_bold.svg#junicode-bold') format('svg');
+}
+

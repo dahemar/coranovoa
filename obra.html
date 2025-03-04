@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cora Novoa - Obra</title>
+    <!-- Preload fonts -->
+    <link rel="preload" href="junicode.webfont/junicode_regular.woff" as="font" type="font/woff" crossorigin="anonymous">
+    <link rel="preload" href="junicode.webfont/junicode_bold.woff" as="font" type="font/woff" crossorigin="anonymous">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Font Definitions */
+        @font-face {
+            font-family: 'Junicode';
+            src: url('junicode.webfont/junicode_regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Junicode';
+            src: url('junicode.webfont/junicode_bold.woff') format('woff');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        body {
+            margin: 0;
+            background-color: white;
+            color: black;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            font-family: 'Junicode', sans-serif;
+        }
+
+        .overlay-content {
+            position: relative;
+            z-index: 10;
+            padding: 20px;
+        }
+
+        .overlay-header {
+            text-align: left;
+        }
+
+        /* Styles for navigation links */
+        .no-underline-link {
+            text-decoration: none;
+            transition: color 0.2s ease-in-out;
+            color: black;
+        }
+
+        .no-underline-link:hover {
+            color: #a0a0a0;
+        }
+
+        .no-underline-link.active {
+            color: #a0a0a0;
+        }
+
+        .hover-light-grey {
+            transition: color 0.2s ease-in-out;
+        }
+
+        .hover-light-grey:hover {
+            color: #a0a0a0;
+        }
+
+        .language-switcher {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 2000;
+            color: black;
+            font-size: 14px;
+        }
+
+        .language-switcher a {
+            text-decoration: none;
+            margin-right: 5px;
+            color: black;
+        }
+
+        .language-switcher a:hover {
+            color: #a0a0a0;
+        }
+
+        .language-switcher a.active-lang {
+            color: #a0a0a0 !important;
+        }
+
+        /* Obra container styles */
+        .obra-container {
+            position: relative;
+            margin-top: 100px;
+            min-height: 500px;
+        }
+
+        .obra-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .obra-item {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .obra-image {
+            width: 100%;
+            height: 0;
+            padding-bottom: 75%; /* 4:3 aspect ratio */
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .obra-item:hover .obra-image {
+            transform: scale(1.05);
+        }
+
+        .obra-title {
+            margin-top: 10px;
+            font-size: 16px;
+            color: black;
+        }
+
+        .obra-year {
+            font-size: 14px;
+            color: #a0a0a0;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Junicode', sans-serif;
+            font-weight: bold;
+        }
+
+        /* Mobile responsive styles */
+        @media (max-width: 768px) {
+            body {
+                overflow: hidden; /* Prevent scrolling on the entire page */
+                position: fixed;
+                width: 100%;
+                height: 100%;
+            }
+            
+            .overlay-content {
+                padding: 10px;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+
+            .overlay-header {
+                padding: 10px !important;
+                margin-top: 30px !important;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                z-index: 100;
+            }
+
+            .overlay-header nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 4px;
+                width: 100%;
+                margin-top: 15px;
+            }
+
+            .overlay-header nav a {
+                margin-bottom: 0;
+                margin-right: 0;
+                font-size: 18px;
+                letter-spacing: -0.5px;
+                padding: 0 1px;
+            }
+
+            .overlay-header h1 {
+                font-size: 20px;
+                margin-bottom: 12px;
+                text-align: left;
+                width: 100%;
+            }
+
+            .obra-container {
+                margin-top: 120px;
+                padding: 0 10px;
+                overflow-y: auto;
+                height: calc(100% - 120px);
+                position: fixed;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .obra-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .obra-title {
+                font-size: 14px;
+            }
+
+            .obra-year {
+                font-size: 12px;
+            }
+
+            .language-switcher {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                font-size: 16px;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                z-index: 2000 !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .overlay-header {
+                margin-top: 25px !important;
+            }
+
+            .overlay-header h1 {
+                font-size: 19px;
+                margin-bottom: 10px;
+            }
+
+            .overlay-header nav {
+                gap: 2px;
+            }
+
+            .overlay-header nav a {
+                font-size: 17px;
+                letter-spacing: -0.6px;
+            }
+
+            .obra-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .overlay-header nav {
+                gap: 2px;
+            }
+
+            .overlay-header nav a {
+                font-size: 14px;
+                letter-spacing: -0.8px;
+            }
+        }
+
+        /* Mobile detail page styles */
+        .mobile-detail-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .mobile-back-button {
+            display: inline-block;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            color: black;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .mobile-detail-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .mobile-detail-year {
+            font-size: 16px;
+            color: #a0a0a0;
+            margin-bottom: 20px;
+        }
+
+        .mobile-detail-image {
+            width: 100%;
+            height: auto;
+            margin-bottom: 25px;
+        }
+
+        .mobile-detail-text {
+            color: #a0a0a0;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-detail-page.active {
+                display: block;
+            }
+        }
+    </style>
+
+    <script>
+        let currentLanguage = 'gal';
+
+        function setCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                let date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
+        function getCookie(name) {
+            let nameEQ = name + "=";
+            let ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+
+            const translations = {
+                "gal": {
+                    "obra": "obra",
+                    "bio": "bio",
+                    "curaduria": "curaduría",
+                    "aldan": "aldán",
+                    "contacto": "contacto",
+                    "back": "← Volver",
+                    "obra1Title": "pel de mimbre sobre pel cama",
+                    "obra1Text": "Descrición da obra 1 en galego...",
+                    "obra2Title": "Título da obra 2",
+                    "obra2Text": "Descrición da obra 2 en galego...",
+                    "obra3Title": "Título da obra 3",
+                    "obra3Text": "Descrición da obra 3 en galego...",
+                    "obra4Title": "Título da obra 4",
+                    "obra4Text": "Descrición da obra 4 en galego...",
+                    "obra5Title": "Título da obra 5",
+                    "obra5Text": "Descrición da obra 5 en galego...",
+                    "obra6Title": "Título da obra 6",
+                    "obra6Text": "Descrición da obra 6 en galego..."
+                },
+                "esp": {
+                    "obra": "obra",
+                    "bio": "bio",
+                    "curaduria": "curaduría",
+                    "aldan": "aldán",
+                    "contacto": "contacto",
+                    "back": "← Volver",
+                    "obra1Title": "Título de la obra 1",
+                    "obra1Text": "Descripción de la obra 1 en español...",
+                    "obra2Title": "Título de la obra 2",
+                    "obra2Text": "Descripción de la obra 2 en español...",
+                    "obra3Title": "Título de la obra 3",
+                    "obra3Text": "Descripción de la obra 3 en español...",
+                    "obra4Title": "Título de la obra 4",
+                    "obra4Text": "Descripción de la obra 4 en español...",
+                    "obra5Title": "Título de la obra 5",
+                    "obra5Text": "Descripción de la obra 5 en español...",
+                    "obra6Title": "Título de la obra 6",
+                    "obra6Text": "Descripción de la obra 6 en español..."
+                },
+                "en": {
+                    "obra": "work",
+                    "bio": "bio",
+                    "curaduria": "curatorship",
+                    "aldan": "aldán",
+                    "contacto": "contact",
+                    "back": "← Back",
+                    "obra1Title": "Artwork Title 1",
+                    "obra1Text": "Description of artwork 1 in English...",
+                    "obra2Title": "Artwork Title 2",
+                    "obra2Text": "Description of artwork 2 in English...",
+                    "obra3Title": "Artwork Title 3",
+                    "obra3Text": "Description of artwork 3 in English...",
+                    "obra4Title": "Artwork Title 4",
+                    "obra4Text": "Description of artwork 4 in English...",
+                    "obra5Title": "Artwork Title 5",
+                    "obra5Text": "Description of artwork 5 in English...",
+                    "obra6Title": "Artwork Title 6",
+                    "obra6Text": "Description of artwork 6 in English..."
+                }
+            };
+
+            let selectedTranslations = translations[lang];
+
+            document.querySelector(".overlay-header nav a:nth-child(1)").textContent = selectedTranslations.obra;
+            document.querySelector(".overlay-header nav a:nth-child(2)").textContent = selectedTranslations.bio;
+            document.querySelector(".overlay-header nav a:nth-child(4)").textContent = selectedTranslations.curaduria;
+            document.querySelector(".overlay-header nav a:nth-child(3)").textContent = selectedTranslations.aldan;
+            document.querySelector(".overlay-header nav a:nth-child(5)").textContent = selectedTranslations.contacto;
+
+            // Update obra titles
+            document.querySelectorAll('.obra-item').forEach((item, index) => {
+                const titleKey = `obra${index + 1}Title`;
+                if (selectedTranslations[titleKey]) {
+                    item.querySelector('.obra-title').textContent = selectedTranslations[titleKey];
+                }
+            });
+
+            // Update mobile detail pages if they exist
+            document.querySelectorAll('.mobile-detail-page').forEach((page, index) => {
+                const titleKey = `obra${index + 1}Title`;
+                const textKey = `obra${index + 1}Text`;
+                
+                if (selectedTranslations[titleKey]) {
+                    page.querySelector('.mobile-detail-title').textContent = selectedTranslations[titleKey];
+                }
+                
+                if (selectedTranslations[textKey]) {
+                    page.querySelector('.mobile-detail-text').textContent = selectedTranslations[textKey];
+                }
+                
+                // Update back button
+                page.querySelector('.mobile-back-button').textContent = selectedTranslations.back;
+            });
+
+            document.documentElement.setAttribute("lang", lang);
+
+            document.querySelectorAll('.language-switcher a').forEach(link => {
+                if (link.getAttribute('data-lang') === lang) {
+                    link.classList.add('active-lang');
+                } else {
+                    link.classList.remove('active-lang');
+                }
+            });
+
+            setCookie('selectedLanguage', lang, 30);
+            
+            return false;
+        }
+
+        window.onload = function() {
+            let savedLanguage = getCookie('selectedLanguage');
+            if (savedLanguage) {
+                currentLanguage = savedLanguage;
+            }
+            changeLanguage(currentLanguage);
+
+            // Mobile detail page handling
+            const obraItems = document.querySelectorAll('.obra-item');
+            const mobileDetailPages = document.querySelectorAll('.mobile-detail-page');
+            const backButtons = document.querySelectorAll('.mobile-back-button');
+
+            // Handle back button clicks
+            backButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Hide all detail pages
+                    mobileDetailPages.forEach(page => {
+                        page.classList.remove('active');
+                    });
+                    
+                    // Show the obra grid
+                    document.querySelector('.obra-container').style.display = 'block';
+                });
+            });
+
+            // Handle obra item clicks
+            obraItems.forEach((item, index) => {
+                item.addEventListener('click', function() {
+                    const obraId = this.getAttribute('data-id');
+                    
+                    if (window.innerWidth <= 768) {
+                        // Mobile behavior: show detail page overlay
+                        document.querySelector('.obra-container').style.display = 'none';
+                        
+                        // Show the corresponding detail page
+                        if (mobileDetailPages[index]) {
+                            mobileDetailPages[index].classList.add('active');
+                        }
+                    } else {
+                        // Desktop behavior: navigate to separate page
+                        window.location.href = `obra-detail.html?id=${obraId}`;
+                    }
+                });
+            });
+        };
+    </script>
+</head>
+
+<body>
+    <div class="page-container">
+        <div class="overlay-content">
+            <header class="p-6 overlay-header">
+                <h1 class="text-lg font-bold hover-light-grey"><a href="index.html" class="no-underline-link">Cora Novoa</a></h1>
+                <nav class="mt-3 flex space-x-6 text-lg">
+                    <a href="obra.html" class="no-underline-link active">obra</a>
+                    <a href="bio.html" class="no-underline-link">bio</a>
+                    <a href="aldan.html" class="no-underline-link">aldán</a>
+                    <a href="curaduria.html" class="no-underline-link">curaduría</a>
+                    <a href="#" class="no-underline-link">contacto</a>
+                </nav>
+            </header>
+
+            <div class="obra-container">
+                <div class="obra-grid">
+                    <!-- Obra 1 -->
+                    <div class="obra-item" data-id="obra1">
+                        <div class="obra-image" style="background-image: url('images/pel de mimbre sobre pel cama.png');"></div>
+                        <div class="obra-title">pel de mimbre sobre pel cama</div>
+                        <div class="obra-year">2023</div>
+                    </div>
+                    
+                    <!-- Obra 2 -->
+                    <div class="obra-item" data-id="obra2">
+                        <div class="obra-image" style="background-image: url('images/obra2.jpg');"></div>
+                        <div class="obra-title">Título da obra 2</div>
+                        <div class="obra-year">2022</div>
+                    </div>
+                    
+                    <!-- Obra 3 -->
+                    <div class="obra-item" data-id="obra3">
+                        <div class="obra-image" style="background-image: url('images/obra3.jpg');"></div>
+                        <div class="obra-title">Título da obra 3</div>
+                        <div class="obra-year">2021</div>
+                    </div>
+                    
+                    <!-- Obra 4 -->
+                    <div class="obra-item" data-id="obra4">
+                        <div class="obra-image" style="background-image: url('images/obra4.jpg');"></div>
+                        <div class="obra-title">Título da obra 4</div>
+                        <div class="obra-year">2020</div>
+                    </div>
+                    
+                    <!-- Obra 5 -->
+                    <div class="obra-item" data-id="obra5">
+                        <div class="obra-image" style="background-image: url('images/obra5.jpg');"></div>
+                        <div class="obra-title">Título da obra 5</div>
+                        <div class="obra-year">2019</div>
+                    </div>
+                    
+                    <!-- Obra 6 -->
+                    <div class="obra-item" data-id="obra6">
+                        <div class="obra-image" style="background-image: url('images/obra6.jpg');"></div>
+                        <div class="obra-title">Título da obra 6</div>
+                        <div class="obra-year">2018</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Detail Pages -->
+        <!-- Obra 1 Detail -->
+        <div class="mobile-detail-page" id="obra1-detail">
+            <div class="language-switcher">
+                <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
+                <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
+                <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
+            </div>
+            <a href="#" class="mobile-back-button">← Volver</a>
+            <h2 class="mobile-detail-title">pel de mimbre sobre pel cama</h2>
+            <div class="mobile-detail-year">2023</div>
+            <img src="images/obra1.jpg" alt="Obra 1" class="mobile-detail-image">
+            <div class="mobile-detail-text">
+                Descrición da obra 1 en galego...
+            </div>
+        </div>
+
+        <!-- Obra 2 Detail -->
+        <div class="mobile-detail-page" id="obra2-detail">
+            <div class="language-switcher">
+                <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
+                <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
+                <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
+            </div>
+            <a href="#" class="mobile-back-button">← Volver</a>
+            <h2 class="mobile-detail-title">Título da obra 2</h2>
+            <div class="mobile-detail-year">2022</div>
+            <img src="images/obra2.jpg" alt="Obra 2" class="mobile-detail-image">
+            <div class="mobile-detail-text">
+                Descrición da obra 2 en galego...
+            </div>
+        </div>
+
+        <!-- Obra 3 Detail -->
+        <div class="mobile-detail-page" id="obra3-detail">
+            <div class="language-switcher">
+                <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
+                <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
+                <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
+            </div>
+            <a href="#" class="mobile-back-button">← Volver</a>
+            <h2 class="mobile-detail-title">Título da obra 3</h2>
+            <div class="mobile-detail-year">2021</div>
+            <img src="images/obra3.jpg" alt="Obra 3" class="mobile-detail-image">
+            <div class="mobile-detail-text">
+                Descrición da obra 3 en galego...
+            </div>
+        </div>
+
+        <!-- Obra 4 Detail -->
+        <div class="mobile-detail-page" id="obra4-detail">
+            <div class="language-switcher">
+                <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
+                <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
+                <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
+            </div>
+            <a href="#" class="mobile-back-button">← Volver</a>
+            <h2 class="mobile-detail-title">Título da obra 4</h2>
+            <div class="mobile-detail-year">2020</div>
+            <img src="images/obra4.jpg" alt="Obra 4" class="mobile-detail-image">
+            <div class="mobile-detail-text">
+                Descrición da obra 4 en galego...
+            </div>
+        </div>
+
+        <!-- Obra 5 Detail -->
+        <div class="mobile-detail-page" id="obra5-detail">
+            <div class="language-switcher">
+                <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
+                <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
+                <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
+            </div>
+            <a href="#" class="mobile-back-button">← Volver</a>
+            <h2 class="mobile-detail-title">Título da obra 5</h2>
+            <div class="mobile-detail-year">2019</div>
+            <img src="images/obra5.jpg" alt="Obra 5" class="mobile-detail-image">
+            <div class="mobile-detail-text">
+                Descrición da obra 5 en galego...
+            </div>
+        </div>
+
+        <!-- Obra 6 Detail -->
+        <div class="mobile-detail-page" id="obra6-detail">
+            <div class="language-switcher">
+                <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
+                <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
+                <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
+            </div>
+            <a href="#" class="mobile-back-button">← Volver</a>
+            <h2 class="mobile-detail-title">Título da obra 6</h2>
+            <div class="mobile-detail-year">2018</div>
+            <img src="images/obra6.jpg" alt="Obra 6" class="mobile-detail-image">
+            <div class="mobile-detail-text">
+                Descrición da obra 6 en galego...
+            </div>
+        </div>
+
+        <!-- Language Switcher -->
+        <div class="language-switcher">
+            <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
+            <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
+            <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
+        </div>
+    </div>
+</body>
+
+</html>
