@@ -136,20 +136,31 @@
         /* Mobile responsive styles - EXACTLY copied from curaduria.html */
         @media (max-width: 768px) {
             body, html {
-                overflow: hidden; /* Prevent scrolling */
-                position: fixed; /* Fix position for mobile */
+                overflow: hidden !important; /* Prevent scrolling with !important */
+                position: fixed !important; /* Fix position for mobile with !important */
                 width: 100%;
                 height: 100%;
+                touch-action: none; /* Disable touch scrolling */
+                -webkit-overflow-scrolling: none; /* Disable momentum scrolling on iOS */
             }
             
             .overlay-content {
                 padding: 10px; /* Adjust padding for mobile */
-                overflow: hidden; /* Prevent overflow */
+                overflow: hidden !important; /* Prevent overflow with !important */
                 position: absolute; /* Ensure content is positioned absolutely */
                 width: 100%; /* Full width */
                 height: 100%; /* Full height */
                 top: 0;
                 left: 0;
+                touch-action: none; /* Disable touch scrolling */
+            }
+
+            .page-container {
+                overflow: hidden !important; /* Prevent container scrolling */
+                position: fixed !important; /* Fix container position */
+                width: 100%;
+                height: 100%;
+                touch-action: none; /* Disable touch scrolling */
             }
 
             .overlay-header {
