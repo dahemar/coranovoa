@@ -145,6 +145,11 @@
             .overlay-content {
                 padding: 10px; /* Adjust padding for mobile */
                 overflow: hidden; /* Prevent overflow */
+                position: absolute; /* Ensure content is positioned absolutely */
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                top: 0;
+                left: 0;
             }
 
             .overlay-header {
@@ -154,7 +159,24 @@
                 top: 0;
                 left: 0;
                 width: 100%;
-                z-index: 100; /* Ensure header is above other content */
+                z-index: 1000; /* Increase z-index to ensure it's above video */
+                background-color: transparent; /* Remove semi-transparent background */
+            }
+
+            .video-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1; /* Ensure video stays behind content */
+            }
+
+            .video-container video {
+                object-fit: cover;
+                width: 100%;
+                height: 100%;
+                position: fixed; /* Fix video position */
             }
 
             .overlay-header nav {
