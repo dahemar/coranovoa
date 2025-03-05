@@ -188,7 +188,7 @@
         /* Mobile responsive styles */
         @media (max-width: 768px) {
             body {
-                overflow: hidden; /* Prevent scrolling on the entire page */
+                overflow: hidden;
                 position: fixed;
                 width: 100%;
                 height: 100%;
@@ -200,6 +200,8 @@
                 width: 100%;
                 height: 100%;
                 overflow: hidden;
+                transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                will-change: transform;
             }
 
             .overlay-header {
@@ -244,17 +246,24 @@
                 left: 0;
                 width: 100%;
                 transform: translateY(-50%);
-                margin-top: 40px; /* Offset to account for header */
+                margin-top: 40px;
                 overflow: hidden;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                gap: 8px; /* Reduced spacing between items */
+                gap: 8px;
+                will-change: transform;
+                transform-style: preserve-3d;
+                backface-visibility: hidden;
+            }
+            
+            .overlay-content.sliding-left .curaduria-list {
+                pointer-events: none;
             }
 
             .curaduria-list li {
                 margin-bottom: 0;
-                padding: 3px 0; /* Reduced padding */
+                padding: 3px 0;
             }
 
             .language-switcher {
@@ -269,68 +278,59 @@
             
             /* For detail pages only */
             .mobile-detail-page {
-                overflow-y: auto;
-            }
-            
-            .mobile-detail-page .overlay-content,
-            .mobile-detail-page .curaduria-list,
-            .mobile-detail-page body {
-                overflow: auto;
-                position: static;
-            }
-
-            #algo-de-veran-li.active ~ li,
-            #a-que-me-refiro-li.active ~ li {
-                transform: none;
-            }
-
-            #algo-de-veran-li.active .expanded-content,
-            #a-que-me-refiro-li.active .expanded-content {
-                height: auto;
-            }
-
-            .curaduria-list.shifted {
-                transform: none;
-            }
-            
-            .curaduria-list li {
-                transition: none;
-            }
-            
-            .expanded-content {
-                transition: none;
-            }
-
-            .hover-image {
-                position: relative;
-                width: 100%;
-                height: 250px;
-            }
-
-            .hover-text {
-                position: relative;
+                display: block;
+                position: fixed;
+                top: 0;
                 left: 0;
                 width: 100%;
-                padding: 10px;
-                margin-top: 10px;
-            }
-
-            .language-switcher {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                font-size: 16px;
-                opacity: 1 !important;
-                pointer-events: auto !important;
-                z-index: 2000 !important;
+                height: 100%;
+                background-color: white;
+                z-index: 1000;
+                overflow-y: auto;
+                padding: 20px;
+                transform: translateX(100%);
+                transition: transform 0.5s ease-out;
+                visibility: hidden;
+                will-change: transform;
+                transform-style: preserve-3d;
+                backface-visibility: hidden;
             }
             
-            /* Para las páginas de detalle móvil */
+            .mobile-detail-page.active {
+                transform: translateX(0);
+                visibility: visible;
+            }
+
+            .mobile-back-button {
+                display: inline-block;
+                margin-top: 30px;
+                margin-bottom: 20px;
+                color: black;
+                text-decoration: none;
+                font-size: 18px;
+            }
+
+            .mobile-detail-title {
+                font-size: 20px;
+                margin-bottom: 20px;
+                line-height: 1.4;
+            }
+
+            .mobile-detail-image {
+                width: 100%;
+                height: auto;
+                margin-bottom: 25px;
+            }
+
+            .mobile-detail-text {
+                color: #a0a0a0;
+                font-size: 16px;
+                line-height: 1.6;
+            }
+
+            /* Remove the language switcher from detail pages */
             .mobile-detail-page .language-switcher {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                text-align: right;
+                display: none;
             }
         }
 
@@ -671,9 +671,6 @@
                 // Hide the main content
                 document.querySelector('.overlay-content').classList.add('sliding-left');
                 
-                // Hide the global language switcher
-                document.querySelector('.page-container > .language-switcher').style.display = 'none';
-                
                 // Show the specific detail page
                 const detailPage = document.getElementById(detailId + '-detail');
                 if (detailPage) {
@@ -688,9 +685,6 @@
             function closeMobileDetail() {
                 // Show the obra grid
                 document.querySelector('.overlay-content').classList.remove('sliding-left');
-                
-                // Show the selector de idioma global
-                document.querySelector('.page-container > .language-switcher').style.display = '';
                 
                 // Animar la salida de la página de detalle
                 const activePage = document.querySelector('.mobile-detail-page.active');
@@ -749,6 +743,13 @@
 
 <body>
     <div class="page-container">
+        <!-- Single language switcher that stays fixed -->
+        <div class="language-switcher">
+            <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
+            <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
+            <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
+        </div>
+        
         <div class="overlay-content">
             <header class="p-6 overlay-header">
                 <h1 class="text-lg font-bold hover-light-grey"><a href="index.html" class="no-underline-link">Cora Novoa</a></h1>
@@ -790,11 +791,6 @@
 
         <!-- Páginas de detalle para móvil -->
         <div id="algo-de-veran-detail" class="mobile-detail-page mobile-detail-page">
-            <div class="language-switcher">
-                <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
-                <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
-                <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
-            </div>
             <a href="#" class="mobile-back-button">← Volver</a>
             <h2 class="mobile-detail-title">Algo de verán | Aldán, 2022-2024</h2>
             <img src="images/veran.jpg" alt="Algo de verán" class="mobile-detail-image">
@@ -804,24 +800,12 @@
         </div>
 
         <div id="a-que-me-refiro-detail" class="mobile-detail-page">
-            <div class="language-switcher">
-                <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
-                <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
-                <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
-            </div>
             <a href="#" class="mobile-back-button">← Volver</a>
             <h2 class="mobile-detail-title">A que me refiro cando falo de corpo | exposición - Galería Sarao, Ferrol, 2025</h2>
             <img src="images/corpo1.jpg" alt="A que me refiro cando falo de corpo" class="mobile-detail-image">
             <div class="mobile-detail-text">
                 «Hai un cuerpo humano cando entre vidente e visible, entre o que toca e o que é tocado, entre un ollo e outro, entre man e man faise unha especie de cruce, cando se acende a chispa do sentinte sensible, cando prende o lume que non cesará de arder, ata que tal accidente do corpo desfaga o que ningún accidente bastara a facer...» Maurice Merleau-Ponty.<br><br>De que falo cando falo de corpo? Que significa ser un corpo? É posible non implicalo? Como se vive a súa experiencia? Que entende un corpo en relación a outros corpos? Que distancia hai entre dous corpos? É corpo o que nos atravesa os corpos?
             </div>
-        </div>
-
-        <!-- Mantener el selector de idioma global para la página principal -->
-        <div class="language-switcher">
-            <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
-            <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
-            <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
         </div>
     </div>
 </body>
