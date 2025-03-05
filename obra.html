@@ -143,7 +143,7 @@
         /* Mobile responsive styles */
         @media (max-width: 768px) {
             body {
-                overflow: hidden; /* Prevent scrolling on the entire page */
+                overflow: hidden;
                 position: fixed;
                 width: 100%;
                 height: 100%;
@@ -155,6 +155,16 @@
                 width: 100%;
                 height: 100%;
                 overflow: hidden;
+                transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+                will-change: transform;
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+                transform-style: preserve-3d;
+                -webkit-transform-style: preserve-3d;
+            }
+
+            .overlay-content.sliding-left {
+                transform: translateX(-100%);
             }
 
             .overlay-header {
@@ -264,7 +274,7 @@
 
         /* Mobile detail page styles */
         .mobile-detail-page {
-            display: none;
+            display: block;
             position: fixed;
             top: 0;
             left: 0;
@@ -274,6 +284,19 @@
             z-index: 1000;
             overflow-y: auto;
             padding: 20px;
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+            visibility: hidden;
+            will-change: transform;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d;
+        }
+
+        .mobile-detail-page.active {
+            transform: translateX(0);
+            visibility: visible;
         }
 
         .mobile-back-button {
@@ -301,6 +324,11 @@
             width: 100%;
             height: auto;
             margin-bottom: 25px;
+            will-change: transform;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
         }
 
         .mobile-detail-text {
@@ -474,10 +502,19 @@
                     // Hide all detail pages
                     mobileDetailPages.forEach(page => {
                         page.classList.remove('active');
+                        
+                        // Wait for transition to complete before hiding
+                        setTimeout(() => {
+                            page.style.visibility = 'hidden';
+                        }, 500);
                     });
                     
                     // Show the obra grid
+                    document.querySelector('.overlay-content').classList.remove('sliding-left');
                     document.querySelector('.obra-container').style.display = 'block';
+                    
+                    // Update browser history
+                    history.pushState({page: 'main'}, '', 'obra.html');
                 });
             });
 
@@ -487,18 +524,40 @@
                     const obraId = this.getAttribute('data-id');
                     
                     if (window.innerWidth <= 768) {
-                        // Mobile behavior: show detail page overlay
-                        document.querySelector('.obra-container').style.display = 'none';
+                        // Mobile behavior: show detail page overlay with transition
+                        document.querySelector('.overlay-content').classList.add('sliding-left');
                         
                         // Show the corresponding detail page
                         if (mobileDetailPages[index]) {
+                            mobileDetailPages[index].style.visibility = 'visible';
                             mobileDetailPages[index].classList.add('active');
                         }
+                        
+                        // Update browser history
+                        history.pushState({page: obraId}, '', `obra.html?id=${obraId}`);
                     } else {
                         // Desktop behavior: navigate to separate page
                         window.location.href = `obra-detail.html?id=${obraId}`;
                     }
                 });
+            });
+            
+            // Handle browser back button
+            window.addEventListener('popstate', function(event) {
+                if (!event.state || event.state.page === 'main') {
+                    // Close any open detail pages
+                    mobileDetailPages.forEach(page => {
+                        page.classList.remove('active');
+                        
+                        setTimeout(() => {
+                            page.style.visibility = 'hidden';
+                        }, 500);
+                    });
+                    
+                    // Show the obra grid
+                    document.querySelector('.overlay-content').classList.remove('sliding-left');
+                    document.querySelector('.obra-container').style.display = 'block';
+                }
             });
         };
     </script>
@@ -506,6 +565,13 @@
 
 <body>
     <div class="page-container">
+        <!-- Single language switcher that stays fixed -->
+        <div class="language-switcher">
+            <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
+            <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
+            <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
+        </div>
+        
         <div class="overlay-content">
             <header class="p-6 overlay-header">
                 <h1 class="text-lg font-bold hover-light-grey"><a href="index.html" class="no-underline-link">Cora Novoa</a></h1>
@@ -568,11 +634,6 @@
         <!-- Mobile Detail Pages -->
         <!-- Obra 1 Detail -->
         <div class="mobile-detail-page" id="obra1-detail">
-            <div class="language-switcher">
-                <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
-                <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
-                <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
-            </div>
             <a href="#" class="mobile-back-button">← Volver</a>
             <h2 class="mobile-detail-title">pel de mimbre sobre pel cama</h2>
             <div class="mobile-detail-year">2023</div>
@@ -584,11 +645,6 @@
 
         <!-- Obra 2 Detail -->
         <div class="mobile-detail-page" id="obra2-detail">
-            <div class="language-switcher">
-                <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
-                <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
-                <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
-            </div>
             <a href="#" class="mobile-back-button">← Volver</a>
             <h2 class="mobile-detail-title">Título da obra 2</h2>
             <div class="mobile-detail-year">2022</div>
@@ -600,11 +656,6 @@
 
         <!-- Obra 3 Detail -->
         <div class="mobile-detail-page" id="obra3-detail">
-            <div class="language-switcher">
-                <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
-                <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
-                <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
-            </div>
             <a href="#" class="mobile-back-button">← Volver</a>
             <h2 class="mobile-detail-title">Título da obra 3</h2>
             <div class="mobile-detail-year">2021</div>
@@ -616,11 +667,6 @@
 
         <!-- Obra 4 Detail -->
         <div class="mobile-detail-page" id="obra4-detail">
-            <div class="language-switcher">
-                <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
-                <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
-                <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
-            </div>
             <a href="#" class="mobile-back-button">← Volver</a>
             <h2 class="mobile-detail-title">Título da obra 4</h2>
             <div class="mobile-detail-year">2020</div>
@@ -632,11 +678,6 @@
 
         <!-- Obra 5 Detail -->
         <div class="mobile-detail-page" id="obra5-detail">
-            <div class="language-switcher">
-                <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
-                <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
-                <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
-            </div>
             <a href="#" class="mobile-back-button">← Volver</a>
             <h2 class="mobile-detail-title">Título da obra 5</h2>
             <div class="mobile-detail-year">2019</div>
@@ -648,11 +689,6 @@
 
         <!-- Obra 6 Detail -->
         <div class="mobile-detail-page" id="obra6-detail">
-            <div class="language-switcher">
-                <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
-                <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
-                <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
-            </div>
             <a href="#" class="mobile-back-button">← Volver</a>
             <h2 class="mobile-detail-title">Título da obra 6</h2>
             <div class="mobile-detail-year">2018</div>
@@ -660,13 +696,6 @@
             <div class="mobile-detail-text">
                 Descrición da obra 6 en galego...
             </div>
-        </div>
-
-        <!-- Language Switcher -->
-        <div class="language-switcher">
-            <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
-            <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
-            <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
         </div>
     </div>
 </body>
