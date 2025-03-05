@@ -7,13 +7,28 @@
     <title>Cora Novoa - Bio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        @font-face {
+            font-family: 'Junicode';
+            src: url('junicode.webfont/junicode_regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Junicode';
+            src: url('junicode.webfont/junicode_bold.woff') format('woff');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+        
         body {
+            font-family: 'Junicode', sans-serif;
             margin: 0;
             background-color: white;
             color: black;
             overflow-y: scroll;
             overflow-x: hidden;
-            font-family: 'Junicode', serif;
         }
 
         .overlay-content {
@@ -26,6 +41,7 @@
             text-align: left;
         }
 
+        /* Styles for navigation links */
         .no-underline-link {
             text-decoration: none;
             transition: color 0.2s ease-in-out;
@@ -98,6 +114,7 @@
                 overflow: hidden;
             }
 
+
             .overlay-header {
                 padding: 10px !important;
                 margin-top: 30px !important;
@@ -105,6 +122,7 @@
                 top: 0;
                 left: 0;
                 width: 100%;
+                background-color: white;
                 z-index: 100;
             }
 
@@ -123,7 +141,6 @@
                 font-size: 18px;
                 letter-spacing: -0.5px;
                 padding: 0 1px;
-                color: black !important;
             }
 
             .overlay-header h1 {
@@ -131,19 +148,7 @@
                 margin-bottom: 12px;
                 text-align: left;
                 width: 100%;
-                color: black !important;
             }
-            
-            .overlay-header nav a:hover,
-            .overlay-header h1:hover,
-            .overlay-header a:hover {
-                color: #a0a0a0 !important;
-            }
-            
-            .overlay-header nav a.active {
-                color: #a0a0a0 !important;
-            }
-
             .bio-container {
                 margin-top: 120px;
                 padding: 0 15px;
@@ -151,20 +156,15 @@
                 height: calc(100vh - 120px);
                 -webkit-overflow-scrolling: touch;
             }
-
+            
             .language-switcher {
-                position: fixed;
+                position: absolute;
                 top: 10px;
                 right: 10px;
-                z-index: 2000;
-                color: black;
-                font-size: 18px;
-                font-family: 'Junicode', serif;
-            }
-
-            .language-switcher a {
-                font-size: 18px;
-                letter-spacing: -0.2px;
+                font-size: 16px;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                z-index: 2000 !important;
                 font-family: 'Junicode', serif;
             }
         }
@@ -188,17 +188,6 @@
                 letter-spacing: -0.6px;
             }
 
-            .language-switcher {
-                font-size: 16px;
-                font-family: 'Junicode', serif;
-            }
-            
-            .language-switcher a {
-                font-size: 16px;
-                font-family: 'Junicode', serif;
-            }
-        }
-
         @media (max-width: 360px) {
             .overlay-header nav {
                 gap: 2px;
@@ -208,17 +197,8 @@
                 font-size: 14px;
                 letter-spacing: -0.8px;
             }
-
-            .language-switcher {
-                font-size: 14px;
-                font-family: 'Junicode', serif;
-            }
-            
-            .language-switcher a {
-                font-size: 14px;
-                font-family: 'Junicode', serif;
-            }
         }
+    }
 
         /* Font Definitions - with improved loading strategy */
         @font-face {
@@ -243,6 +223,21 @@
         }
         html.fonts-loaded {
             opacity: 1;
+        }
+        
+        /* Preload fonts */
+        @link rel="preload" href="junicode.webfont/junicode_regular.woff" as="font" type="font/woff" crossorigin="anonymous";
+        @link rel="preload" href="junicode.webfont/junicode_bold.woff" as="font" type="font/woff" crossorigin="anonymous";
+
+        /* Add this to improve text readability */
+        .bio-text, .bio-list li {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* Add more vertical spacing between sections */
+        .section-title {
+            margin-top: 60px;
         }
     </style>
 
@@ -386,9 +381,9 @@
                 
                 <h2 class="section-title font-bold text-xl mb-4 mt-8">encontros</h2>
                 <ul class="bio-list mb-6">
-                    <li class="mb-2">Seminario EAN, Santiago de Compostela, 2023. Organiza Rafa Doctor, a Xunta de Galicia e a Fundación Cidade da Cultura. Colabora a Fundación Banco Sabadell.</li>
-                    <li class="mb-2">Encontros Paraíso illa San Simón, 2023. Organiza el Colectivo RPM (ointe).</li>
-                    <li class="mb-2">Algo de verán, Aldán, 2024– coordinadora (3 edicións).</li>
+                    <li class="mb-2">2023 - Seminario EAN, Santiago de Compostela. Organiza Rafa Doctor, a Xunta de Galicia e a Fundación Cidade da Cultura. Colabora a Fundación Banco Sabadell.</li>
+                    <li class="mb-2">2023 - Encontros Paraíso illa San Simón. Organiza el Colectivo RPM (ointe).</li> 
+                    <li class="mb-2">2024 - Algo de verán, Aldán – coordinadora (3 edicións).</li>
                 </ul>
                 
                 <h2 class="section-title font-bold text-xl mb-4 mt-8">obradoiros</h2>
@@ -446,6 +441,8 @@
                 </ul>
                 
                 <h2 class="section-title font-bold text-xl mb-4 mt-8">exposicións</h2>
+                <p class="bio-text mb-6">A continuación se presenta un listado de las exposiciones en las que Cora Novoa ha participado desde 2018 hasta la actualidad:</p>
+
                 <h3 class="font-semibold mb-2">2024</h3>
                 <ul class="bio-list mb-4">
                     <li class="mb-1">Valencia, TEM, mostra oberta de accións, considerando el tiempo con Marilyn Arsem.</li>
