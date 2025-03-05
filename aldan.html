@@ -1,17 +1,14 @@
 <!DOCTYPE html>
-<html lang="gal">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cora Novoa - Aldán</title>
-    
     <!-- Preload fonts -->
     <link rel="preload" href="junicode.webfont/junicode_regular.woff" as="font" type="font/woff" crossorigin="anonymous">
     <link rel="preload" href="junicode.webfont/junicode_bold.woff" as="font" type="font/woff" crossorigin="anonymous">
-    
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <style>
         /* Font Definitions */
         @font-face {
@@ -38,11 +35,6 @@
             overflow-x: hidden;
         }
 
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Junicode', sans-serif;
-            font-weight: bold;
-        }
-
         .overlay-content {
             position: relative;
             z-index: 10;
@@ -50,39 +42,7 @@
         }
 
         .overlay-header {
-            padding: 12px 0 !important;
-            margin-top: 0;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: white;
-            z-index: 100;
-            text-align: center;
-        }
-
-        .overlay-header nav {
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 4px;
-            width: 100%;
-            margin-top: 15px;
-        }
-
-        .overlay-header nav a {
-            margin-bottom: 0;
-            margin-right: 0;
-            font-size: 18px;
-            letter-spacing: -0.5px;
-            padding: 0 1px;
-        }
-
-        .overlay-header h1 {
-            font-size: 20px;
-            margin-bottom: 12px;
             text-align: left;
-            width: 100%;
         }
 
         /* Styles for navigation links */
@@ -135,15 +95,22 @@
         .aldan-container {
             position: relative;
             margin-top: 100px;
+            min-height: 500px;
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
             padding: 0 20px;
+            line-height: 1.6;
         }
 
         .aldan-text {
-            line-height: 1.6;
+            font-size: 18px;
             margin-bottom: 30px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Junicode', sans-serif;
+            font-weight: bold;
         }
 
         /* Mobile responsive styles */
@@ -175,8 +142,12 @@
             }
 
             .overlay-header nav {
-                margin-top: 0;
-                padding: 0;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 4px;
+                width: 100%;
+                margin-top: 15px;
             }
 
             .overlay-header nav a {
@@ -195,13 +166,17 @@
             }
 
             .aldan-container {
-                position: fixed;
-                top: 50px;
-                width: 100%;
-                height: calc(100% - 50px);
+                margin-top: 120px;
+                padding: 0 20px;
                 overflow-y: auto;
-                z-index: 1;
-                padding-top: 20px;
+                height: calc(100% - 120px);
+                position: fixed;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .aldan-text {
+                font-size: 16px;
             }
 
             .language-switcher {
@@ -232,6 +207,10 @@
             .overlay-header nav a {
                 font-size: 17px;
                 letter-spacing: -0.6px;
+            }
+
+            .aldan-text {
+                font-size: 15px;
             }
         }
 
@@ -281,7 +260,7 @@
                     "curaduria": "curaduría",
                     "aldan": "aldán",
                     "contacto": "contacto",
-                    "aldanText": "Algo de verán é un encontro anual autoxestionado, onde as únicas certezas son onde e cando: Aldán, Cangas do Morrazo, Galicia, no verán. O que é indefinido, está por construír mediante o facer —como a propia práctica—, cambia cada vez. Na procura de profesionalizar os proxectos, implicando a máis persoas e evitando a nosa precarización, podendo soster a primeira residencia, paralela ao proxecto de encontro, dividindo este en dous, mellorando así a organización ao coincidir o taller e lugar de residencia, incrementando o número de participantes (de 17 a 24) e a duración (de 5 a 7 días), concluíndo cunha mostra aberta ao público. Descentralizando os eixes, favorecendo o diálogo co próximo e o periférico. Requírese rodear para comprender, desde a escoita, o respecto e os coidados co que nos rodea e nós mesmas. Un exercicio nominal, pero non só desde a palabra. Unha práctica por e para artistas, sobre e desde o presente e a súa autonomía. O encontro articúlase como dispositivo relacional, entrelazando arte e vida, desafiando as limitacións do medio e favorecendo presenzas co que hai: autoposibilitándonos. Ten máis que ver cun modo de vida, unha forma de estar no mundo, de maneira situada. Formúlase a existencia dun punto de intersección entre a realidade interior e a exterior (H. Michaux), co material e inmaterial do espazo. situacións de realidades complexas que operan como xerme doutras realidades larvarias."
+                    "aldanText": "Algo de verán es un encuentro anual autogestionado, donde las únicas certezas son dónde y cuándo: Aldán, Cangas do Morrazo, Galicia, en verano. El qué es indefinido, está por construir mediante el hacer —como la propia práctica—, cambia cada vez. En la búsqueda de profesionalizar los proyectos, implicando a más personas y evitando nuestra precarización, pudiendo sostener la primera residencia, paralela al proyecto de encuentro, dividiendo este en dos, mejorando así la organización al coincidir el taller y lugar de residencia, incrementando el número de participantes (de 17 a 24) y la duración (de 5 a 7 días), concluyendo con una muestra abierta al público. Descentralizando los ejes, favoreciendo el diálogo con lo próximo y lo periférico. Se requiere rodear para comprender, desde la escucha, el respeto y los cuidados con lo que nos rodea y nosotras mismas. Un ejercicio nominal, pero no sólo desde la palabra. Una práctica por y para artistas, sobre y desde el presente y su autonomía. El encuentro se articula como dispositivo relacional, entrelazando arte y vida, desafiando las limitaciones del medio y favoreciendo presencias con lo que hay: autoposibilitándonos. Tiene más que ver con un modo de vida, una forma de estar en el mundo, de manera situada. Se plantea la existencia de un punto de intersección entre la realidad interior y la exterior (H. Michaux), con lo material e inmaterial del espacio. situaciones de realidades complejas que operan como germen de otras realidades larvarias."
                 },
                 "esp": {
                     "obra": "obra",
@@ -297,7 +276,7 @@
                     "curaduria": "curatorship",
                     "aldan": "aldán",
                     "contacto": "contact",
-                    "aldanText": "Algo de verán is an annual self-managed gathering, where the only certainties are where and when: Aldán, Cangas do Morrazo, Galicia, in summer. What happens is undefined, to be built through doing—like practice itself—changing each time. In seeking to professionalize projects, involving more people and avoiding precariousness, we've been able to sustain the first residency, parallel to the gathering project, dividing it in two, thus improving organization by having the workshop and residence in the same place, increasing the number of participants (from 17 to 24) and duration (from 5 to 7 days), concluding with an exhibition open to the public. Decentralizing axes, favoring dialogue with the nearby and peripheral. Surrounding is required to understand, from listening, respect, and care for what surrounds us and ourselves. A nominal exercise, but not only from words. A practice by and for artists, about and from the present and its autonomy. The gathering is articulated as a relational device, intertwining art and life, challenging the limitations of the medium and favoring presences with what is available: enabling ourselves. It has more to do with a way of life, a way of being in the world, in a situated manner. It proposes the existence of an intersection point between inner and outer reality (H. Michaux), with the material and immaterial of space. Situations of complex realities that operate as the germ of other larval realities."
+                    "aldanText": "Algo de verán is a self-managed annual gathering, where the only certainties are where and when: Aldán, Cangas do Morrazo, Galicia, in summer. What it is remains undefined, to be built through doing—like practice itself—changing each time. In seeking to professionalize projects, involving more people and avoiding precariousness, we were able to sustain the first residency, parallel to the meeting project, dividing it in two, thus improving organization by having the workshop and residence in the same place, increasing the number of participants (from 17 to 24) and duration (from 5 to 7 days), concluding with an exhibition open to the public. Decentralizing axes, favoring dialogue with the nearby and peripheral. It requires surrounding to understand, from listening, respect and care for what surrounds us and ourselves. A nominal exercise, but not only from words. A practice by and for artists, about and from the present and its autonomy. The meeting is articulated as a relational device, intertwining art and life, challenging the limitations of the medium and favoring presences with what is available: enabling ourselves. It has more to do with a way of life, a way of being in the world, in a situated manner. It raises the existence of a point of intersection between inner and outer reality (H. Michaux), with the material and immaterial of space. Situations of complex realities that operate as the germ of other larval realities."
                 }
             };
 
@@ -309,8 +288,8 @@
             document.querySelector(".overlay-header nav a:nth-child(3)").textContent = selectedTranslations.aldan;
             document.querySelector(".overlay-header nav a:nth-child(5)").textContent = selectedTranslations.contacto;
 
-            // Update aldan text
-            document.getElementById('aldanText').textContent = selectedTranslations.aldanText;
+            // Update Aldan text
+            document.querySelector('.aldan-text').textContent = selectedTranslations.aldanText;
 
             document.documentElement.setAttribute("lang", lang);
 
@@ -352,7 +331,7 @@
             </header>
 
             <div class="aldan-container">
-                <div class="aldan-text" id="aldanText">
+                <div class="aldan-text">
                     Algo de verán es un encuentro anual autogestionado, donde las únicas certezas son dónde y cuándo: Aldán, Cangas do Morrazo, Galicia, en verano. El qué es indefinido, está por construir mediante el hacer —como la propia práctica—, cambia cada vez. En la búsqueda de profesionalizar los proyectos, implicando a más personas y evitando nuestra precarización, pudiendo sostener la primera residencia, paralela al proyecto de encuentro, dividiendo este en dos, mejorando así la organización al coincidir el taller y lugar de residencia, incrementando el número de participantes (de 17 a 24) y la duración (de 5 a 7 días), concluyendo con una muestra abierta al público. Descentralizando los ejes, favoreciendo el diálogo con lo próximo y lo periférico. Se requiere rodear para comprender, desde la escucha, el respeto y los cuidados con lo que nos rodea y nosotras mismas. Un ejercicio nominal, pero no sólo desde la palabra. Una práctica por y para artistas, sobre y desde el presente y su autonomía. El encuentro se articula como dispositivo relacional, entrelazando arte y vida, desafiando las limitaciones del medio y favoreciendo presencias con lo que hay: autoposibilitándonos. Tiene más que ver con un modo de vida, una forma de estar en el mundo, de manera situada. Se plantea la existencia de un punto de intersección entre la realidad interior y la exterior (H. Michaux), con lo material e inmaterial del espacio. situaciones de realidades complejas que operan como germen de otras realidades larvarias.
                 </div>
             </div>

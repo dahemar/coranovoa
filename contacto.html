@@ -1,17 +1,14 @@
 <!DOCTYPE html>
-<html lang="gal">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cora Novoa - Contacto</title>
-    
     <!-- Preload fonts -->
     <link rel="preload" href="junicode.webfont/junicode_regular.woff" as="font" type="font/woff" crossorigin="anonymous">
     <link rel="preload" href="junicode.webfont/junicode_bold.woff" as="font" type="font/woff" crossorigin="anonymous">
-    
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <style>
         /* Font Definitions */
         @font-face {
@@ -38,11 +35,6 @@
             overflow-x: hidden;
         }
 
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Junicode', sans-serif;
-            font-weight: bold;
-        }
-
         .overlay-content {
             position: relative;
             z-index: 10;
@@ -50,36 +42,7 @@
         }
 
         .overlay-header {
-            background-color: rgba(255, 255, 255, 0.9);
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 100;
-        }
-
-        .overlay-header nav {
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 4px;
-            width: 100%;
-            margin-top: 15px;
-        }
-
-        .overlay-header nav a {
-            margin-bottom: 0;
-            margin-right: 0;
-            font-size: 18px;
-            letter-spacing: -0.5px;
-            padding: 0 1px;
-        }
-
-        .overlay-header h1 {
-            font-size: 20px;
-            margin-bottom: 12px;
             text-align: left;
-            width: 100%;
         }
 
         /* Styles for navigation links */
@@ -110,6 +73,8 @@
             top: 10px;
             right: 10px;
             z-index: 2000;
+            color: black;
+            font-size: 14px;
         }
 
         .language-switcher a {
@@ -127,43 +92,44 @@
         }
 
         /* Contact container styles */
-        .contact-container {
+        .aldan-container {
             position: relative;
             margin-top: 100px;
+            min-height: 500px;
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
             padding: 0 20px;
-        }
-
-        .contact-info {
-            margin-bottom: 30px;
             line-height: 1.6;
         }
 
-        .contact-email {
+        .aldan-text {
             font-size: 18px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
-        .social-links {
-            margin-top: 30px;
-        }
-
-        .social-links a {
-            display: inline-block;
-            margin-right: 15px;
-            color: black;
-            text-decoration: none;
-            transition: color 0.2s ease-in-out;
-        }
-
-        .social-links a:hover {
-            color: #a0a0a0;
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Junicode', sans-serif;
+            font-weight: bold;
         }
 
         /* Mobile responsive styles */
         @media (max-width: 768px) {
+            body {
+                overflow: hidden; /* Prevent scrolling on the entire page */
+                position: fixed;
+                width: 100%;
+                height: 100%;
+            }
+            
+            .overlay-content {
+                padding: 10px;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+
             .overlay-header {
                 padding: 10px !important;
                 margin-top: 30px !important;
@@ -199,9 +165,18 @@
                 width: 100%;
             }
 
-            .contact-container {
+            .aldan-container {
                 margin-top: 120px;
-                padding: 0 15px;
+                padding: 0 20px;
+                overflow-y: auto;
+                height: calc(100% - 120px);
+                position: fixed;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .aldan-text {
+                font-size: 16px;
             }
 
             .language-switcher {
@@ -232,6 +207,10 @@
             .overlay-header nav a {
                 font-size: 17px;
                 letter-spacing: -0.6px;
+            }
+
+            .aldan-text {
+                font-size: 15px;
             }
         }
 
@@ -281,8 +260,7 @@
                     "curaduria": "curaduría",
                     "aldan": "aldán",
                     "contacto": "contacto",
-                    "contactInfo": "Para consultas ou colaboracións, podes contactar comigo a través do seguinte correo electrónico:",
-                    "followMe": "Sígueme nas redes sociais:"
+                    "contactText": "info@coranovoa.com"
                 },
                 "esp": {
                     "obra": "obra",
@@ -290,8 +268,7 @@
                     "curaduria": "curaduría",
                     "aldan": "aldán",
                     "contacto": "contacto",
-                    "contactInfo": "Para consultas o colaboraciones, puedes contactar conmigo a través del siguiente correo electrónico:",
-                    "followMe": "Sígueme en redes sociales:"
+                    "contactText": "info@coranovoa.com"
                 },
                 "en": {
                     "obra": "work",
@@ -299,8 +276,7 @@
                     "curaduria": "curatorship",
                     "aldan": "aldán",
                     "contacto": "contact",
-                    "contactInfo": "For inquiries or collaborations, you can contact me through the following email:",
-                    "followMe": "Follow me on social media:"
+                    "contactText": "info@coranovoa.com"
                 }
             };
 
@@ -312,9 +288,8 @@
             document.querySelector(".overlay-header nav a:nth-child(3)").textContent = selectedTranslations.aldan;
             document.querySelector(".overlay-header nav a:nth-child(5)").textContent = selectedTranslations.contacto;
 
-            // Update contact text
-            document.getElementById('contactInfo').textContent = selectedTranslations.contactInfo;
-            document.getElementById('followMe').textContent = selectedTranslations.followMe;
+            // Update Contact text
+            document.querySelector('.aldan-text').textContent = selectedTranslations.contactText;
 
             document.documentElement.setAttribute("lang", lang);
 
@@ -355,9 +330,9 @@
                 </nav>
             </header>
 
-            <div class="contact-container">
-                <div class="contact-email">
-                    <a href="mailto:info@coranovoa.com">info@coranovoa.com</a>
+            <div class="aldan-container">
+                <div class="aldan-text">
+                    info@coranovoa.com
                 </div>
             </div>
         </div>
