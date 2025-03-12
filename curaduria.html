@@ -9,6 +9,7 @@
     <!-- Preload fonts -->
     <link rel="preload" href="junicode.webfont/junicode_regular.woff" as="font" type="font/woff" crossorigin="anonymous">
     <link rel="preload" href="junicode.webfont/junicode_bold.woff" as="font" type="font/woff" crossorigin="anonymous">
+    <link rel="preload" href="fonts/demo-atbserif-it.otf" as="font" type="font/opentype" crossorigin="anonymous">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -25,6 +26,13 @@
             src: url('junicode.webfont/junicode_bold.woff') format('woff');
             font-weight: bold;
             font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'ATB Serif';
+            src: url('fonts/demo-atbserif-it.otf') format('opentype');
+            font-weight: normal;
+            font-style: italic;
             font-display: swap;
         }
         
@@ -477,6 +485,19 @@
                 pointer-events: auto !important;
                 z-index: 2000 !important;
             }
+        }
+
+        /* Modify the h1 styles */
+        .overlay-header h1 {
+            font-family: 'ATB Serif', serif;
+            font-weight: normal;
+            font-style: italic;
+        }
+
+        /* Remove h1 from this group style */
+        h2, h3, h4, h5, h6 {
+            font-family: 'Junicode', sans-serif;
+            font-weight: bold;
         }
     </style>
 

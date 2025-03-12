@@ -9,6 +9,7 @@
     <!-- Preload fonts with high priority -->
     <link rel="preload" href="junicode.webfont/junicode_regular.woff" as="font" type="font/woff" crossorigin="anonymous">
     <link rel="preload" href="junicode.webfont/junicode_bold.woff" as="font" type="font/woff" crossorigin="anonymous">
+    <link rel="preload" href="fonts/demo-atbserif-it.otf" as="font" type="font/opentype" crossorigin="anonymous">
     
     <!-- Load Tailwind after font preloading -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -317,6 +318,28 @@
         .fade-exit-active {
             opacity: 0;
             transform: translateY(20px);
+        }
+
+        /* Add this font-face declaration at the top of your styles */
+        @font-face {
+            font-family: 'ATB Serif';
+            src: url('fonts/demo-atbserif-it.otf') format('opentype');
+            font-weight: normal;
+            font-style: italic;
+            font-display: swap;
+        }
+
+        /* Modify the title style */
+        .overlay-header h1 {
+            font-family: 'ATB Serif', serif;
+            font-weight: normal;
+            font-style: italic;
+        }
+
+        /* Remove h1 from this group style */
+        h2, h3, h4, h5, h6 {
+            font-family: 'Junicode', sans-serif;
+            font-weight: bold;
         }
     </style>
 

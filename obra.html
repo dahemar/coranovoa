@@ -8,6 +8,7 @@
     <!-- Preload fonts -->
     <link rel="preload" href="junicode.webfont/junicode_regular.woff" as="font" type="font/woff" crossorigin="anonymous">
     <link rel="preload" href="junicode.webfont/junicode_bold.woff" as="font" type="font/woff" crossorigin="anonymous">
+    <link rel="preload" href="fonts/demo-atbserif-it.otf" as="font" type="font/opentype" crossorigin="anonymous">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Font Definitions */
@@ -23,6 +24,13 @@
             src: url('junicode.webfont/junicode_bold.woff') format('woff');
             font-weight: bold;
             font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'ATB Serif';
+            src: url('fonts/demo-atbserif-it.otf') format('opentype');
+            font-weight: normal;
+            font-style: italic;
             font-display: swap;
         }
         
@@ -128,6 +136,9 @@
             margin-top: 10px;
             font-size: 16px;
             color: black;
+            font-family: 'ATB Serif', serif;
+            font-weight: normal;
+            font-style: italic;
         }
 
         .obra-year {
@@ -219,6 +230,9 @@
 
             .obra-title {
                 font-size: 14px;
+                font-family: 'ATB Serif', serif;
+                font-weight: normal;
+                font-style: italic;
             }
 
             .obra-year {
@@ -309,6 +323,9 @@
         }
 
         .mobile-detail-title {
+            font-family: 'ATB Serif', serif;
+            font-weight: normal;
+            font-style: italic;
             font-size: 20px;
             margin-bottom: 10px;
             line-height: 1.4;
@@ -341,6 +358,19 @@
             .mobile-detail-page.active {
                 display: block;
             }
+        }
+
+        /* Modify the h1 styles */
+        .overlay-header h1 {
+            font-family: 'ATB Serif', serif;
+            font-weight: normal;
+            font-style: italic;
+        }
+
+        /* Remove h1 from this group style */
+        h2, h3, h4, h5, h6 {
+            font-family: 'Junicode', sans-serif;
+            font-weight: bold;
         }
     </style>
 
