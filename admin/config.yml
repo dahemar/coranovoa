@@ -1,22 +1,14 @@
 backend:
-  name: "github"
-  repo: "dahemar/coranovoa"  # Replace with your actual GitHub repo
-  branch: "main"
-  auth_scope: "public_repo"
-
-
-auth:
-  auth0:
-    client_id: "Onoo5ebWF247vyARqosSkC0aOMTGZSjr"  # Replace with your Auth0 Client ID
-    domain: "dev-mpc4uh4n3zm4vayc.us.auth0.com"  # Replace with your Auth0 Domain (e.g., "myapp.auth0.com")
-    redirect_uri: "https://coranovoa.netlify.app/admin"
-    response_type: "token id_token"
-    scope: "openid profile email"
+  name: "auth0"
+  domain: "dev-mpc4uh4n3zm4vayc.us.auth0.com"
+  client_id: "Onoo5ebWF247vyARqosSkC0aOMTGZSjr"
+  redirect_uri: "https://coranovoa.netlify.app/admin"
+  scope: "openid profile email"
 
 media_library:
   name: "uploadcare"
   config:
-    publicKey: "your-uploadcare-public-key"  # Optional, for image uploading
+    publicKey: "your-uploadcare-public-key"  # Replace with your actual Uploadcare public key
 
 collections:
   - name: "pages"
