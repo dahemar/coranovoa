@@ -1,19 +1,27 @@
 backend:
-  name: git-gateway
-  branch: main  # O el nombre de la rama donde está la web
+  name: "git-gateway"  # Use this if you want to edit files via GitHub
+  branch: "main"  # Use the branch where your site is hosted
+
+auth:
+  auth0:
+    client_id: "Onoo5ebWF247vyARqosSkC0aOMTGZSjr"  # Replace with your Auth0 Client ID
+    domain: "dev-mpc4uh4n3zm4vayc.us.auth0.com"  # Replace with your Auth0 Domain (e.g., "myapp.auth0.com")
+    redirect_uri: "https://coranovoa.netlify.app/admin"
+    response_type: "token id_token"
+    scope: "openid profile email"
 
 media_library:
-  name: uploadcare
+  name: "uploadcare"
   config:
-    publicKey: "your-uploadcare-public-key"  # Opcional, puedes usar Netlify para subir imágenes
+    publicKey: "your-uploadcare-public-key"  # Optional, for image uploading
 
 collections:
   - name: "pages"
-    label: "Páginas"
+    label: "Pages"
     files:
-      - label: "Inicio"
+      - label: "Home"
         name: "home"
         file: "index.html"
         fields:
-          - { label: "Título", name: "title", widget: "string" }
-          - { label: "Contenido", name: "body", widget: "markdown" }
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
