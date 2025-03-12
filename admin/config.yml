@@ -1,6 +1,6 @@
 backend:
-  name: "git-gateway"
-  branch: "main"  # or whatever branch you want to use
+  name: "auth0"
+  branch: "main"
 
 local_backend: true  # Optional: enables local development
 
