@@ -111,10 +111,12 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 30px;
             margin-top: 20px;
-            padding: 0 20px;
+            padding: 0 60px;
+            max-width: 100%;
         }
 
         .obra-item {
+            width: 100%;
             position: relative;
             cursor: pointer;
             overflow: hidden;
@@ -416,18 +418,7 @@
                     "aldan": "aldán",
                     "contacto": "contacto",
                     "back": "← Volver",
-                    "obra1Title": "pel de mimbre sobre pel cama",
-                    "obra1Text": "Descrición da obra 1 en galego...",
-                    "obra2Title": "Título da obra 2",
-                    "obra2Text": "Descrición da obra 2 en galego...",
-                    "obra3Title": "Título da obra 3",
-                    "obra3Text": "Descrición da obra 3 en galego...",
-                    "obra4Title": "Título da obra 4",
-                    "obra4Text": "Descrición da obra 4 en galego...",
-                    "obra5Title": "Título da obra 5",
-                    "obra5Text": "Descrición da obra 5 en galego...",
-                    "obra6Title": "Título da obra 6",
-                    "obra6Text": "Descrición da obra 6 en galego..."
+                    "obra1Text": "Descrición da obra 1 en galego..."
                 },
                 "esp": {
                     "obra": "obra",
@@ -436,18 +427,7 @@
                     "aldan": "aldán",
                     "contacto": "contacto",
                     "back": "← Volver",
-                    "obra1Title": "Título de la obra 1",
-                    "obra1Text": "Descripción de la obra 1 en español...",
-                    "obra2Title": "Título de la obra 2",
-                    "obra2Text": "Descripción de la obra 2 en español...",
-                    "obra3Title": "Título de la obra 3",
-                    "obra3Text": "Descripción de la obra 3 en español...",
-                    "obra4Title": "Título de la obra 4",
-                    "obra4Text": "Descripción de la obra 4 en español...",
-                    "obra5Title": "Título de la obra 5",
-                    "obra5Text": "Descripción de la obra 5 en español...",
-                    "obra6Title": "Título de la obra 6",
-                    "obra6Text": "Descripción de la obra 6 en español..."
+                    "obra1Text": "Descripción de la obra 1 en español..."
                 },
                 "en": {
                     "obra": "work",
@@ -456,55 +436,11 @@
                     "aldan": "aldán",
                     "contacto": "contact",
                     "back": "← Back",
-                    "obra1Title": "Artwork Title 1",
-                    "obra1Text": "Description of artwork 1 in English...",
-                    "obra2Title": "Artwork Title 2",
-                    "obra2Text": "Description of artwork 2 in English...",
-                    "obra3Title": "Artwork Title 3",
-                    "obra3Text": "Description of artwork 3 in English...",
-                    "obra4Title": "Artwork Title 4",
-                    "obra4Text": "Description of artwork 4 in English...",
-                    "obra5Title": "Artwork Title 5",
-                    "obra5Text": "Description of artwork 5 in English...",
-                    "obra6Title": "Artwork Title 6",
-                    "obra6Text": "Description of artwork 6 in English..."
+                    "obra1Text": "Description of artwork 1 in English..."
                 }
             };
 
             let selectedTranslations = translations[lang];
-
-            document.querySelector(".overlay-header nav a:nth-child(1)").textContent = selectedTranslations.obra;
-            document.querySelector(".overlay-header nav a:nth-child(2)").textContent = selectedTranslations.bio;
-            document.querySelector(".overlay-header nav a:nth-child(4)").textContent = selectedTranslations.curaduria;
-            document.querySelector(".overlay-header nav a:nth-child(3)").textContent = selectedTranslations.aldan;
-            document.querySelector(".overlay-header nav a:nth-child(5)").textContent = selectedTranslations.contacto;
-
-            // Update obra titles
-            document.querySelectorAll('.obra-item').forEach((item, index) => {
-                const titleKey = `obra${index + 1}Title`;
-                if (selectedTranslations[titleKey]) {
-                    item.querySelector('.obra-title').textContent = selectedTranslations[titleKey];
-                }
-            });
-
-            // Update mobile detail pages if they exist
-            document.querySelectorAll('.mobile-detail-page').forEach((page, index) => {
-                const titleKey = `obra${index + 1}Title`;
-                const textKey = `obra${index + 1}Text`;
-                
-                if (selectedTranslations[titleKey]) {
-                    page.querySelector('.mobile-detail-title').textContent = selectedTranslations[titleKey];
-                }
-                
-                if (selectedTranslations[textKey]) {
-                    page.querySelector('.mobile-detail-text').textContent = selectedTranslations[textKey];
-                }
-                
-                // Update back button
-                page.querySelector('.mobile-back-button').textContent = selectedTranslations.back;
-            });
-
-            document.documentElement.setAttribute("lang", lang);
 
             document.querySelectorAll('.language-switcher a').forEach(link => {
                 if (link.getAttribute('data-lang') === lang) {
