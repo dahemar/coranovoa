@@ -499,6 +499,12 @@
             font-family: 'Junicode', sans-serif;
             font-weight: bold;
         }
+
+        .atb-title {
+            font-family: 'ATB Serif', serif;
+            font-weight: normal;
+            font-style: italic;
+        }
     </style>
 
     <script>
@@ -581,23 +587,21 @@
             document.querySelector(".overlay-header nav a:nth-child(3)").textContent = selectedTranslations.aldan;
             document.querySelector(".overlay-header nav a:nth-child(5)").textContent = selectedTranslations.contacto;
 
-            document.querySelector(".curaduria-list li:nth-child(1)").textContent = selectedTranslations.nomesPropios;
-            document.querySelector("#algo-de-veran-li span").textContent = selectedTranslations.algoDeVeran;
-            document.querySelector("#a-que-me-refiro-li span").textContent = selectedTranslations.aQueMeRefiroTitle;
+            document.querySelector(".curaduria-list li:nth-child(1)").innerHTML = `<span class="atb-title">Nomes Propios</span> | Galiza, 2019-2023`;
+            document.querySelector("#algo-de-veran-li span").innerHTML = `<span class="atb-title">Algo de verán</span> | Aldán, 2022-2024`;
+            document.querySelector("#a-que-me-refiro-li span").innerHTML = `<span class="atb-title">A que me refiro cando falo de corpo</span> | exposición - Galería Sarao, Ferrol, 2025`;
             document.querySelector("#a-que-me-refiro-li .hover-text").innerHTML = selectedTranslations.aQueMeRefiroText;
             document.querySelector("#algo-de-veran-li .hover-text").innerHTML = selectedTranslations.algoDeVeranText;
-            document.querySelector(".curaduria-list li:nth-child(4)").textContent = selectedTranslations.ciclosDeAcciones;
-            document.querySelector(".curaduria-list li:nth-child(5)").textContent = selectedTranslations.candoFaloDeCorpo;
+            document.querySelector(".curaduria-list li:nth-child(4)").innerHTML = `<span class="atb-title">Ciclos de acciones</span> | Valencia, 2024-2026`;
+            document.querySelector(".curaduria-list li:nth-child(5)").innerHTML = `<span class="atb-title">Cando falo de corpo</span> | exposición - Sala Manuel Moldes, Pontevedra, 2026`;
 
-            // También actualizar los textos en las páginas de detalle móvil
+            // Actualizar los títulos en las páginas de detalle móvil
             if (document.getElementById('algo-de-veran-detail')) {
-                document.querySelector('#algo-de-veran-detail .mobile-detail-title').textContent = selectedTranslations.algoDeVeran;
-                document.querySelector('#algo-de-veran-detail .mobile-detail-text').innerHTML = selectedTranslations.algoDeVeranText;
+                document.querySelector('#algo-de-veran-detail .mobile-detail-title').innerHTML = `<span class="atb-title">Algo de verán</span> | Aldán, 2022-2024`;
             }
             
             if (document.getElementById('a-que-me-refiro-detail')) {
-                document.querySelector('#a-que-me-refiro-detail .mobile-detail-title').textContent = selectedTranslations.aQueMeRefiroTitle;
-                document.querySelector('#a-que-me-refiro-detail .mobile-detail-text').innerHTML = selectedTranslations.aQueMeRefiroText;
+                document.querySelector('#a-que-me-refiro-detail .mobile-detail-title').innerHTML = `<span class="atb-title">A que me refiro cando falo de corpo</span> | exposición - Galería Sarao, Ferrol, 2025`;
             }
 
             // Actualizar el texto del botón de volver
@@ -785,9 +789,9 @@
 
             <div class="curaduria-container">
                 <ul class="curaduria-list">
-                    <li>Nomes Propios | Galiza, 2019-2023</li>
+                    <li><span class="atb-title">Nomes Propios</span> | Galiza, 2019-2023</li>
                     <li id="algo-de-veran-li">
-                        <span>Algo de verán | Aldán, 2022-2024</span>
+                        <span><span class="atb-title">Algo de verán</span> | Aldán, 2022-2024</span>
                         <div class="expanded-content">
                             <div class="hover-image" style="background-image: url('images/veran.jpg');"></div>
                             <div class="hover-text">
@@ -796,7 +800,7 @@
                         </div>
                     </li>
                     <li id="a-que-me-refiro-li">
-                        <span>A que me refiro cando falo de corpo | exposición - Galería Sarao, Ferrol, 2025</span>
+                        <span><span class="atb-title">A que me refiro cando falo de corpo</span> | exposición - Galería Sarao, Ferrol, 2025</span>
                         <div class="expanded-content">
                             <div class="hover-image" style="background-image: url('images/corpo1.jpg');"></div>
                             <div class="hover-text">
@@ -804,8 +808,8 @@
                             </div>
                         </div>
                     </li>
-                    <li>Ciclos de acciones | Valencia, 2024-2026</li>
-                    <li>Cando falo de corpo | exposición - Sala Manuel Moldes, Pontevedra, 2026</li>
+                    <li><span class="atb-title">Ciclos de acciones</span> | Valencia, 2024-2026</li>
+                    <li><span class="atb-title">Cando falo de corpo</span> | exposición - Sala Manuel Moldes, Pontevedra, 2026</li>
                 </ul>
             </div>
         </div>
@@ -813,7 +817,7 @@
         <!-- Páginas de detalle para móvil -->
         <div id="algo-de-veran-detail" class="mobile-detail-page mobile-detail-page">
             <a href="#" class="mobile-back-button">← Volver</a>
-            <h2 class="mobile-detail-title">Algo de verán | Aldán, 2022-2024</h2>
+            <h2 class="mobile-detail-title"><span class="atb-title">Algo de verán</span> | Aldán, 2022-2024</h2>
             <img src="images/veran.jpg" alt="Algo de verán" class="mobile-detail-image">
             <div class="mobile-detail-text">
                 Algo de verán es un encuentro anual autogestionado, donde las únicas certezas son donde y cuando : Aldán (Cangas do Morrazo, Galicia), en verano. El qué es indefinido, está por construir mediante el hacer —como la propia práctica—, cambia cada vez. Un dispositivo relacional y práctica por y para artistas, sobre y desde el presente y su autonomía.
@@ -822,7 +826,7 @@
 
         <div id="a-que-me-refiro-detail" class="mobile-detail-page">
             <a href="#" class="mobile-back-button">← Volver</a>
-            <h2 class="mobile-detail-title">A que me refiro cando falo de corpo | exposición - Galería Sarao, Ferrol, 2025</h2>
+            <h2 class="mobile-detail-title"><span class="atb-title">A que me refiro cando falo de corpo</span> | exposición - Galería Sarao, Ferrol, 2025</h2>
             <img src="images/corpo1.jpg" alt="A que me refiro cando falo de corpo" class="mobile-detail-image">
             <div class="mobile-detail-text">
                 «Hai un cuerpo humano cando entre vidente e visible, entre o que toca e o que é tocado, entre un ollo e outro, entre man e man faise unha especie de cruce, cando se acende a chispa do sentinte sensible, cando prende o lume que non cesará de arder, ata que tal accidente do corpo desfaga o que ningún accidente bastara a facer...» Maurice Merleau-Ponty.<br><br>De que falo cando falo de corpo? Que significa ser un corpo? É posible non implicalo? Como se vive a súa experiencia? Que entende un corpo en relación a outros corpos? Que distancia hai entre dous corpos? É corpo o que nos atravesa os corpos?
