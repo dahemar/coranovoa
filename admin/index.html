@@ -11,6 +11,19 @@
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 
     <script>
+      // Configure the CMS with Auth0
+      window.decapInit = {
+        config: {
+          backend: {
+            name: 'auth0',
+            auth_endpoint: 'https://your-domain.auth0.com/authorize',
+            auth0_domain: 'your-domain.auth0.com',
+            client_id: 'your-client-id',
+            scope: 'openid profile email'
+          }
+        }
+      };
+
       // Log a message when the CMS is initialized
       window.addEventListener('CMS_INIT', function () {
         console.log('Netlify CMS is initialized');
