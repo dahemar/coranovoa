@@ -1,9 +1,11 @@
 backend:
-  name: "auth0"
-  domain: "dev-mpc4uh4n3zm4vayc.us.auth0.com"
-  client_id: "Onoo5ebWF247vyARqosSkC0aOMTGZSjr"
-  redirect_uri: "https://coranovoa.netlify.app/admin"
-  scope: "openid profile email"
+  name: "git-gateway"
+  branch: "main"  # or whatever branch you want to use
+
+local_backend: true  # Optional: enables local development
+
+# Auth0 configuration should be in your index.html, not here in config.yml
+# (which you already have correctly set up)
 
 media_library:
   name: "uploadcare"
