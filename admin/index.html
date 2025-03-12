@@ -9,5 +9,12 @@
   <body>
     <!-- Include the script that builds the page and powers Decap CMS -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+    <script>
+      // Log a message when the CMS is initialized
+      window.addEventListener('CMS_INIT', function () {
+        console.log('Netlify CMS is initialized');
+      });
+    </script>
   </body>
 </html>
