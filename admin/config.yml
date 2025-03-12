@@ -1,6 +1,9 @@
 backend:
-  name: "git-gateway"  # Use this if you want to edit files via GitHub
-  branch: "main"  # Use the branch where your site is hosted
+  name: "github"
+  repo: "dahemar/coranovoa"  # Replace with your actual GitHub repo
+  branch: "main"
+  auth_scope: "public_repo"
+
 
 auth:
   auth0:
