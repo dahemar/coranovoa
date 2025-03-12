@@ -1,0 +1,19 @@
+backend:
+  name: git-gateway
+  branch: main  # O el nombre de la rama donde está la web
+
+media_library:
+  name: uploadcare
+  config:
+    publicKey: "your-uploadcare-public-key"  # Opcional, puedes usar Netlify para subir imágenes
+
+collections:
+  - name: "pages"
+    label: "Páginas"
+    files:
+      - label: "Inicio"
+        name: "home"
+        file: "index.html"
+        fields:
+          - { label: "Título", name: "title", widget: "string" }
+          - { label: "Contenido", name: "body", widget: "markdown" }
