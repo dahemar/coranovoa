@@ -1,6 +1,9 @@
 backend:
-  name: "auth0"
+  name: "github"
+  repo: "dahemar/coranovoa"  # Replace with your actual GitHub repository
   branch: "main"
+  base_url: "https://coranovoa.netlify.app"
+  auth_endpoint: "auth"
 
 local_backend: true  # Optional: enables local development
 
