@@ -418,8 +418,7 @@
                     "curaduria": "curaduría",
                     "aldan": "aldán",
                     "contacto": "contacto",
-                    "back": "← Volver",
-                    "obra1Text": "Descrición da obra 1 en galego..."
+                    "back": "← Volver"
                 },
                 "esp": {
                     "obra": "obra",
@@ -427,8 +426,7 @@
                     "curaduria": "curaduría",
                     "aldan": "aldán",
                     "contacto": "contacto",
-                    "back": "← Volver",
-                    "obra1Text": "Descripción de la obra 1 en español..."
+                    "back": "← Volver"
                 },
                 "en": {
                     "obra": "work",
@@ -436,13 +434,25 @@
                     "curaduria": "curatorship",
                     "aldan": "aldán",
                     "contacto": "contact",
-                    "back": "← Back",
-                    "obra1Text": "Description of artwork 1 in English..."
+                    "back": "← Back"
                 }
             };
 
             let selectedTranslations = translations[lang];
 
+            // Actualizar los elementos del menú
+            document.querySelector('nav a[href="obra.html"]').textContent = selectedTranslations.obra;
+            document.querySelector('nav a[href="bio.html"]').textContent = selectedTranslations.bio;
+            document.querySelector('nav a[href="aldan.html"]').textContent = selectedTranslations.aldan;
+            document.querySelector('nav a[href="curaduria.html"]').textContent = selectedTranslations.curaduria;
+            document.querySelector('nav a[href="#"]').textContent = selectedTranslations.contacto;
+
+            // Actualizar los botones de "volver" en las páginas de detalle móvil
+            document.querySelectorAll('.mobile-back-button').forEach(button => {
+                button.textContent = selectedTranslations.back;
+            });
+
+            // Actualizar el selector de idioma
             document.querySelectorAll('.language-switcher a').forEach(link => {
                 if (link.getAttribute('data-lang') === lang) {
                     link.classList.add('active-lang');
