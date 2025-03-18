@@ -115,6 +115,17 @@
             margin-bottom: 30px;
         }
 
+        .aldan-text a {
+            text-decoration: none;
+            color: black;
+            transition: text-decoration 0.2s ease-in-out;
+        }
+
+        .aldan-text a:hover {
+            text-decoration: underline;
+            color: black;
+        }
+
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Junicode', sans-serif;
             font-weight: bold;
@@ -280,7 +291,8 @@
                     "curaduria": "curaduría",
                     "aldan": "aldán",
                     "contacto": "contacto",
-                    "contactText": "info@coranovoa.com"
+                    "email": "acoranovoa@gmail.com",
+                    "instagram": "instagram"
                 },
                 "esp": {
                     "obra": "obra",
@@ -288,7 +300,8 @@
                     "curaduria": "curaduría",
                     "aldan": "aldán",
                     "contacto": "contacto",
-                    "contactText": "info@coranovoa.com"
+                    "email": "acoranovoa@gmail.com",
+                    "instagram": "instagram"
                 },
                 "en": {
                     "obra": "work",
@@ -296,7 +309,8 @@
                     "curaduria": "curatorship",
                     "aldan": "aldán",
                     "contacto": "contact",
-                    "contactText": "info@coranovoa.com"
+                    "email": "acoranovoa@gmail.com",
+                    "instagram": "instagram"
                 }
             };
 
@@ -308,8 +322,11 @@
             document.querySelector(".overlay-header nav a:nth-child(3)").textContent = selectedTranslations.aldan;
             document.querySelector(".overlay-header nav a:nth-child(5)").textContent = selectedTranslations.contacto;
 
-            // Update Contact text
-            document.querySelector('.aldan-text').textContent = selectedTranslations.contactText;
+            // Update Contact text with HTML links
+            document.querySelector('.aldan-text').innerHTML = `
+                <a href="mailto:${selectedTranslations.email}">${selectedTranslations.email}</a><br><br>
+                <a href="https://www.instagram.com/intel_cora/" target="_blank">${selectedTranslations.instagram}</a>
+            `;
 
             document.documentElement.setAttribute("lang", lang);
 
@@ -352,7 +369,8 @@
 
             <div class="aldan-container">
                 <div class="aldan-text">
-                    info@coranovoa.com
+                    <a href="mailto:acoranovoa@gmail.com">acoranovoa@gmail.com</a><br><br>
+                    <a href="https://www.instagram.com/intel_cora/" target="_blank">instagram</a>
                 </div>
             </div>
         </div>
