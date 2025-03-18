@@ -21,6 +21,13 @@
             font-style: normal;
             font-display: swap;
         }
+        @font-face {
+            font-family: 'ATB Serif';
+            src: url('fonts/demo-atbserif-it.otf') format('opentype');
+            font-weight: normal;
+            font-style: italic;
+            font-display: swap;
+        }
         
         body {
             font-family: 'Junicode', sans-serif;
@@ -34,7 +41,9 @@
         .overlay-content {
             position: relative;
             z-index: 10;
-            padding: 20px;
+            padding: 40px 0 40px 160px;
+            max-width: 1600px;
+            margin: 0 auto;
         }
 
         .overlay-header {
@@ -70,7 +79,7 @@
             right: 10px;
             z-index: 2000;
             color: black;
-            font-size: 14px;
+            font-size: 15px;
         }
 
         .language-switcher a {
@@ -87,23 +96,79 @@
             color: #a0a0a0 !important;
         }
 
-
+        /* Bio container styles */
         .bio-container {
+            position: relative;
+            margin-top: 120px;
+            min-height: 500px;
             max-width: 800px;
-            margin: 100px auto 0;
-            padding: 0 20px;
+            margin-left: 0;
+            margin-right: auto;
+            padding: 0;
             line-height: 1.6;
         }
 
         .bio-text {
+            font-size: 15px;
             margin-bottom: 30px;
-            color: #333;
+            white-space: pre-line;
+        }
+
+        .bio-text a {
+            text-decoration: none;
+            color: black;
+            transition: text-decoration 0.2s ease-in-out;
+        }
+
+        .bio-text a:hover {
+            text-decoration: underline;
+            color: black;
+        }
+
+        /* Desktop navigation specific styles */
+        .overlay-header {
+            display: flex;
+            flex-direction: column;
+            margin-top: 30px;
+        }
+
+        .overlay-header h1 {
+            font-size: 16px;
+            margin-bottom: 50px;
+            font-weight: normal;
+            font-style: italic;
+            font-family: 'ATB Serif', serif;
+        }
+
+        .overlay-header nav {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 110px;
+            width: 90%;
+            max-width: 1000px;
+        }
+
+        .overlay-header nav a {
+            font-size: 16px;
+            font-weight: normal;
+            letter-spacing: 0px;
+            padding: 0;
+            margin-right: 0;
+        }
+
+        /* Section titles */
+        .section-title {
+            font-size: 16px;
+            font-weight: normal;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            text-transform: lowercase;
         }
 
         /* Mobile responsive styles */
         @media (max-width: 768px) {
-            body, html {
-                overflow: hidden;
+            body {
+                overflow: hidden; /* Prevent scrolling on the entire page */
                 position: fixed;
                 width: 100%;
                 height: 100%;
@@ -111,13 +176,18 @@
             
             .overlay-content {
                 padding: 10px;
+                position: fixed;
+                width: 100%;
+                height: 100%;
                 overflow: hidden;
             }
 
-
             .overlay-header {
-                padding: 10px !important;
-                margin-top: 30px !important;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px 0 20px 20px !important;
+                margin-top: 20px !important;
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -126,139 +196,122 @@
                 z-index: 100;
             }
 
+            .overlay-header h1 {
+                font-size: 16px;
+                margin-bottom: 45px;
+                text-align: left;
+                width: 100%;
+                padding-left: 2px;
+                margin-left: 2px;
+            }
+
             .overlay-header nav {
                 flex-direction: row;
                 flex-wrap: wrap;
-                justify-content: center;
-                gap: 4px;
-                width: 100%;
-                margin-top: 15px;
+                justify-content: space-between;
+                gap: 18px 0;
+                width: 95%;
+                margin: 0 auto;
             }
 
             .overlay-header nav a {
                 margin-bottom: 0;
-                margin-right: 0;
-                font-size: 18px;
-                letter-spacing: -0.5px;
-                padding: 0 1px;
+                font-size: 16px;
+                letter-spacing: 0px;
+                padding: 5px;
+                width: auto;
+                text-align: center;
             }
 
-            .overlay-header h1 {
-                font-size: 20px;
-                margin-bottom: 12px;
-                text-align: left;
-                width: 100%;
-            }
             .bio-container {
-                margin-top: 120px;
-                padding: 0 15px;
+                margin-top: 190px;
+                padding: 0 20px 0 20px;
+                margin-left: auto;
+                margin-right: auto;
                 overflow-y: auto;
-                height: calc(100vh - 120px);
-                -webkit-overflow-scrolling: touch;
+                height: calc(100% - 190px);
+                position: fixed;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .bio-text {
+                font-size: 15px;
+                text-align: left;
             }
             
             .language-switcher {
                 position: absolute;
                 top: 10px;
                 right: 10px;
-                font-size: 16px;
+                font-size: 15px;
                 opacity: 1 !important;
                 pointer-events: auto !important;
                 z-index: 2000 !important;
-                font-family: 'Junicode', serif;
             }
         }
 
         @media (max-width: 480px) {
             .overlay-header {
-                margin-top: 25px !important;
+                margin-top: 20px !important;
+                padding: 15px 0 15px 20px !important;
             }
 
             .overlay-header h1 {
-                font-size: 19px;
-                margin-bottom: 10px;
+                font-size: 15px;
+                margin-bottom: 40px;
+                padding-left: 2px;
+                margin-left: 2px;
             }
 
             .overlay-header nav {
-                gap: 2px;
+                gap: 15px 0;
             }
 
             .overlay-header nav a {
-                font-size: 17px;
-                letter-spacing: -0.6px;
+                font-size: 15px;
+                padding: 4px;
+            }
+
+            .bio-container {
+                margin-top: 180px;
+                padding: 0 20px 0 20px;
+                height: calc(100% - 180px);
+            }
+
+            .bio-text {
+                font-size: 14px;
+            }
+            
+            .language-switcher {
+                font-size: 14px;
+            }
             }
 
         @media (max-width: 360px) {
+            .overlay-header {
+                padding: 10px 0 10px 20px !important;
+            }
+            
             .overlay-header nav {
-                gap: 2px;
+                gap: 12px 0;
+                width: 100%;
             }
 
             .overlay-header nav a {
                 font-size: 14px;
-                letter-spacing: -0.8px;
+                padding: 3px;
             }
-        }
-    }
 
-        /* Font Definitions - with improved loading strategy */
-        @font-face {
-            font-family: 'Junicode';
-            src: url('junicode.webfont/junicode_regular.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
-            font-display: swap;
-        }
-        @font-face {
-            font-family: 'Junicode';
-            src: url('junicode.webfont/junicode_bold.woff') format('woff');
-            font-weight: bold;
-            font-style: normal;
-            font-display: swap;
-        }
-        
-        /* Force font loading before page render */
-        html {
-            opacity: 0;
-            transition: opacity 0.1s ease-in;
-        }
-        html.fonts-loaded {
-            opacity: 1;
-        }
-        
-        /* Preload fonts */
-        @link rel="preload" href="junicode.webfont/junicode_regular.woff" as="font" type="font/woff" crossorigin="anonymous";
-        @link rel="preload" href="junicode.webfont/junicode_bold.woff" as="font" type="font/woff" crossorigin="anonymous";
-
-        /* Add this to improve text readability */
-        .bio-text, .bio-list li {
-            font-size: 18px;
-            line-height: 1.6;
-        }
-
-        /* Add more vertical spacing between sections */
-        .section-title {
-            margin-top: 60px;
-        }
-
-        @font-face {
-            font-family: 'ATB Serif';
-            src: url('fonts/demo-atbserif-it.otf') format('opentype');
-            font-weight: normal;
-            font-style: italic;
-            font-display: swap;
-        }
-        
-        /* Modify the h1 styles */
-        .overlay-header h1 {
-            font-family: 'ATB Serif', serif;
-            font-weight: normal;
-            font-style: italic;
-        }
-
-        /* Remove h1 from this group style */
-        h2, h3, h4, h5, h6 {
-            font-family: 'Junicode', sans-serif;
-            font-weight: bold;
+            .bio-container {
+                margin-top: 170px;
+                padding: 0 20px 0 20px;
+                height: calc(100% - 170px);
+            }
+            
+            .language-switcher {
+                font-size: 13px;
+            }
         }
     </style>
 
@@ -372,9 +425,9 @@
 <body>
     <div class="page-container">
         <div class="overlay-content">
-            <header class="p-6 overlay-header">
-                <h1 class="text-lg font-bold hover-light-grey"><a href="index.html" class="no-underline-link">Cora Novoa</a></h1>
-                <nav class="mt-3 flex space-x-6 text-lg">
+            <header class="overlay-header">
+                <h1 class="hover-light-grey"><a href="index.html" class="no-underline-link">Cora Novoa</a></h1>
+                <nav>
                     <a href="obra.html" class="no-underline-link">obra</a>
                     <a href="bio.html" class="no-underline-link active">bio</a>
                     <a href="aldan.html" class="no-underline-link">aldán</a>
@@ -384,8 +437,8 @@
             </header>
 
             <div class="bio-container">
-                <h2 id="education-title" class="section-title font-bold text-xl mb-4">educación e formación</h2>
-                <div id="education-text" class="bio-text" style="white-space: pre-line;">
+                <h2 id="education-title" class="section-title">educación e formación</h2>
+                <div id="education-text" class="bio-text">
                     Contrato predoctoral en Arte: Producción e Investigación, UPV (actualmente) 2025.
                     Máster en Artes del Espectáculo Vivo , US Sevilla, 2023.
                     Becaria: Sala X de exposicións (Pontevedra) / Productora Audiovisual Saint Denis , Sevilla, 2023.
@@ -395,8 +448,8 @@
                     Conservatorio de música de Tui, Segundo de Profesional, piano, 2014.
                 </div>
                 
-                <h2 id="meetings-title" class="section-title font-bold text-xl mb-4 mt-8">encontros</h2>
-                <div id="meetings-text" class="bio-text" style="white-space: pre-line;">
+                <h2 id="meetings-title" class="section-title">encontros</h2>
+                <div id="meetings-text" class="bio-text">
 - Seminario EAN, Santiago de Compostela, 2023. Organiza Rafa Doctor, a Xunta de
 Galicia e a Fundación Cidade da Cultura. Colabora a Fundación Banco Sabadell.
 - Encontros Paraíso illa San Simón, 2023. Organiza el Colectivo RPM (ointe).
@@ -404,8 +457,8 @@ Galicia e a Fundación Cidade da Cultura. Colabora a Fundación Banco Sabadell.
 - Xuventude crea, Igrexa da universidade, Santiago, 2025 – 3º premio.
                 </div>
                 
-                <h2 id="publications-title" class="section-title font-bold text-xl mb-4 mt-8">publicacions</h2>
-                <div id="publications-text" class="bio-text" style="white-space: pre-line;">
+                <h2 id="publications-title" class="section-title">publicacions</h2>
+                <div id="publications-text" class="bio-text">
 - Espazo do Eu, autoedición, 2020.
 - Youth Dance Art - En defensa de la juventud, 2023.
 - Modos de (non) ver, autoedición, 2023.
@@ -421,8 +474,8 @@ Catálogos:
    - Xuventude crea, 2024.
                 </div>
                 
-                <h2 id="workshops-title" class="section-title font-bold text-xl mb-4 mt-8">obradoiros</h2>
-                <div id="workshops-text" class="bio-text" style="white-space: pre-line;">
+                <h2 id="workshops-title" class="section-title">obradoiros</h2>
+                <div id="workshops-text" class="bio-text">
 2024
 - Danza contemporánea, A contar mentiras, Paula Romero.
 - Libre improvisación, Josep Lluís Galiana, Art D', CCCC, Valencia.
@@ -455,8 +508,8 @@ Performance:
 - Enfoques sobre o cotián dende unha perspectiva de xénero – UVigo, con Iria Vazquez e Chelo Matesanz.
                 </div>
                 
-                <h2 id="exhibitions-title" class="section-title font-bold text-xl mb-4 mt-8">exposicións</h2>
-                <div id="exhibitions-text" class="bio-text" style="white-space: pre-line;">
+                <h2 id="exhibitions-title" class="section-title">exposicións</h2>
+                <div id="exhibitions-text" class="bio-text">
 2026
 - Cando falo de corpo, Sala Manuel Moldes, coa UVigo – comisaria.
 
