@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cora Novoa - Curaduría</title>
+    
+    <!-- Preload fonts -->
+    <link rel="preload" href="junicode.webfont/junicode_regular.woff" as="font" type="font/woff" crossorigin="anonymous">
+    <link rel="preload" href="junicode.webfont/junicode_bold.woff" as="font" type="font/woff" crossorigin="anonymous">
+    <link rel="preload" href="fonts/demo-atbserif-it.otf" as="font" type="font/opentype" crossorigin="anonymous">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Font Definitions */
+        @font-face {
+            font-family: 'Junicode';
+            src: url('junicode.webfont/junicode_regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Junicode';
+            src: url('junicode.webfont/junicode_bold.woff') format('woff');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'ATB Serif';
+            src: url('fonts/demo-atbserif-it.otf') format('opentype');
+            font-weight: normal;
+            font-style: italic;
+            font-display: swap;
+        }
+        
+        body {
+            font-family: 'Junicode', sans-serif;
+            margin: 0;
+            background-color: white;
+            color: black;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Junicode', sans-serif;
+            font-weight: bold;
+        }
+
+        .overlay-content {
+            position: relative;
+            z-index: 10;
+            padding: 40px 0 40px 160px;
+            max-width: 1600px;
+            margin: 0 auto;
+            transition: transform 0.5s ease-out;
+            width: 100%;
+        }
+
+        .overlay-header {
+            text-align: left;
+        }
+
+        .no-underline-link {
+            text-decoration: none;
+            transition: color 0.2s ease-in-out;
+            color: black;
+        }
+
+        .no-underline-link:hover {
+            color: #a0a0a0;
+        }
+
+        .no-underline-link.active {
+            color: #a0a0a0;
+        }
+
+        .hover-light-grey {
+            transition: color 0.2s ease-in-out;
+        }
+
+        .hover-light-grey:hover {
+            color: #a0a0a0;
+        }
+
+        .language-switcher {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 2000;
+            color: black;
+            font-size: 15px;
+        }
+
+        .language-switcher a {
+            text-decoration: none;
+            margin-right: 5px;
+            color: black;
+        }
+
+        .language-switcher a:hover {
+            color: #a0a0a0;
+        }
+
+        .language-switcher a.active-lang {
+            color: #a0a0a0 !important;
+        }
+
+        .curaduria-container {
+            position: relative;
+            margin-top: 120px;
+            min-height: 500px;
+            max-width: 1200px;
+        }
+
+        .curaduria-list {
+            margin-top: 20px;
+            padding-left: 0;
+            position: relative;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .curaduria-list.shifted {
+            transform: translateY(-50px);
+        }
+
+        .curaduria-list li {
+            margin-bottom: 15px;
+            transition: margin-bottom 0.8s ease-in-out, transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+            font-size: 15px;
+        }
+
+        .expanded-content {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease-in-out;
+            z-index: 0;
+        }
+
+        .hover-image {
+            position: absolute;
+            left: 0;
+            width: 700px;
+            height: 400px;
+            opacity: 0;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: left top;
+        }
+
+        .hover-text {
+            position: absolute;
+            left: 710px;
+            width: 480px;
+            color: #a0a0a0;
+            font-size: 15px;
+            line-height: 1.4;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        .curaduria-list li span {
+            cursor: pointer;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .curaduria-list li span:hover {
+            text-decoration: underline;
+        }
+
+        /* Desktop navigation specific styles */
+        .overlay-header {
+            display: flex;
+            flex-direction: column;
+            margin-top: 30px;
+        }
+
+        .overlay-header h1 {
+            font-size: 16px;
+            margin-bottom: 50px;
+            font-weight: normal;
+            font-style: italic;
+            font-family: 'ATB Serif', serif;
+        }
+
+        .overlay-header nav {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 110px;
+            width: 90%;
+            max-width: 1000px;
+        }
+
+        .overlay-header nav a {
+            font-size: 16px;
+            font-weight: normal;
+            letter-spacing: 0px;
+            padding: 0;
+            margin-right: 0;
+        }
+
+        /* Mobile responsive styles */
+        @media (max-width: 768px) {
+            body {
+                overflow: hidden;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+            }
+            
+            .overlay-content {
+                padding: 10px;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                will-change: transform;
+            }
+
+            .overlay-header {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px 0 20px 20px !important;
+                margin-top: 20px !important;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                z-index: 100;
+            }
+
+            .overlay-header h1 {
+                font-size: 16px;
+                margin-bottom: 45px;
+                text-align: left;
+                width: 100%;
+                padding-left: 2px;
+                margin-left: 2px;
+            }
+
+            .overlay-header nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                gap: 18px 0;
+                width: 95%;
+                margin: 0 auto;
+            }
+
+            .overlay-header nav a {
+                margin-bottom: 0;
+                font-size: 16px;
+                letter-spacing: 0px;
+                padding: 5px;
+                width: auto;
+                text-align: center;
+            }
+
+            .curaduria-list {
+                padding-left: 20px;
+                position: fixed;
+                top: 50%;
+                left: 0;
+                width: 100%;
+                transform: translateY(-50%);
+                margin-top: 40px;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 15px;
+                will-change: transform;
+                transform-style: preserve-3d;
+                backface-visibility: hidden;
+                font-size: 15px;
+            }
+            
+            .overlay-content.sliding-left .curaduria-list {
+                pointer-events: none;
+            }
+
+            .curaduria-list li {
+                margin-bottom: 0;
+                padding: 3px 0;
+                font-size: 15px;
+            }
+
+            .language-switcher {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                font-size: 15px;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                z-index: 2000 !important;
+            }
+            
+            /* For detail pages only */
+            .mobile-detail-page {
+                display: block;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: white;
+                z-index: 1000;
+                overflow-y: auto;
+                padding: 20px;
+                transform: translateX(100%);
+                transition: transform 0.5s ease-out;
+                visibility: hidden;
+                will-change: transform;
+                transform-style: preserve-3d;
+                backface-visibility: hidden;
+            }
+            
+            .mobile-detail-page.active {
+                transform: translateX(0);
+                visibility: visible;
+            }
+
+            .mobile-back-button {
+                display: inline-block;
+                margin-top: 30px;
+                margin-bottom: 20px;
+                color: black;
+                text-decoration: none;
+                font-size: 16px;
+            }
+
+            .mobile-detail-title {
+                font-size: 16px;
+                margin-bottom: 20px;
+                line-height: 1.4;
+            }
+
+            .mobile-detail-image {
+                width: 100%;
+                height: auto;
+                margin-bottom: 25px;
+                object-fit: contain;
+                max-height: 50vh;
+            }
+
+            .mobile-detail-text {
+                color: #a0a0a0;
+                font-size: 15px;
+                line-height: 1.6;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .overlay-header {
+                margin-top: 20px !important;
+                padding: 15px 0 15px 20px !important;
+            }
+
+            .overlay-header h1 {
+                font-size: 15px;
+                margin-bottom: 40px;
+                padding-left: 2px;
+                margin-left: 2px;
+            }
+
+            .overlay-header nav {
+                gap: 15px 0;
+            }
+
+            .overlay-header nav a {
+                font-size: 15px;
+                padding: 4px;
+            }
+
+            .curaduria-list {
+                margin-top: 40px;
+                gap: 12px;
+            }
+
+            .curaduria-list li {
+                margin-bottom: 0;
+                line-height: 1.3;
+                font-size: 14px;
+            }
+
+            .mobile-detail-text {
+                font-size: 14px;
+            }
+            
+            .mobile-detail-title {
+                font-size: 15px;
+            }
+            
+            .mobile-back-button {
+                font-size: 15px;
+            }
+            
+            .language-switcher {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .overlay-header {
+                padding: 10px 0 10px 20px !important;
+            }
+            
+            .overlay-header nav {
+                gap: 12px 0;
+                width: 100%;
+            }
+
+            .overlay-header nav a {
+                font-size: 14px;
+                padding: 3px;
+            }
+            
+            .curaduria-list li {
+                font-size: 14px;
+            }
+            
+            .language-switcher {
+                font-size: 13px;
+            }
+        }
+
+        /* Estilos para las transiciones de página en móvil */
+        .overlay-content.sliding-left {
+            transform: translateX(-100%);
+        }
+
+        /* Proyecto title styles */
+        .atb-title {
+            font-family: 'ATB Serif', serif;
+            font-weight: normal;
+            font-style: italic;
+        }
+
+        .curaduria-list li.no-clickable {
+            cursor: default;
+        }
+
+        .curaduria-list li.no-clickable span:hover {
+            text-decoration: none;
+            cursor: default;
+        }
+
+        .project-title {
+            display: inline;
+            font-family: 'ATB Serif', serif;
+            font-weight: normal;
+            font-style: italic;
+        }
+
+        .hover-text, .mobile-detail-text {
+            color: #a0a0a0;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        .hover-text br, .mobile-detail-text br {
+            display: block;
+            content: "";
+            margin-top: 10px;
+        }
+
+        /* Actualizar los selectores para incluir todos los elementos expandibles */
+        #cando-falo-corpo-li.active .expanded-content,
+        #papel-engomado-li.active .expanded-content,
+        #ciclos-acciones-li.active .expanded-content,
+        #a-que-me-refiro-li.active .expanded-content,
+        #algo-de-veran-li.active .expanded-content,
+        #nomes-propios-li.active .expanded-content {
+            height: 400px;
+            opacity: 1;
+        }
+
+        #cando-falo-corpo-li.active ~ li,
+        #papel-engomado-li.active ~ li,
+        #ciclos-acciones-li.active ~ li,
+        #a-que-me-refiro-li.active ~ li,
+        #algo-de-veran-li.active ~ li,
+        #nomes-propios-li.active ~ li {
+            transform: translateY(400px);
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #cando-falo-corpo-li.active .hover-image,
+        #papel-engomado-li.active .hover-image,
+        #ciclos-acciones-li.active .hover-image,
+        #a-que-me-refiro-li.active .hover-image,
+        #algo-de-veran-li.active .hover-image,
+        #cando-falo-corpo-li.active .hover-text,
+        #papel-engomado-li.active .hover-text,
+        #ciclos-acciones-li.active .hover-text,
+        #a-que-me-refiro-li.active .hover-text,
+        #algo-de-veran-li.active .hover-text,
+        #nomes-propios-li.active .hover-image,
+        #nomes-propios-li.active .hover-text {
+            opacity: 1;
+        }
+
+        /* Ocultar completamente las páginas de detalle móvil en escritorio */
+        .mobile-detail-page {
+            display: none;
+        }
+
+        /* Solo mostrar en móvil */
+        @media (max-width: 768px) {
+            .mobile-detail-page {
+                display: block;
+            }
+        }
+    </style>
+    <script>
+        let currentLanguage = 'gal';
+
+        function setCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                let date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
+        function getCookie(name) {
+            let nameEQ = name + "=";
+            let ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+
+            const translations = {
+                "gal": {
+                    "obra": "obra",
+                    "bio": "bio",
+                    "curaduria": "curaduría",
+                    "aldan": "aldán",
+                    "contacto": "contacto",
+                    "back": "← Volver",
+                    "cando_falo_text": `<span class="atb-title project-title">Cando falo de corpo</span> propón un segundo pensamento e espazo de encontro de corporei-
+                        dades esparcidas e subxectividades encarnadas.<br><br>
+                        Corporeidades presentes, variadas, íntimamente ligadas ao corpo colectivo. Cor-
+                        pos que se relacionan, corpos inscritos, testemuñas, encarnados, incompletos e inaca-
+                        bados. Corpos materia, proceso, tema, soporte, matriz, espazo que xera xesto, experien-
+                        cia compartida, que se completa cando les estes corpos, mesmo, cando les este texto.<br><br>
+                        Corpos, de corpos presentes, que forman outros novos.<br><br>
+                        marzo - abril, 2026<br>
+                        Sala Manuel Moldes, Pontevedra`,
+                    "ciclos_text": `<span class="atb-title project-title">Ciclos de acciones</span> son uns espazos plurais de investigación interdisciplinar onde con-
+                        viven distintos materias, disciplinas e formatos, habitados dende a presenza e o agora.<br><br>
+                        Concebindo a creación artística como investigación e a emancipación procesual coma
+                        obra, desafiando as limitacións do medio e autoposibilitándonos, dando lugar a espazos e
+                        resistencias, exercendo unha desaprendizaxe comprometida coa materialidade que xorde.<br><br>
+                        Espazos: Cuenca, Almería, Sierra de Huelva, Festival Line up Action (Coimbra), Santiago
+                        de Compostela, Aldán, TEM, Porto de Valencia, El Parterre, El Grao, Escombrera, Fun-
+                        dació Sala Castelló, Universidad Politécnica de Valencia, IVAM, Estudi P, entre outros.`,
+                    "algo_veran_text": `<span class="atb-title project-title">Algo de verán</span> é un encontro/taller/residencia anual autoxestionado, onde as únicas certezas
+                        son onde e cando: Aldán (Cangas do Morrazi, Galiza), en verán. O qué é indefinido, está
+                        por construir mediante o facer, coma a práctica, cambia cada vez.<br><br>
+                        Un dispositivo relacional e ecosistema de encontro, por e para artistas, dende e sobre o pre-
+                        sente e a súa autonomía. Propónse un ser no entre, un espacio de intersección entre o máis
+                        e o menos, entre arte e vida, o final e procesual, prácticas propias e colaborativas. A través
+                        da convivencia e o habitar performativo, descentralizando os eixos, favorecendo o diálogo co
+                        próximo e co periférico.<br><br>
+                        Un refuxio no que coinciden taller e lugar de residencia, facendo presencias co que hai, co posto
+                        e o atopado, de maneira situada. Onde nada é a priori senon unha persecución constante dun
+                        equilibrio inestable, situándonos así ante un discontinuo concebido dende a incertidume do
+                        proceso, sen una solución concreta ou meta definida máis que a convivencia. Na súa propia
+                        incógnita reside a súa relevancia. Onde se xenera un espazo para que as cousas sucedan.`,
+                    "nomes_propios_text": `<span class="atb-title project-title">Nomes Propios</span> é un proxecto autoxestionado para artistas novxs vinculadxs á Galiza.<br><br>
+                        Un espazo expositivo virtual e de okupación das vilas galegas en formato de cartaz
+                        e un catálogo recollido en formato postal.<br><br>
+                        Edicións: 2021 e 2023<br>
+                        Comisaries: Sergio Martinez e Cora Novoa<br><br>
+                        Rúas: Monforte de Lemos, Ribeira, Salvaterra do Miño, A Guarda, Tui, Mos,
+                        Vigo, Ferrol, Pobra do Caramiñal, Moaña, Pontevedra, Pontareas, Ouren-
+                        se, Santiago de Compostela, A Coruña, Santa Comba, Rábade (Lugo), As Ne-
+                        ves, Valencia, Bilbao, Toro (Zamora), Waterloo (Londres), Lousame (Suiza).`,
+                    "papel_engomado_text": `<span class="atb-title project-title">Papel engomado</span> é unha iniciativa editorial independente e autoxestionada, unha revista ensamblada de pequeno formato, materializada mediante unha caixiña de tabaco reciclada.<br><br>
+                        Un proxecto colaborativo, de reflexión, diálogo, experimentación, mediación e produción que trata temáticas e contidos de diversas índoles. Os números realízanse convidando a unhe artista que o dirixa convidando a artistas afíns; mediante la curaduría dun axente da arte contemporánea convidade ou unha liña editorial contactando directamente coas artistas.<br><br>
+                        Dirección: Joaquin Artime<br>
+                        Equipo editorial: M Reme Silvestre<br>
+                        Colaboración: Cora Novoa, Carmelo Gabaldón<br>
+                        papelengomado.revistaobjeto@gmail.com`
+                },
+                "esp": {
+                    "obra": "obra",
+                    "bio": "bio",
+                    "curaduria": "curaduría",
+                    "aldan": "aldán",
+                    "contacto": "contacto",
+                    "back": "← Volver",
+                    "cando_falo_text": `<span class="atb-title project-title">Cando falo de corpo</span> propone un segundo pensamiento y espacio de encuentro de corporei-
+                        dades dispersas y subjetividades encarnadas.<br><br>
+                        Corporeidades presentes, variadas, íntimamente ligadas al cuerpo colectivo. Cuer-
+                        pos que se relacionan, cuerpos inscritos, testigos, encarnados, incompletos e inaca-
+                        bados. Cuerpos materia, proceso, tema, soporte, matriz, espacio que genera gesto, experien-
+                        cia compartida, que se completa cuando lees estos cuerpos, incluso, cuando lees este texto.<br><br>
+                        Cuerpos, de cuerpos presentes, que forman otros nuevos.<br><br>
+                        marzo - abril, 2026<br>
+                        Sala Manuel Moldes, Pontevedra`,
+                    "ciclos_text": `<span class="atb-title project-title">Ciclos de acciones</span> son espacios plurales de investigación interdisciplinar donde con-
+                        viven distintas materias, disciplinas y formatos, habitados desde la presencia y el ahora.<br><br>
+                        Concibiendo la creación artística como investigación y la emancipación procesual como
+                        obra, desafiando las limitaciones del medio y autoposibilitándonos, dando lugar a espacios y
+                        resistencias, ejerciendo un desaprendizaje comprometido con la materialidad que surge.<br><br>
+                        Espacios: Cuenca, Almería, Sierra de Huelva, Festival Line up Action (Coimbra), Santiago
+                        de Compostela, Aldán, TEM, Puerto de Valencia, El Parterre, El Grao, Escombrera, Fun-
+                        dació Sala Castelló, Universidad Politécnica de Valencia, IVAM, Estudi P, entre otros.`,
+                    "algo_veran_text": `<span class="atb-title project-title">Algo de verán</span> é un encontro/taller/residencia anual autoxestionado, onde as únicas certezas
+                        son dónde y cuándo: Aldán (Cangas do Morrazo, Galicia), en verano. El qué es indefinido, está
+                        por construir mediante el hacer, como la práctica, cambia cada vez.<br><br>
+                        Un dispositivo relacional y ecosistema de encuentro, por y para artistas, desde y sobre el pre-
+                        sente y su autonomía. Se propone un ser en el entre, un espacio de intersección entre el más
+                        y el menos, entre arte y vida, lo final y procesual, prácticas propias y colaborativas. A través
+                        de la convivencia y el habitar performativo, descentralizando los ejes, favoreciendo el diálogo con
+                        lo próximo y lo periférico.<br><br>
+                        Un refugio en el que coinciden taller y lugar de residencia, haciendo presencias con lo que hay, con lo puesto
+                        y lo encontrado, de manera situada. Donde nada es a priori sino una persecución constante de un
+                        equilibrio inestable, situándonos así ante un discontinuo concebido desde la incertidumbre del
+                        proceso, sin una solución concreta o meta definida más que la convivencia. En su propia
+                        incógnita reside su relevancia. Donde se genera un espacio para que las cosas sucedan.`,
+                    "nomes_propios_text": `<span class="atb-title project-title">Nomes Propios</span> é un proxecto autoxestionado para artistas jóvenes vinculados a Galicia.<br><br>
+                        Un espacio expositivo virtual y de ocupación de las villas gallegas en formato de cartel
+                        y un catálogo recogido en formato postal.<br><br>
+                        Ediciones: 2021 y 2023<br>
+                        Comisaries: Sergio Martinez y Cora Novoa<br><br>
+                        Calles: Monforte de Lemos, Ribeira, Salvaterra do Miño, A Guarda, Tui, Mos,
+                        Vigo, Ferrol, Pobra do Caramiñal, Moaña, Pontevedra, Pontareas, Ouren-
+                        se, Santiago de Compostela, A Coruña, Santa Comba, Rábade (Lugo), As Ne-
+                        ves, Valencia, Bilbao, Toro (Zamora), Waterloo (Londres), Lousame (Suiza).`,
+                    "papel_engomado_text": `<span class="atb-title project-title">Papel engomado</span> es una iniciativa editorial independiente y autogestionada, una revista ensamblada de pequeño formato, materializada mediante una cajetilla de tabaco reciclada.<br><br>
+                        Un proyecto colaborativo, de reflexión, diálogo, experimentación, mediación y producción que trata temáticas y contenidos de diversas índoles. Los números se realizan invitando a une artista que lo dirija invitando a artistas afines; mediante la curaduría de un agente del arte contemporáneo invitade o una linea editorial contactando directamente con las artistas.<br><br>
+                        Dirección: Joaquin Artime<br>
+                        Equipo editorial: M Reme Silvestre<br>
+                        Colaboración: Cora Novoa, Carmelo Gabaldón<br>
+                        papelengomado.revistaobjeto@gmail.com`
+                },
+                "en": {
+                    "obra": "work",
+                    "bio": "bio",
+                    "curaduria": "curatorship",
+                    "aldan": "aldán",
+                    "contacto": "contact",
+                    "back": "← Back",
+                    "cando_falo_text": `<span class="atb-title project-title">Cando falo de corpo</span> proposes a second thought and meeting space for scattered 
+                        corporealities and embodied subjectivities.<br><br>
+                        Present, varied corporealities, intimately linked to the collective body. Bodies 
+                        that relate, inscribed bodies, witnesses, incarnated, incomplete and unfinished. 
+                        Bodies as matter, process, theme, support, matrix, space that generates gesture, shared 
+                        experience, completed when you read these bodies, even when you read this text.<br><br>
+                        Bodies, from present bodies, that form new ones.<br><br>
+                        March - April, 2026<br>
+                        Sala Manuel Moldes, Pontevedra`,
+                    "ciclos_text": `<span class="atb-title project-title">Ciclos de acciones</span> are plural spaces of interdisciplinary research where different
+                        materials, disciplines, and formats coexist, inhabited from presence and the now.<br><br>
+                        Conceiving artistic creation as research and procedural emancipation as
+                        work, challenging the limitations of the medium and enabling ourselves, giving rise to spaces and
+                        resistances, exercising an unlearning committed to the materiality that emerges.<br><br>
+                        Spaces: Cuenca, Almería, Sierra de Huelva, Festival Line up Action (Coimbra), Santiago
+                        de Compostela, Aldán, TEM, Port of Valencia, El Parterre, El Grao, Escombrera, Fun-
+                        dació Sala Castelló, Polytechnic University of Valencia, IVAM, Estudi P, among others.`,
+                    "algo_veran_text": `<span class="atb-title project-title">Algo de verán</span> is a self-managed annual encounter/workshop/residency, where the only certainties
+                        are where and when: Aldán (Cangas do Morrazo, Galicia), in summer. The what is undefined, it's
+                        to be built through doing, like practice, it changes each time.<br><br>
+                        A relational device and ecosystem of encounter, by and for artists, from and about the pre-
+                        sent and its autonomy. It proposes being in the between, a space of intersection between the more
+                        and the less, between art and life, the final and processual, individual and collaborative practices. Through
+                        coexistence and performative inhabiting, decentralizing axes, favoring dialogue with
+                        the proximate and the peripheral.<br><br>
+                        A refuge where workshop and residence coincide, making presences with what exists, with what's placed
+                        and found, in a situated manner. Where nothing is a priori but rather a constant pursuit of an
+                        unstable equilibrium, thus placing us before a discontinuous conceived from the uncertainty of the
+                        process, without a concrete solution or defined goal other than coexistence. In its own
+                        unknown lies its relevance. Where a space is generated for things to happen.`,
+                    "nomes_propios_text": `<span class="atb-title project-title">Nomes Propios</span> is a self-managed project for young artists linked to Galicia.<br><br>
+                        A virtual exhibition space and occupation of Galician towns in poster format
+                        and a catalog collected in postcard format.<br><br>
+                        Editions: 2021 and 2023<br>
+                        Curators: Sergio Martinez and Cora Novoa<br><br>
+                        Streets: Monforte de Lemos, Ribeira, Salvaterra do Miño, A Guarda, Tui, Mos,
+                        Vigo, Ferrol, Pobra do Caramiñal, Moaña, Pontevedra, Pontareas, Ouren-
+                        se, Santiago de Compostela, A Coruña, Santa Comba, Rábade (Lugo), As Ne-
+                        ves, Valencia, Bilbao, Toro (Zamora), Waterloo (London), Lousame (Switzerland).`,
+                    "papel_engomado_text": `<span class="atb-title project-title">Papel engomado</span> is an independent and self-managed editorial initiative, an assembled magazine in small format, materialized through a recycled cigarette pack.<br><br>
+                        A collaborative project of reflection, dialogue, experimentation, mediation, and production that deals with various themes and contents. The issues are created by inviting an artist to direct it by inviting related artists; through the curatorship of an invited contemporary art agent or an editorial line directly contacting the artists.<br><br>
+                        Direction: Joaquin Artime<br>
+                        Editorial team: M Reme Silvestre<br>
+                        Colaboration: Cora Novoa, Carmelo Gabaldón<br>
+                        papelengomado.revistaobjeto@gmail.com`
+                }
+            };
+
+            let selectedTranslations = translations[lang];
+
+            document.querySelector(".overlay-header nav a:nth-child(1)").textContent = selectedTranslations.obra;
+            document.querySelector(".overlay-header nav a:nth-child(2)").textContent = selectedTranslations.bio;
+            document.querySelector(".overlay-header nav a:nth-child(4)").textContent = selectedTranslations.curaduria;
+            document.querySelector(".overlay-header nav a:nth-child(3)").textContent = selectedTranslations.aldan;
+            document.querySelector(".overlay-header nav a:nth-child(5)").textContent = selectedTranslations.contacto;
+
+            // Actualizar el texto del botón de volver
+            const backButtons = document.querySelectorAll('.mobile-back-button');
+            const backText = lang === 'en' ? '← Back' : '← Volver';
+            backButtons.forEach(button => {
+                button.textContent = backText;
+            });
+
+            document.documentElement.setAttribute("lang", lang);
+
+            document.querySelectorAll('.language-switcher a').forEach(link => {
+                if (link.getAttribute('data-lang') === lang) {
+                    link.classList.add('active-lang');
+                } else {
+                    link.classList.remove('active-lang');
+                }
+            });
+
+            setCookie('selectedLanguage', lang, 30);
+            
+            // Actualizar el texto de Cando falo de corpo
+            const hoverText = document.querySelector('#cando-falo-corpo-li .hover-text');
+            const mobileText = document.querySelector('#cando-falo-corpo-detail .mobile-detail-text');
+            
+            if (hoverText) {
+                hoverText.innerHTML = selectedTranslations.cando_falo_text;
+            }
+            if (mobileText) {
+                mobileText.innerHTML = selectedTranslations.cando_falo_text;
+            }
+
+            // Actualizar el texto de Ciclos de acciones
+            const ciclosHoverText = document.querySelector('#ciclos-acciones-li .hover-text');
+            const ciclosMobileText = document.querySelector('#ciclos-acciones-detail .mobile-detail-text');
+            
+            if (ciclosHoverText) {
+                ciclosHoverText.innerHTML = selectedTranslations.ciclos_text;
+            }
+            if (ciclosMobileText) {
+                ciclosMobileText.innerHTML = selectedTranslations.ciclos_text;
+            }
+
+            // Actualizar el texto de Algo de verán
+            const veranHoverText = document.querySelector('#algo-de-veran-li .hover-text');
+            const veranMobileText = document.querySelector('#algo-de-veran-detail .mobile-detail-text');
+            
+            if (veranHoverText) {
+                veranHoverText.innerHTML = selectedTranslations.algo_veran_text;
+            }
+            if (veranMobileText) {
+                veranMobileText.innerHTML = selectedTranslations.algo_veran_text;
+            }
+
+            // Actualizar el texto de Nomes Propios
+            const nomesHoverText = document.querySelector('#nomes-propios-li .hover-text');
+            const nomesMobileText = document.querySelector('#nomes-propios-detail .mobile-detail-text');
+            
+            if (nomesHoverText) {
+                nomesHoverText.innerHTML = selectedTranslations.nomes_propios_text;
+            }
+            if (nomesMobileText) {
+                nomesMobileText.innerHTML = selectedTranslations.nomes_propios_text;
+            }
+
+            // Actualizar el texto de Papel engomado
+            const papelHoverText = document.querySelector('#papel-engomado-li .hover-text');
+            const papelMobileText = document.querySelector('#papel-engomado-detail .mobile-detail-text');
+            
+            if (papelHoverText) {
+                papelHoverText.innerHTML = selectedTranslations.papel_engomado_text;
+            }
+            if (papelMobileText) {
+                papelMobileText.innerHTML = selectedTranslations.papel_engomado_text;
+            }
+
+            return false;
+        }
+
+        window.onload = function() {
+            let savedLanguage = getCookie('selectedLanguage');
+            if (savedLanguage) {
+                currentLanguage = savedLanguage;
+            }
+            changeLanguage(currentLanguage);
+
+            const curaduriaList = document.querySelector('.curaduria-list');
+            const listItems = document.querySelectorAll('.curaduria-list li');
+
+            // Manejar el botón de retroceso del navegador
+            window.addEventListener('popstate', function(event) {
+                if (!event.state || event.state.page === 'main') {
+                    closeMobileDetail();
+                }
+            });
+
+            // Botones de retroceso en las páginas de detalle
+            document.querySelectorAll('.mobile-back-button').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    closeMobileDetail();
+                });
+            });
+
+            listItems.forEach(item => {
+                if (!item.classList.contains('no-clickable')) {
+                item.addEventListener('click', function(event) {
+                    if (event.target.tagName === 'SPAN' || event.target === this) {
+                        event.preventDefault();
+
+                        // Comportamiento diferente para móvil y escritorio
+                        if (window.innerWidth <= 768) {
+                            // En móvil, abrir página de detalle con transición
+                                const detailId = this.id.replace('-li', '');
+                                openMobileDetail(detailId);
+                        } else {
+                            // En escritorio, comportamiento original
+                            // Si ya está activo, desactivar todo
+                            if (this.classList.contains('active')) {
+                                this.classList.remove('active');
+                                curaduriaList.classList.remove('shifted');
+                                return;
+                            }
+
+                            // Desactivar otros elementos
+                            listItems.forEach(otherItem => {
+                                otherItem.classList.remove('active');
+                            });
+
+                                // Activar el elemento actual
+                                this.classList.add('active');
+                                curaduriaList.classList.add('shifted');
+                            }
+                        }
+                    });
+                    }
+            });
+
+            function openMobileDetail(detailId) {
+                // Hide the main content
+                document.querySelector('.overlay-content').classList.add('sliding-left');
+                
+                // Show the specific detail page
+                const detailPage = document.getElementById(detailId + '-detail');
+                if (detailPage) {
+                    detailPage.style.visibility = 'visible';
+                    detailPage.classList.add('active');
+                }
+                
+                // Update browser history
+                history.pushState({page: detailId}, '', 'curaduria.html?detail=' + detailId);
+            }
+            
+            function closeMobileDetail() {
+                // Show the obra grid
+                document.querySelector('.overlay-content').classList.remove('sliding-left');
+                
+                // Animar la salida de la página de detalle
+                const activePage = document.querySelector('.mobile-detail-page.active');
+                if (activePage) {
+                    activePage.classList.remove('active');
+                    
+                    // Esperar a que termine la transición antes de ocultar completamente
+                    setTimeout(() => {
+                        activePage.style.visibility = 'hidden';
+                    }, 500);
+                }
+                
+                // Actualizar el historial del navegador
+                history.pushState({page: 'main'}, '', 'curaduria.html');
+            }
+
+            // For mobile view adjustments
+            function adjustForMobile() {
+                if (window.innerWidth <= 768) {
+                    // Ajustes específicos para móvil
+                } else {
+                    // Ajustes específicos para escritorio
+                    const hoverImages = document.querySelectorAll('.hover-image');
+                    const hoverTexts = document.querySelectorAll('.hover-text');
+                    
+                    hoverImages.forEach(img => {
+                        img.style.position = 'absolute';
+                    });
+                    
+                    hoverTexts.forEach(text => {
+                        text.style.position = 'absolute';
+                        text.style.left = '710px';
+                    });
+                }
+                
+                // Force equal spacing between list items
+                document.querySelectorAll('.curaduria-list li').forEach(item => {
+                    if (!item.classList.contains('active')) {
+                        if (window.innerWidth <= 480) {
+                            item.style.marginBottom = '20px';
+                        } else if (window.innerWidth <= 768) {
+                            item.style.marginBottom = '22px';
+                        } else {
+                            item.style.marginBottom = '15px';
+                        }
+                    }
+                });
+            }
+            
+            // Run on load and resize
+            adjustForMobile();
+            window.addEventListener('resize', adjustForMobile);
+        };
+    </script>
+</head>
+
+<body>
+    <div class="page-container">
+        <!-- Single language switcher that stays fixed -->
+        <div class="language-switcher">
+            <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
+            <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
+            <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
+        </div>
+        
+        <div class="overlay-content">
+            <header class="overlay-header">
+                <h1 class="hover-light-grey"><a href="index.html" class="no-underline-link">Cora Novoa</a></h1>
+                <nav>
+                    <a href="obra.html" class="no-underline-link">obra</a>
+                    <a href="bio.html" class="no-underline-link">bio</a>
+                    <a href="aldan.html" class="no-underline-link">aldán</a>
+                    <a href="curaduria.html" class="no-underline-link active">curaduría</a>
+                    <a href="contacto.html" class="no-underline-link">contacto</a>
+                </nav>
+            </header>
+
+            <div class="curaduria-container">
+                <ul class="curaduria-list">
+                    <li id="cando-falo-corpo-li">
+                        <span><span class="atb-title">Cando falo de corpo</span> | exposición - Sala Manuel Moldes, Pontevedra, 2026</span>
+                        <div class="expanded-content">
+                            <div class="hover-image" style="background-image: url('images/2.png');"></div>
+                            <div class="hover-text">
+                                <span class="atb-title project-title">Cando falo de corpo</span> propón un segundo pensamento e espazo de encontro de corporei-
+                                dades esparcidas e subxectividades encarnadas.<br><br>
+                                Corporeidades presentes, variadas, íntimamente ligadas ao corpo colectivo. Cor-
+                                pos que se relacionan, corpos inscritos, testemuñas, encarnados, incompletos e inaca-
+                                bados. Corpos materia, proceso, tema, soporte, matriz, espazo que xera xesto, experien-
+                                cia compartida, que se completa cando les estes corpos, mesmo, cando les este texto.<br><br>
+                                Corpos, de corpos presentes, que forman outros novos.<br><br>
+                                marzo - abril, 2026<br>
+                                Sala Manuel Moldes, Pontevedra
+                            </div>
+                        </div>
+                    </li>
+                    <li id="papel-engomado-li">
+                        <span><span class="atb-title">Papel engomado</span> | proyecto de producción editorial (colaboradore), 2025</span>
+                        <div class="expanded-content">
+                            <div class="hover-image" style="background-image: url('images/1.png');"></div>
+                            <div class="hover-text">
+                                <span class="atb-title project-title">Papel engomado</span> es una iniciativa editorial independente e autoxestionada, unha revista ensamblada de pequeno formato, materializada mediante unha caixiña de tabaco reciclada.<br><br>
+                                Un proxecto colaborativo, de reflexión, diálogo, experimentación, mediación e produción que trata temáticas y contenidos de diversas índoles. Os números realízanse convidando a unhe artista que o dirixa convidando a artistas afíns; mediante a curaduría dun axente da arte contemporánea convidade ou unha liña editorial contactando directamente coas artistas.<br><br>
+                                Dirección: Joaquin Artime<br>
+                                Equipo editorial: M Reme Silvestre<br>
+                                Colaboración: Cora Novoa, Carmelo Gabaldón<br>
+                                papelengomado.revistaobjeto@gmail.com
+                            </div>
+                        </div>
+                    </li>
+                    <li id="ciclos-acciones-li">
+                        <span><span class="atb-title">Ciclos de acciones</span> | Valencia, 2024-2026</span>
+                        <div class="expanded-content">
+                            <div class="hover-image" style="background-image: url('images/3.png');"></div>
+                            <div class="hover-text">
+                                <span class="atb-title project-title">Ciclos de acciones</span> son uns espazos plurais de investigación interdisciplinar onde con-
+                                viven distintos materias, disciplinas e formatos, habitados dende a presenza e o agora.<br><br>
+                                Concebindo a creación artística como investigación e a emancipación procesual coma
+                                obra, desafiando as limitacións do medio e autoposibilitándonos, dando lugar a espazos e
+                                resistencias, exercendo unha desaprendizaxe comprometida coa materialidade que xorde.<br><br>
+                                Espazos: Cuenca, Almería, Sierra de Huelva, Festival Line up Action (Coimbra), Santiago
+                                de Compostela, Aldán, TEM, Porto de Valencia, El Parterre, El Grao, Escombrera, Fun-
+                                dació Sala Castelló, Universidad Politécnica de Valencia, IVAM, Estudi P, entre outros.
+                            </div>
+                        </div>
+                    </li>
+                    <li id="a-que-me-refiro-li">
+                        <span><span class="atb-title">A que me refiro cando falo de corpo</span> | exposición - Galería Sarao, Ferrol, 2025</span>
+                        <div class="expanded-content">
+                            <div class="hover-image" style="background-image: url('images/7.png');"></div>
+                            <div class="hover-text">
+                                <span class="atb-title project-title">A que me refiro cando falo de corpo</span> é unha exposición que recolle o corpo de traba-
+                                llo de 15 artistas da diáspora galega —e a colaboración cunha artista de Viena—.<br><br>
+                                «Hai un corpo humano cando entre vidente e visible, entre o que toca e o que é tocado, en-
+                                tre un ollo e outro, entre man e man faise unha especie de cruce, cando se encende a chispa
+                                do sentinte sensible, cando prende o lume que non cesará de arder, ate que tal accidente do
+                                corpo desfaga o que ningún accidente houbese bastado a facer…» Maurice Merleau-Ponty.<br><br>
+                                De qué falo cando falo de corpo? Qué significa ser un corpo? É posible non implica-
+                                lo? Cómo se vive a súa experiencia? Qué entende un corpo en relación a outros cor-
+                                pos? Qué distancia hai entre dous corpos? É corpo o que nos atravesa os corpos?<br><br>
+                                01/02 - 12/03, 2025<br>
+                                Galería Sarao, Ferrol
+                            </div>
+                        </div>
+                    </li>
+                    <li id="algo-de-veran-li">
+                        <span><span class="atb-title">Algo de verán</span> | Aldán, 2022-2024</span>
+                        <div class="expanded-content">
+                            <div class="hover-image" style="background-image: url('images/5.png');"></div>
+                            <div class="hover-text">
+                                <span class="atb-title project-title">Algo de verán</span> é un encontro/taller/residencia anual autoxestionado, onde as únicas certezas
+                                son onde e cando: Aldán (Cangas do Morrazi, Galiza), en verán. O qué é indefinido, está
+                                por construir mediante o facer, coma a práctica, cambia cada vez.<br><br>
+                                Un dispositivo relacional e ecosistema de encontro, por e para artistas, dende e sobre o pre-
+                                sente e a súa autonomía. Propónse un ser no entre, un espacio de intersección entre o máis
+                                e o menos, entre arte e vida, o final e procesual, prácticas propias e colaborativas. A través
+                                da convivencia e o habitar performativo, descentralizando os eixos, favorecendo o diálogo co
+                                próximo e co periférico.<br><br>
+                                Un refuxio no que coinciden taller e lugar de residencia, facendo presencias co que hai, co posto
+                                e o atopado, de maneira situada. Onde nada é a priori senon unha persecución constante dun
+                                equilibrio inestable, situándonos así ante un discontinuo concebido dende a incertidume do
+                                proceso, sen una solución concreta ou meta definida máis que a convivencia. Na súa propia
+                                incógnita reside a súa relevancia. Onde se xenera un espazo para que as cousas sucedan.
+                            </div>
+                        </div>
+                    </li>
+                    <li id="nomes-propios-li">
+                        <span><span class="atb-title">Nomes Propios</span> | Galiza, 2019-2023</span>
+                        <div class="expanded-content">
+                            <div class="hover-image" style="background-image: url('images/6.png');"></div>
+                            <div class="hover-text">
+                                <span class="atb-title project-title">Nomes Propios</span> é un proxecto autoxestionado para artistas novxs vinculadxs á Galiza.<br><br>
+                                Un espazo expositivo virtual e de okupación das vilas galegas en formato de cartaz
+                                e un catálogo recollido en formato postal.<br><br>
+                                Edicións: 2021 e 2023<br>
+                                Comisaries: Sergio Martinez e Cora Novoa<br><br>
+                                Rúas: Monforte de Lemos, Ribeira, Salvaterra do Miño, A Guarda, Tui, Mos,
+                                Vigo, Ferrol, Pobra do Caramiñal, Moaña, Pontevedra, Pontareas, Ouren-
+                                se, Santiago de Compostela, A Coruña, Santa Comba, Rábade (Lugo), As Ne-
+                                ves, Valencia, Bilbao, Toro (Zamora), Waterloo (Londres), Lousame (Suiza).
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Páginas de detalle para móvil -->
+        <div id="cando-falo-corpo-detail" class="mobile-detail-page">
+            <a href="#" class="mobile-back-button">← Volver</a>
+            <h2 class="mobile-detail-title"><span class="atb-title">Cando falo de corpo</span> | exposición - Sala Manuel Moldes, Pontevedra, 2026</h2>
+            <img src="images/2.png" alt="Cando falo de corpo" class="mobile-detail-image">
+            <div class="mobile-detail-text">
+                <span class="atb-title project-title">Cando falo de corpo</span> propón un segundo pensamento e espazo de encontro de corporei-
+                dades esparcidas e subxectividades encarnadas.<br><br>
+                Corporeidades presentes, variadas, íntimamente ligadas ao corpo colectivo. Cor-
+                pos que se relacionan, corpos inscritos, testemuñas, encarnados, incompletos e inaca-
+                bados. Corpos materia, proceso, tema, soporte, matriz, espazo que xera xesto, experien-
+                cia compartida, que se completa cando les estes corpos, mesmo, cando les este texto.<br><br>
+                Corpos, de corpos presentes, que forman outros novos.<br><br>
+                marzo - abril, 2026<br>
+                Sala Manuel Moldes, Pontevedra
+            </div>
+        </div>
+
+        <div id="papel-engomado-detail" class="mobile-detail-page">
+            <a href="#" class="mobile-back-button">← Volver</a>
+            <h2 class="mobile-detail-title"><span class="atb-title">Papel engomado</span> | proyecto de producción editorial (colaboradore), 2025</h2>
+            <img src="images/1.png" alt="Papel engomado" class="mobile-detail-image">
+            <div class="mobile-detail-text">
+                <span class="atb-title project-title">Papel engomado</span> é unha iniciativa editorial independente e autoxestionada, unha revista ensamblada de pequeno formato, materializada mediante unha caixiña de tabaco reciclada.<br><br>
+                Un proxecto colaborativo, de reflexión, diálogo, experimentación, mediación e produción que trata temáticas e contidos de diversas índoles. Os números realízanse convidando a unhe artista que o dirixa convidando a artistas afíns; mediante a curaduría dun axente da arte contemporánea convidade ou unha liña editorial contactando directamente coas artistas.<br><br>
+                Dirección: Joaquin Artime<br>
+                Equipo editorial: M Reme Silvestre<br>
+                Colaboración: Cora Novoa, Carmelo Gabaldón<br>
+                papelengomado.revistaobjeto@gmail.com
+            </div>
+        </div>
+
+        <div id="ciclos-acciones-detail" class="mobile-detail-page">
+            <a href="#" class="mobile-back-button">← Volver</a>
+            <h2 class="mobile-detail-title"><span class="atb-title">Ciclos de acciones</span> | Valencia, 2024-2026</h2>
+            <img src="images/3.png" alt="Ciclos de acciones" class="mobile-detail-image">
+            <div class="mobile-detail-text">
+                <span class="atb-title project-title">Ciclos de acciones</span> son uns espazos plurais de investigación interdisciplinar onde con-
+                viven distintos materias, disciplinas e formatos, habitados dende a presenza e o agora.<br><br>
+                Concebindo a creación artística como investigación e a emancipación procesual coma
+                obra, desafiando as limitacións do medio e autoposibilitándonos, dando lugar a espazos e
+                resistencias, exercendo unha desaprendizaxe comprometida coa materialidade que xorde.<br><br>
+                Espazos: Cuenca, Almería, Sierra de Huelva, Festival Line up Action (Coimbra), Santiago
+                de Compostela, Aldán, TEM, Porto de Valencia, El Parterre, El Grao, Escombrera, Fun-
+                dació Sala Castelló, Universidad Politécnica de Valencia, IVAM, Estudi P, entre outros.
+            </div>
+        </div>
+
+        <div id="a-que-me-refiro-detail" class="mobile-detail-page">
+            <a href="#" class="mobile-back-button">← Volver</a>
+            <h2 class="mobile-detail-title"><span class="atb-title">A que me refiro cando falo de corpo</span> | exposición - Galería Sarao, Ferrol, 2025</h2>
+            <img src="images/7.png" alt="A que me refiro cando falo de corpo" class="mobile-detail-image">
+            <div class="mobile-detail-text">
+                <span class="atb-title project-title">A que me refiro cando falo de corpo</span> é unha exposición que recolle o corpo de traba-
+                llo de 15 artistas da diáspora galega —e a colaboración cunha artista de Viena—.<br><br>
+                «Hai un corpo humano cando entre vidente e visible, entre o que toca e o que é tocado, en-
+                tre un ollo e outro, entre man e man faise unha especie de cruce, cando se encende a chispa
+                do sentinte sensible, cando prende o lume que non cesará de arder, ate que tal accidente do
+                corpo desfaga o que ningún accidente houbese bastado a facer…» Maurice Merleau-Ponty.<br><br>
+                De qué falo cando falo de corpo? Qué significa ser un corpo? É posible non implica-
+                lo? Cómo se vive a súa experiencia? Qué entende un corpo en relación a outros cor-
+                pos? Qué distancia hai entre dous corpos? É corpo o que nos atravesa os corpos?<br><br>
+                01/02 - 12/03, 2025<br>
+                Galería Sarao, Ferrol
+            </div>
+        </div>
+
+        <div id="algo-de-veran-detail" class="mobile-detail-page">
+            <a href="#" class="mobile-back-button">← Volver</a>
+            <h2 class="mobile-detail-title"><span class="atb-title">Algo de verán</span> | Aldán, 2022-2024</h2>
+            <img src="images/5.png" alt="Algo de verán" class="mobile-detail-image">
+            <div class="mobile-detail-text">
+                <span class="atb-title project-title">Algo de verán</span> é un encontro/taller/residencia anual autoxestionado, onde as únicas certezas
+                son onde e cando: Aldán (Cangas do Morrazi, Galiza), en verán. O qué é indefinido, está
+                por construir mediante o facer, coma a práctica, cambia cada vez.<br><br>
+                Un dispositivo relacional e ecosistema de encontro, por e para artistas, dende e sobre o pre-
+                sente e a súa autonomía. Propónse un ser no entre, un espacio de intersección entre o máis
+                e o menos, entre arte e vida, o final e procesual, prácticas propias e colaborativas. A través
+                da convivencia e o habitar performativo, descentralizando os eixos, favorecendo o diálogo co
+                próximo e co periférico.<br><br>
+                Un refuxio no que coinciden taller e lugar de residencia, facendo presencias co que hai, co posto
+                e o atopado, de maneira situada. Onde nada é a priori senon unha persecución constante dun
+                equilibrio inestable, situándonos así ante un discontinuo concebido dende a incertidume do
+                proceso, sen una solución concreta ou meta definida máis que a convivencia. Na súa propia
+                incógnita reside a súa relevancia. Onde se xenera un espazo para que as cousas sucedan.
+    </div>
+        </div>
+
+        <div id="nomes-propios-detail" class="mobile-detail-page">
+            <a href="#" class="mobile-back-button">← Volver</a>
+            <h2 class="mobile-detail-title"><span class="atb-title">Nomes Propios</span> | Galiza, 2019-2023</h2>
+            <img src="images/6.png" alt="Nomes Propios" class="mobile-detail-image">
+            <div class="mobile-detail-text">
+                <span class="atb-title project-title">Nomes Propios</span> é un proxecto autoxestionado para artistas novxs vinculadxs á Galiza.<br><br>
+                Un espazo expositivo virtual e de okupación das vilas galegas en formato de cartaz
+                e un catálogo recollido en formato postal.<br><br>
+                Edicións: 2021 e 2023<br>
+                Comisaries: Sergio Martinez e Cora Novoa<br><br>
+                Rúas: Monforte de Lemos, Ribeira, Salvaterra do Miño, A Guarda, Tui, Mos,
+                Vigo, Ferrol, Pobra do Caramiñal, Moaña, Pontevedra, Pontareas, Ouren-
+                se, Santiago de Compostela, A Coruña, Santa Comba, Rábade (Lugo), As Ne-
+                ves, Valencia, Bilbao, Toro (Zamora), Waterloo (Londres), Lousame (Suiza).
+            </div>
+        </div>
+    </div>
+</body>
+</html>
