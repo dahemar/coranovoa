@@ -47,7 +47,10 @@
         .overlay-content {
             position: relative;
             z-index: 10;
-            padding: 20px;
+            padding: 40px 0 40px 160px;
+            max-width: 1600px;
+            margin: 0 auto;
+            transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
         .overlay-header {
@@ -83,7 +86,7 @@
             right: 10px;
             z-index: 2000;
             color: black;
-            font-size: 14px;
+            font-size: 15px;
         }
 
         .language-switcher a {
@@ -103,7 +106,7 @@
         /* Obra container styles */
         .obra-container {
             position: relative;
-            margin-top: 100px;
+            margin-top: 120px;
             min-height: 500px;
         }
 
@@ -112,7 +115,7 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 30px;
             margin-top: 20px;
-            padding: 0 60px;
+            padding: 0 0;
             max-width: 100%;
         }
 
@@ -138,7 +141,7 @@
 
         .obra-title {
             margin-top: 10px;
-            font-size: 16px;
+            font-size: 15px;
             color: black;
             font-family: 'ATB Serif', serif;
             font-weight: normal;
@@ -146,13 +149,39 @@
         }
 
         .obra-year {
-            font-size: 14px;
+            font-size: 15px;
             color: #a0a0a0;
         }
 
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Junicode', sans-serif;
-            font-weight: bold;
+        /* Desktop navigation specific styles */
+        .overlay-header {
+            display: flex;
+            flex-direction: column;
+            margin-top: 30px;
+        }
+
+        .overlay-header h1 {
+            font-size: 16px;
+            margin-bottom: 50px;
+            font-weight: normal;
+            font-style: italic;
+            font-family: 'ATB Serif', serif;
+        }
+
+        .overlay-header nav {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 110px;
+            width: 90%;
+            max-width: 1000px;
+        }
+
+        .overlay-header nav a {
+            font-size: 16px;
+            font-weight: normal;
+            letter-spacing: 0px;
+            padding: 0;
+            margin-right: 0;
         }
 
         /* Mobile responsive styles */
@@ -183,8 +212,11 @@
             }
 
             .overlay-header {
-                padding: 10px !important;
-                margin-top: 30px !important;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px 0 20px 20px !important;
+                margin-top: 20px !important;
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -193,35 +225,38 @@
                 z-index: 100;
             }
 
+            .overlay-header h1 {
+                font-size: 16px;
+                margin-bottom: 45px;
+                text-align: left;
+                width: 100%;
+                padding-left: 2px;
+                margin-left: 2px;
+            }
+
             .overlay-header nav {
                 flex-direction: row;
                 flex-wrap: wrap;
-                justify-content: center;
-                gap: 4px;
-                width: 100%;
-                margin-top: 15px;
+                justify-content: space-between;
+                gap: 18px 0;
+                width: 95%;
+                margin: 0 auto;
             }
 
             .overlay-header nav a {
                 margin-bottom: 0;
-                margin-right: 0;
-                font-size: 18px;
-                letter-spacing: -0.5px;
-                padding: 0 1px;
-            }
-
-            .overlay-header h1 {
-                font-size: 20px;
-                margin-bottom: 12px;
-                text-align: left;
-                width: 100%;
+                font-size: 16px;
+                letter-spacing: 0px;
+                padding: 5px;
+                width: auto;
+                text-align: center;
             }
 
             .obra-container {
-                margin-top: 120px;
-                padding: 0 10px;
+                margin-top: 190px;
+                padding: 0 20px;
                 overflow-y: auto;
-                height: calc(100% - 120px);
+                height: calc(100% - 190px);
                 position: fixed;
                 width: 100%;
                 box-sizing: border-box;
@@ -230,69 +265,95 @@
             .obra-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 15px;
+                padding: 0;
             }
 
             .obra-title {
-                font-size: 14px;
-                font-family: 'ATB Serif', serif;
-                font-weight: normal;
-                font-style: italic;
+                font-size: 15px;
             }
 
             .obra-year {
-                font-size: 12px;
+                font-size: 15px;
             }
 
             .language-switcher {
                 position: absolute;
                 top: 10px;
                 right: 10px;
-                font-size: 16px;
+                font-size: 15px;
                 opacity: 1 !important;
                 pointer-events: auto !important;
                 z-index: 2000 !important;
-            }
-
-            .obra-image {
-                width: 100%;
-                height: 0;
-                padding-bottom: 75%;
             }
         }
 
         @media (max-width: 480px) {
             .overlay-header {
-                margin-top: 25px !important;
+                margin-top: 20px !important;
+                padding: 15px 0 15px 20px !important;
             }
 
             .overlay-header h1 {
-                font-size: 19px;
-                margin-bottom: 10px;
+                font-size: 15px;
+                margin-bottom: 40px;
+                padding-left: 2px;
+                margin-left: 2px;
             }
 
             .overlay-header nav {
-                gap: 2px;
+                gap: 15px 0;
             }
 
             .overlay-header nav a {
-                font-size: 17px;
-                letter-spacing: -0.6px;
+                font-size: 15px;
+                padding: 4px;
+            }
+
+            .obra-container {
+                margin-top: 180px;
+                height: calc(100% - 180px);
             }
 
             .obra-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
+            
+            .obra-title {
+                font-size: 14px;
+            }
+
+            .obra-year {
+                font-size: 14px;
+            }
+            
+            .language-switcher {
+                font-size: 14px;
+            }
         }
 
         @media (max-width: 360px) {
+            .overlay-header {
+                padding: 10px 0 10px 20px !important;
+            }
+            
             .overlay-header nav {
-                gap: 2px;
+                gap: 12px 0;
+                width: 100%;
             }
 
             .overlay-header nav a {
                 font-size: 14px;
-                letter-spacing: -0.8px;
+                padding: 3px;
+            }
+            
+            .obra-container {
+                margin-top: 170px;
+                height: calc(100% - 170px);
+            }
+            
+            .language-switcher {
+                font-size: 13px;
             }
         }
 
@@ -329,20 +390,20 @@
             margin-bottom: 20px;
             color: black;
             text-decoration: none;
-            font-size: 18px;
+            font-size: 16px;
         }
 
         .mobile-detail-title {
             font-family: 'ATB Serif', serif;
             font-weight: normal;
             font-style: italic;
-            font-size: 20px;
+            font-size: 16px;
             margin-bottom: 10px;
             line-height: 1.4;
         }
 
         .mobile-detail-year {
-            font-size: 16px;
+            font-size: 15px;
             color: #a0a0a0;
             margin-bottom: 20px;
         }
@@ -360,27 +421,32 @@
 
         .mobile-detail-text {
             color: #a0a0a0;
-            font-size: 16px;
+            font-size: 15px;
             line-height: 1.6;
         }
 
-        @media (max-width: 768px) {
-            .mobile-detail-page.active {
-                display: block;
+        @media (max-width: 480px) {
+            .mobile-back-button {
+                font-size: 15px;
+            }
+            
+            .mobile-detail-title {
+                font-size: 15px;
+            }
+            
+            .mobile-detail-year {
+                font-size: 14px;
+            }
+            
+            .mobile-detail-text {
+                font-size: 14px;
             }
         }
 
-        /* Modify the h1 styles */
-        .overlay-header h1 {
-            font-family: 'ATB Serif', serif;
-            font-weight: normal;
-            font-style: italic;
-        }
-
-        /* Remove h1 from this group style */
-        h2, h3, h4, h5, h6 {
-            font-family: 'Junicode', sans-serif;
-            font-weight: bold;
+        @media (max-width: 360px) {
+            .mobile-back-button {
+                font-size: 14px;
+            }
         }
     </style>
 
@@ -445,7 +511,7 @@
             document.querySelector('nav a[href="bio.html"]').textContent = selectedTranslations.bio;
             document.querySelector('nav a[href="aldan.html"]').textContent = selectedTranslations.aldan;
             document.querySelector('nav a[href="curaduria.html"]').textContent = selectedTranslations.curaduria;
-            document.querySelector('nav a[href="#"]').textContent = selectedTranslations.contacto;
+            document.querySelector('nav a[href="contacto.html"]').textContent = selectedTranslations.contacto;
 
             // Actualizar los botones de "volver" en las páginas de detalle móvil
             document.querySelectorAll('.mobile-back-button').forEach(button => {
@@ -557,14 +623,14 @@
         </div>
         
         <div class="overlay-content">
-            <header class="p-6 overlay-header">
-                <h1 class="text-lg font-bold hover-light-grey"><a href="index.html" class="no-underline-link">Cora Novoa</a></h1>
-                <nav class="mt-3 flex space-x-6 text-lg">
+            <header class="overlay-header">
+                <h1 class="hover-light-grey"><a href="index.html" class="no-underline-link">Cora Novoa</a></h1>
+                <nav>
                     <a href="obra.html" class="no-underline-link active">obra</a>
                     <a href="bio.html" class="no-underline-link">bio</a>
                     <a href="aldan.html" class="no-underline-link">aldán</a>
                     <a href="curaduria.html" class="no-underline-link">curaduría</a>
-                    <a href="#" class="no-underline-link">contacto</a>
+                    <a href="contacto.html" class="no-underline-link">contacto</a>
                 </nav>
             </header>
 
