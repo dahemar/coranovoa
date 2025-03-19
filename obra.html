@@ -40,7 +40,6 @@
             margin: 0;
             background-color: white;
             color: black;
-            overflow-y: scroll;
             overflow-x: hidden;
         }
 
@@ -392,7 +391,7 @@
             }
         }
 
-        /* Mobile detail page styles */
+        /* Mobile detail page styles - actualizar para que funcione tanto en móvil como en escritorio */
         .mobile-detail-page {
             display: block;
             position: fixed;
@@ -409,14 +408,36 @@
             visibility: hidden;
             will-change: transform;
             backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            transform-style: preserve-3d;
-            -webkit-transform-style: preserve-3d;
         }
 
         .mobile-detail-page.active {
             transform: translateX(0);
             visibility: visible;
+        }
+
+        /* Ajustar los estilos para pantallas más grandes */
+        @media (min-width: 769px) {
+            .mobile-detail-page {
+                padding: 40px 0 40px 160px;
+            }
+            
+            .mobile-back-button {
+                margin-top: 30px;
+                display: inline-block;
+            }
+            
+            .mobile-detail-image {
+                max-width: 800px;
+            }
+            
+            .mobile-detail-text {
+                max-width: 800px;
+            }
+        }
+
+        /* Asegurar que el contenido también se deslice en escritorio */
+        .overlay-content.sliding-left {
+            transform: translateX(-100%);
         }
 
         .mobile-back-button {
@@ -603,6 +624,21 @@
             const mobileDetailPages = document.querySelectorAll('.mobile-detail-page');
             const backButtons = document.querySelectorAll('.mobile-back-button');
 
+            // Comprobar si hay un ID de obra en la URL al cargar la página
+            const urlParams = new URLSearchParams(window.location.search);
+            const obraId = urlParams.get('id');
+            
+            if (obraId) {
+                // Si hay un ID en la URL, mostrar la página de detalle correspondiente
+                const itemIndex = Array.from(obraItems).findIndex(item => item.getAttribute('data-id') === obraId);
+                
+                if (itemIndex !== -1 && mobileDetailPages[itemIndex]) {
+                    document.querySelector('.overlay-content').classList.add('sliding-left');
+                    mobileDetailPages[itemIndex].style.visibility = 'visible';
+                    mobileDetailPages[itemIndex].classList.add('active');
+                }
+            }
+
             // Handle back button clicks
             backButtons.forEach(button => {
                 button.addEventListener('click', function(e) {
@@ -620,7 +656,6 @@
                     
                     // Show the obra grid
                     document.querySelector('.overlay-content').classList.remove('sliding-left');
-                    document.querySelector('.obra-container').style.display = 'block';
                     
                     // Update browser history
                     history.pushState({page: 'main'}, '', 'obra.html');
@@ -629,25 +664,22 @@
 
             // Handle obra item clicks
             obraItems.forEach((item, index) => {
-                item.addEventListener('click', function() {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault(); // Evitar navegación predeterminada
+                    
                     const obraId = this.getAttribute('data-id');
                     
-                    if (window.innerWidth <= 768) {
-                        // Mobile behavior: show detail page overlay with transition
-                        document.querySelector('.overlay-content').classList.add('sliding-left');
-                        
-                        // Show the corresponding detail page
-                        if (mobileDetailPages[index]) {
-                            mobileDetailPages[index].style.visibility = 'visible';
-                            mobileDetailPages[index].classList.add('active');
-                        }
-                        
-                        // Update browser history
-                        history.pushState({page: obraId}, '', `obra.html?id=${obraId}`);
-                    } else {
-                        // Desktop behavior: navigate to separate page
-                        window.location.href = `obra-detail.html?id=${obraId}`;
+                    // Mostrar overlay para todos los dispositivos (móvil y escritorio)
+                    document.querySelector('.overlay-content').classList.add('sliding-left');
+                    
+                    // Mostrar la página de detalles correspondiente
+                    if (mobileDetailPages[index]) {
+                        mobileDetailPages[index].style.visibility = 'visible';
+                        mobileDetailPages[index].classList.add('active');
                     }
+                    
+                    // Actualizar el historial del navegador
+                    history.pushState({page: obraId}, '', `obra.html?id=${obraId}`);
                 });
             });
             
@@ -665,7 +697,6 @@
                     
                     // Show the obra grid
                     document.querySelector('.overlay-content').classList.remove('sliding-left');
-                    document.querySelector('.obra-container').style.display = 'block';
                 }
             });
         };
