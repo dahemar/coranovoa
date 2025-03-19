@@ -62,6 +62,38 @@
 
         .overlay-header {
             text-align: left;
+            display: flex;
+            flex-direction: column;
+            margin-top: 30px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            z-index: 1000;
+            padding: 40px 0 30px 160px;
+        }
+
+        .overlay-header::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: white;
+            z-index: 999;
+        }
+
+        .overlay-header::before {
+            content: "";
+            position: absolute;
+            top: -100vh;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: white;
+            z-index: -1;
         }
 
         .no-underline-link {
@@ -111,24 +143,24 @@
 
         .curaduria-container {
             position: relative;
-            margin-top: 120px;
+            margin-top: 135px;
             min-height: 500px;
             max-width: 1200px;
         }
 
         .curaduria-list {
-            margin-top: 20px;
+            margin-top: 180px;
             padding-left: 0;
             position: relative;
             transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .curaduria-list.shifted {
-            transform: translateY(-50px);
+            transform: translateY(-10px);
         }
 
         .curaduria-list li {
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             transition: margin-bottom 0.8s ease-in-out, transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             position: relative;
@@ -157,6 +189,7 @@
             background-size: contain;
             background-repeat: no-repeat;
             background-position: left top;
+            top: 15px;
         }
 
         .hover-text {
@@ -168,6 +201,7 @@
             line-height: 1.4;
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
+            top: 15px;
         }
 
         .curaduria-list li span {
@@ -379,7 +413,7 @@
             }
 
             .overlay-header nav {
-                gap: 15px 0;
+                gap: 10px 0;
             }
 
             .overlay-header nav a {
@@ -389,7 +423,7 @@
 
             .curaduria-list {
                 margin-top: 40px;
-                gap: 12px;
+                gap: 10px;
             }
 
             .curaduria-list li {
@@ -486,8 +520,10 @@
         #a-que-me-refiro-li.active .expanded-content,
         #algo-de-veran-li.active .expanded-content,
         #nomes-propios-li.active .expanded-content {
-            height: 400px;
+            height: 350px;
             opacity: 1;
+            position: relative;
+            z-index: 2;
         }
 
         #cando-falo-corpo-li.active ~ li,
@@ -496,7 +532,7 @@
         #a-que-me-refiro-li.active ~ li,
         #algo-de-veran-li.active ~ li,
         #nomes-propios-li.active ~ li {
-            transform: translateY(400px);
+            transform: translateY(0);
             transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -513,6 +549,45 @@
         #nomes-propios-li.active .hover-image,
         #nomes-propios-li.active .hover-text {
             opacity: 1;
+        }
+
+        /* Añadir reglas para los elementos siguientes cuando están cerrándose */
+        #cando-falo-corpo-li.closing ~ li,
+        #papel-engomado-li.closing ~ li,
+        #ciclos-acciones-li.closing ~ li,
+        #a-que-me-refiro-li.closing ~ li,
+        #algo-de-veran-li.closing ~ li,
+        #nomes-propios-li.closing ~ li {
+            transform: translateY(0);
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Animación para el elemento que se está cerrando */
+        #cando-falo-corpo-li.closing .expanded-content,
+        #papel-engomado-li.closing .expanded-content,
+        #ciclos-acciones-li.closing .expanded-content,
+        #a-que-me-refiro-li.closing .expanded-content,
+        #algo-de-veran-li.closing .expanded-content,
+        #nomes-propios-li.closing .expanded-content {
+            height: 0;
+            opacity: 0;
+            transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease-in-out;
+        }
+
+        #cando-falo-corpo-li.closing .hover-image,
+        #papel-engomado-li.closing .hover-image,
+        #ciclos-acciones-li.closing .hover-image,
+        #a-que-me-refiro-li.closing .hover-image,
+        #algo-de-veran-li.closing .hover-image,
+        #cando-falo-corpo-li.closing .hover-text,
+        #papel-engomado-li.closing .hover-text,
+        #ciclos-acciones-li.closing .hover-text,
+        #a-que-me-refiro-li.closing .hover-text,
+        #algo-de-veran-li.closing .hover-text,
+        #nomes-propios-li.closing .hover-image,
+        #nomes-propios-li.closing .hover-text {
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
         }
 
         /* Ocultar completamente las páginas de detalle móvil en escritorio */
@@ -602,7 +677,7 @@
                         se, Santiago de Compostela, A Coruña, Santa Comba, Rábade (Lugo), As Ne-
                         ves, Valencia, Bilbao, Toro (Zamora), Waterloo (Londres), Lousame (Suiza).`,
                     "papel_engomado_text": `<span class="atb-title project-title">Papel engomado</span> é unha iniciativa editorial independente e autoxestionada, unha revista ensamblada de pequeno formato, materializada mediante unha caixiña de tabaco reciclada.<br><br>
-                        Un proxecto colaborativo, de reflexión, diálogo, experimentación, mediación e produción que trata temáticas e contidos de diversas índoles. Os números realízanse convidando a unhe artista que o dirixa convidando a artistas afíns; mediante la curaduría dun axente da arte contemporánea convidade ou unha liña editorial contactando directamente coas artistas.<br><br>
+                        Un proxecto colaborativo, de reflexión, diálogo, experimentación, mediación e produción que trata temáticas e contidos de diversas índoles. Os números realízanse convidando a unhe artista que o dirixa convidando a artistas afíns; mediante a curaduría dun axente da arte contemporánea convidade ou unha liña editorial contactando directamente coas artistas.<br><br>
                         Dirección: Joaquin Artime<br>
                         Equipo editorial: M Reme Silvestre<br>
                         Colaboración: Cora Novoa, Carmelo Gabaldón<br>
@@ -839,21 +914,86 @@
                                 openMobileDetail(detailId);
                         } else {
                             // En escritorio, comportamiento original
-                            // Si ya está activo, desactivar todo
+                                // Si ya está activo, desactivar todo con una animación suave
                             if (this.classList.contains('active')) {
-                                this.classList.remove('active');
+                                    // Preparar los elementos para la animación sincronizada
+                                    const followingItems = [];
+                                    let nextEl = this.nextElementSibling;
+                                    while (nextEl) {
+                                        if (nextEl.tagName === 'LI') {
+                                            followingItems.push(nextEl);
+                                        }
+                                        nextEl = nextEl.nextElementSibling;
+                                    }
+                                    
+                                    // Coordinar ambas animaciones para que ocurran simultáneamente
+                                    this.classList.add('closing');
                                 curaduriaList.classList.remove('shifted');
+                                    
+                                    // Aplicar transformaciones de inmediato a los elementos siguientes
+                                    // para sincronizar con la animación de cierre del contenido
+                                    followingItems.forEach(li => {
+                                        li.style.transition = 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+                                        li.style.transform = 'translateY(0)';
+                                    });
+                                    
+                                    // Esperar a que termine la animación antes de limpiar las clases
+                                    setTimeout(() => {
+                                        this.classList.remove('active');
+                                        this.classList.remove('closing');
+                                        
+                                        // Limpiar estilos inline
+                                        followingItems.forEach(li => {
+                                            li.style.transition = '';
+                                            li.style.transform = '';
+                                        });
+                                    }, 800);
+                                    
                                 return;
                             }
 
-                            // Desactivar otros elementos
+                                // Desactivar otros elementos activos
                             listItems.forEach(otherItem => {
+                                    if (otherItem.classList.contains('active')) {
+                                        // Obtener los elementos siguientes del que estaba activo
+                                        const previouslyFollowingItems = [];
+                                        let nextEl = otherItem.nextElementSibling;
+                                        while (nextEl) {
+                                            if (nextEl.tagName === 'LI') {
+                                                previouslyFollowingItems.push(nextEl);
+                                            }
+                                            nextEl = nextEl.nextElementSibling;
+                                        }
+                                        
+                                        // Coordinar ambas animaciones
+                                        otherItem.classList.add('closing');
+                                        curaduriaList.classList.remove('shifted');
+                                        
+                                        // Aplicar transformaciones inmediatamente
+                                        previouslyFollowingItems.forEach(li => {
+                                            li.style.transition = 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+                                            li.style.transform = 'translateY(0)';
+                                        });
+                                        
+                                        // Limpiar todo después de la animación
+                                        setTimeout(() => {
                                 otherItem.classList.remove('active');
-                            });
+                                            otherItem.classList.remove('closing');
+                                            
+                                            previouslyFollowingItems.forEach(li => {
+                                                li.style.transition = '';
+                                                li.style.transform = '';
+                                            });
+                                        }, 800);
+                                    }
+                                });
 
-                                // Activar el elemento actual
+                                // Activar el elemento actual después de un pequeño retraso
+                                // para permitir que cualquier animación de cierre anterior termine
+                                setTimeout(() => {
                                 this.classList.add('active');
                                 curaduriaList.classList.add('shifted');
+                                }, 10);
                             }
                         }
                     });

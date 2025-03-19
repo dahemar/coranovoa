@@ -106,15 +106,15 @@
         /* Obra container styles */
         .obra-container {
             position: relative;
-            margin-top: 120px;
+            margin-top: 135px;
             min-height: 500px;
         }
 
         .obra-grid {
+            margin-top: 180px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 30px;
-            margin-top: 20px;
             padding: 0 0;
             max-width: 100%;
         }
@@ -158,6 +158,13 @@
             display: flex;
             flex-direction: column;
             margin-top: 30px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            z-index: 1000;
+            padding: 40px 0 30px 160px;
         }
 
         .overlay-header h1 {
@@ -253,16 +260,17 @@
             }
 
             .obra-container {
-                margin-top: 190px;
+                margin-top: 165px;
                 padding: 0 20px;
                 overflow-y: auto;
-                height: calc(100% - 190px);
+                height: calc(100% - 165px);
                 position: fixed;
                 width: 100%;
                 box-sizing: border-box;
             }
 
             .obra-grid {
+                margin-top: 0;
                 grid-template-columns: repeat(2, 1fr);
                 gap: 15px;
                 padding: 0;
@@ -284,6 +292,13 @@
                 opacity: 1 !important;
                 pointer-events: auto !important;
                 z-index: 2000 !important;
+            }
+
+            /* Ajuste del pseudoelemento para móvil */
+            .overlay-header::after {
+                bottom: -2px;
+                height: 2px;
+                z-index: 99;
             }
         }
 
@@ -310,8 +325,8 @@
             }
 
             .obra-container {
-                margin-top: 180px;
-                height: calc(100% - 180px);
+                margin-top: 155px;
+                height: calc(100% - 155px);
             }
 
             .obra-grid {
@@ -364,8 +379,8 @@
             }
             
             .obra-container {
-                margin-top: 170px;
-                height: calc(100% - 170px);
+                margin-top: 145px;
+                height: calc(100% - 145px);
             }
             
             .language-switcher {
@@ -467,6 +482,30 @@
             .mobile-back-button {
                 font-size: 14px;
             }
+        }
+
+        /* Solución para evitar que el texto aparezca sobre el menú */
+        .overlay-header::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: white;
+            z-index: 999;
+        }
+
+        /* Añadir un pseudo-elemento before para cubrir todo el espacio por encima del menú */
+        .overlay-header::before {
+            content: "";
+            position: absolute;
+            top: -100vh; /* Extender hacia arriba para cubrir todo el espacio superior */
+            left: 0;
+            width: 100%;
+            height: 100vh; /* Alto suficiente para cubrir toda la parte superior */
+            background-color: white;
+            z-index: -1; /* Colocarlo detrás del contenido del header pero encima del contenido de la página */
         }
     </style>
 

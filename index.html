@@ -98,10 +98,15 @@
         }
 
         .overlay-header {
-            text-align: left;
             display: flex;
             flex-direction: column;
             margin-top: 30px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 40px 0 30px 160px;
         }
 
         /* Styles for navigation links */
@@ -211,7 +216,7 @@
                 top: 0;
                 left: 0;
                 width: 100%;
-                z-index: 1000;
+                z-index: 100;
                 background-color: transparent;
             }
 

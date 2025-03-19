@@ -52,6 +52,40 @@
 
         .overlay-header {
             text-align: left;
+            display: flex;
+            flex-direction: column;
+            margin-top: 30px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            z-index: 1000;
+            padding: 40px 0 30px 160px;
+        }
+
+        .overlay-header h1 {
+            font-size: 16px;
+            margin-bottom: 50px;
+            font-weight: normal;
+            font-style: italic;
+            font-family: 'ATB Serif', serif;
+        }
+
+        .overlay-header nav {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 110px;
+            width: 90%;
+            max-width: 1000px;
+        }
+
+        .overlay-header nav a {
+            font-size: 16px;
+            font-weight: normal;
+            letter-spacing: 0px;
+            padding: 0;
+            margin-right: 0;
         }
 
         /* Styles for navigation links */
@@ -103,7 +137,7 @@
         /* Contact container styles */
         .aldan-container {
             position: relative;
-            margin-top: 120px;
+            margin-top: 135px;
             min-height: 500px;
             max-width: 800px;
             margin-left: 0;
@@ -113,6 +147,7 @@
         }
 
         .aldan-text {
+            margin-top: 180px;
             font-size: 15px;
             margin-bottom: 30px;
             padding-left: 0;
@@ -132,37 +167,6 @@
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Junicode', sans-serif;
             font-weight: bold;
-        }
-
-        /* Desktop navigation specific styles */
-        .overlay-header {
-            display: flex;
-            flex-direction: column;
-            margin-top: 30px;
-        }
-
-        .overlay-header h1 {
-            font-size: 16px;
-            margin-bottom: 50px;
-            font-weight: normal;
-            font-style: italic;
-            font-family: 'ATB Serif', serif;
-        }
-
-        .overlay-header nav {
-            display: flex;
-            flex-wrap: nowrap;
-            gap: 110px;
-            width: 90%;
-            max-width: 1000px;
-        }
-
-        .overlay-header nav a {
-            font-size: 16px;
-            font-weight: normal;
-            letter-spacing: 0px;
-            padding: 0;
-            margin-right: 0;
         }
 
         /* Mobile responsive styles */
@@ -224,18 +228,19 @@
             }
 
             .aldan-container {
-                margin-top: 190px;
+                margin-top: 165px;
                 padding: 0 0 0 22px;
                 margin-left: auto;
                 margin-right: auto;
                 overflow-y: auto;
-                height: calc(100% - 190px);
+                height: calc(100% - 165px);
                 position: fixed;
                 width: 100%;
                 box-sizing: border-box;
             }
 
             .aldan-text {
+                margin-top: 0;
                 font-size: 15px;
                 text-align: left;
                 padding-left: 0;
@@ -249,6 +254,12 @@
                 opacity: 1 !important;
                 pointer-events: auto !important;
                 z-index: 2000 !important;
+            }
+
+            .overlay-header::after {
+                bottom: -2px;
+                height: 2px;
+                z-index: 99;
             }
         }
 
@@ -275,9 +286,9 @@
             }
 
             .aldan-container {
-                margin-top: 180px;
+                margin-top: 155px;
                 padding: 0 0 0 22px;
-                height: calc(100% - 180px);
+                height: calc(100% - 155px);
             }
 
             .aldan-text {
@@ -305,9 +316,9 @@
             }
 
             .aldan-container {
-                margin-top: 170px;
+                margin-top: 145px;
                 padding: 0 0 0 22px;
-                height: calc(100% - 170px);
+                height: calc(100% - 145px);
             }
             
             .language-switcher {
@@ -326,6 +337,30 @@
         h2, h3, h4, h5, h6 {
             font-family: 'Junicode', sans-serif;
             font-weight: bold;
+        }
+
+        /* Solución para evitar que el texto aparezca sobre el menú */
+        .overlay-header::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: white;
+            z-index: 999;
+        }
+
+        /* Añadir un pseudo-elemento before para cubrir todo el espacio por encima del menú */
+        .overlay-header::before {
+            content: "";
+            position: absolute;
+            top: -100vh; /* Extender hacia arriba para cubrir todo el espacio superior */
+            left: 0;
+            width: 100%;
+            height: 100vh; /* Alto suficiente para cubrir toda la parte superior */
+            background-color: white;
+            z-index: -1; /* Colocarlo detrás del contenido del header pero encima del contenido de la página */
         }
     </style>
 
