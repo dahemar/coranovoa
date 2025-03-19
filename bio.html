@@ -167,7 +167,7 @@
 
         /* Section titles */
         .section-title {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: normal;
             margin-top: 40px;
             margin-bottom: 20px;
@@ -259,12 +259,12 @@
             }
 
             .bio-container {
-                margin-top: 165px;
+                margin-top: 150px;
                 padding: 0 20px 0 22px;
                 margin-left: auto;
                 margin-right: auto;
                 overflow-y: auto;
-                height: calc(100% - 165px);
+                height: calc(100% - 150px);
                 position: fixed;
                 width: 100%;
                 box-sizing: border-box;
@@ -292,9 +292,14 @@
                 z-index: 99;
             }
 
-            /* Eliminar el margen extra de la primera sección en móvil */
+            /* Eliminar el margen extra de la primera sección en móvil y darle valor negativo */
             .section-title:first-of-type {
-                margin-top: 40px; /* Volver al valor original en móvil */
+                margin-top: 15px;
+            }
+            
+            /* Ajustar el espacio entre el título y el texto */
+            .section-title {
+                margin-bottom: 15px;
             }
         }
 
@@ -321,9 +326,9 @@
             }
 
             .bio-container {
-                margin-top: 155px;
+                margin-top: 140px;
                 padding: 0 20px 0 22px;
-                height: calc(100% - 155px);
+                height: calc(100% - 140px);
             }
 
             .bio-text {
@@ -335,6 +340,10 @@
             }
             .section-title {
                 font-size: 14px;
+            }
+            
+            .section-title:first-of-type {
+                margin-top: 10px;
             }
             }
 
@@ -354,16 +363,20 @@
             }
 
             .bio-container {
-                margin-top: 145px;
+                margin-top: 130px;
                 padding: 0 20px 0 22px;
-                height: calc(100% - 145px);
+                height: calc(100% - 130px);
             }
             
             .language-switcher {
                 font-size: 13px;
             }
-        .section-title {
+            .section-title {
                 font-size: 13px;
+            }
+            
+            .section-title:first-of-type {
+                margin-top: 5px;
             }
         }
     </style>
@@ -406,7 +419,11 @@
                     "encontros": "encontros",
                     "obradoiros": "obradoiros",
                     "publicacions": "publicacions",
-                    "exposicions": "exposicións"
+                    "exposicions": "exposicións",
+                    "education_text": "Contrato predoctoral en Arte: Producción e Investigación, UPV (actualmente) 2025.\nMáster en Artes do Espectáculo Vivo, US Sevilla, 2023.\nBolseira: Sala X de exposicións (Pontevedra) / Productora Audiovisual Saint Denis, Sevilla, 2023.\n/ Prácticas extracurriculares: taller La Madriguera de Paula Bonet, Barcelona, 2020.\nGrao en Belas Artes, UVigo - Campus de Pontevedra, 2021.\nKingston School of Art, Londres. Programa Erasmus, 2018-2019.\nConservatorio de música de Tui, Segundo de Profesional, piano, 2014.",
+                    "meetings_text": "- Seminario EAN, Santiago de Compostela, 2023. Organiza Rafa Doctor, a Xunta de\nGalicia e a Fundación Cidade da Cultura. Colabora a Fundación Banco Sabadell.\n- Encontros Paraíso illa San Simón, 2023. Organiza o Colectivo RPM (oínte).\n- Algo de verán, Aldán, 2024 – coordinadora (3 edicións).\n- Xuventude crea, Igrexa da universidade, Santiago, 2025 – 3º premio.",
+                    "publications_text": "- Espazo do Eu, autoedición, 2020.\n- Youth Dance Art - En defensa da xuventude, 2023.\n- Modos de (non) ver, autoedición, 2023.\n- Entrevista por Carmen Elsa Conversando con Cora Novoa, Revista Dot, 2023.\n- Ex ± acto - ANIAV, VI Congreso Internacional de investigación UPV, 2024.\nCatálogos:\n   - Nomes Propios, xestora, editora e comisaria – I e II Edición (2019-2023).\n   - Unha Odisea no pazo, Do final e do comezo, 2021.\n   - Intersección festival, 2022.\n   - Unha pincelada a Paco, 2022.\n   - Nada Contemporary art fair, 2022.\n   - Xornadas IX de Performance Fundació Caixa Castelló, Sala Sant Miquel, 2023.\n   - Xuventude crea, 2024.",
+                    "workshops_text": "2024\n- Danza contemporánea, A contar mentiras, Paula Romero.\n- Libre improvisación, Josep Lluís Galiana, Art D', CCCC, Valencia.\nPerformance:\n - Marilyn Arsem, Dialeg Obert, Teatre el musical, Valencia.\n - Grupo de investigación LCI, UPV – colaboradora, IVAM Valencia.\n - Marita Bullman, Dialeg Obert, Teatre el musical, Valencia.\n - Algo de verán Edición III, coordinadora, Aldan, Cangas.\n\n2023\n- Danza contemporánea, Paula Quintás, Alfaia, Santiago.\n- Libre improvisación musical, Wade Matthews. Dialeg Obert, Teatre el musical, Valencia.\nPerformance:\n - Olga Mesa e Francisco Ruiz de Infante. CGAC, Santiago.\n - Ana Gesto, taller persoal e no contexto de Plataforma Festival, Santiago.\n - Nieves Correa e Abel Loureda // Martine Viale. Dialeg Obert, Teatre el musical, Valencia.\n - Algo de verán Edición II, Ruben Barroso – coordinadora, Aldan.\n - Mario Montoya, CCCC, Valencia.\n\n2022\n- Danza contemporánea, Lorine de Azevedo, Sevilla.\nPerformance:\n- Ernesto Artillo, Cabo de Gata, Almería.\n- Ruben Barroso. Galería Art House Lab, Sevilla.\n- Ana Matey Cañada del Hoyo, Cuenca.\n- Ruben Barroso, Sierra de Huelva.\n- Algo de verán Edición I, Isabel León – coordinadora, Aldan.\n\n2021\n- Enfoques sobre o cotián dende unha perspectiva de xénero – UVigo, con Iria Vazquez e Chelo Matesanz."
                 },
                 "esp": {
                     "obra": "obra",
@@ -418,7 +435,11 @@
                     "encontros": "encuentros",
                     "obradoiros": "talleres",
                     "publicacions": "publicaciones",
-                    "exposicions": "exposiciones"
+                    "exposicions": "exposiciones",
+                    "education_text": "Contrato predoctoral en Arte: Producción e Investigación, UPV (actualmente) 2025.\nMáster en Artes del Espectáculo Vivo, US Sevilla, 2023.\nBecaria: Sala X de exposiciones (Pontevedra) / Productora Audiovisual Saint Denis, Sevilla, 2023.\n/ Prácticas extracurriculares: taller La Madriguera de Paula Bonet, Barcelona, 2020.\nGrado en Bellas Artes, UVigo - Campus de Pontevedra, 2021.\nKingston School of Art, Londres. Programa Erasmus, 2018-2019.\nConservatorio de música de Tui, Segundo de Profesional, piano, 2014.",
+                    "meetings_text": "- Seminario EAN, Santiago de Compostela, 2023. Organiza Rafa Doctor, la Xunta de\nGalicia y la Fundación Ciudad de la Cultura. Colabora la Fundación Banco Sabadell.\n- Encuentros Paraíso isla San Simón, 2023. Organiza el Colectivo RPM (oyente).\n- Algo de verano, Aldán, 2024 – coordinadora (3 ediciones).\n- Juventud crea, Iglesia de la universidad, Santiago, 2025 – 3º premio.",
+                    "publications_text": "- Espazo do Eu, autoedición, 2020.\n- Youth Dance Art - En defensa de la juventud, 2023.\n- Modos de (non) ver, autoedición, 2023.\n- Entrevista por Carmen Elsa Conversando con Cora Novoa, Revista Dot, 2023.\n- Ex ± acto - ANIAV, VI Congreso Internacional de investigación UPV, 2024.\nCatálogos:\n   - Nomes Propios, gestora, editora y comisaria – I y II Edición (2019-2023).\n   - Unha Odisea no pazo, Do final e do comezo, 2021.\n   - Intersección festival, 2022.\n   - Unha pincelada a Paco, 2022.\n   - Nada Contemporary art fair, 2022.\n   - Jornadas IX de Performance Fundació Caixa Castelló, Sala Sant Miquel, 2023.\n   - Xuventude crea, 2024.",
+                    "workshops_text": "2024\n- Danza contemporánea, A contar mentiras, Paula Romero.\n- Libre improvisación, Josep Lluís Galiana, Art D', CCCC, Valencia.\nPerformance:\n - Marilyn Arsem, Dialeg Obert, Teatre el musical, Valencia.\n - Grupo de investigación LCI, UPV – colaboradora, IVAM Valencia.\n - Marita Bullman, Dialeg Obert, Teatre el musical, Valencia.\n - Algo de verán Edición III, coordinadora, Aldan, Cangas.\n\n2023\n- Danza contemporánea, Paula Quintás, Alfaia, Santiago.\n- Libre improvisación musical, Wade Matthews. Dialeg Obert, Teatre el musical, Valencia.\nPerformance:\n - Olga Mesa y Francisco Ruiz de Infante. CGAC, Santiago.\n - Ana Gesto, taller personal y en el contexto de Plataforma Festival, Santiago.\n - Nieves Correa y Abel Loureda // Martine Viale. Dialeg Obert, Teatre el musical, Valencia.\n - Algo de verán Edición II, Ruben Barroso – coordinadora, Aldan.\n - Mario Montoya, CCCC, Valencia.\n\n2022\n- Danza contemporánea, Lorine de Azevedo, Sevilla.\nPerformance:\n- Ernesto Artillo, Cabo de Gata, Almería.\n- Ruben Barroso. Galería Art House Lab, Sevilla.\n- Ana Matey Cañada del Hoyo, Cuenca.\n- Ruben Barroso, Sierra de Huelva.\n- Algo de verán Edición I, Isabel León – coordinadora, Aldan.\n\n2021\n- Enfoques sobre lo cotidiano desde una perspectiva de género – UVigo, con Iria Vazquez y Chelo Matesanz."
                 },
                 "en": {
                     "obra": "work",
@@ -430,7 +451,11 @@
                     "encontros": "meetings",
                     "obradoiros": "workshops",
                     "publicacions": "publications",
-                    "exposicions": "exhibitions"
+                    "exposicions": "exhibitions",
+                    "education_text": "Predoctoral contract in Art: Production and Research, UPV (currently) 2025.\nMaster's in Live Performing Arts, US Seville, 2023.\nFellow: Sala X exhibition hall (Pontevedra) / Saint Denis Audiovisual Production, Seville, 2023.\n/ Extracurricular internship: La Madriguera workshop by Paula Bonet, Barcelona, 2020.\nDegree in Fine Arts, UVigo - Pontevedra Campus, 2021.\nKingston School of Art, London. Erasmus Program, 2018-2019.\nTui Music Conservatory, Second Professional Level, piano, 2014.",
+                    "meetings_text": "- EAN Seminar, Santiago de Compostela, 2023. Organized by Rafa Doctor, the Galician\nGovernment and the City of Culture Foundation. With collaboration from Banco Sabadell Foundation.\n- Paraíso Encounters San Simón Island, 2023. Organized by RPM Collective (listener).\n- Algo de verán (Something of Summer), Aldán, 2024 – coordinator (3 editions).\n- Xuventude crea (Youth Creates), University Church, Santiago, 2025 – 3rd prize.",
+                    "publications_text": "- Espazo do Eu, self-published, 2020.\n- Youth Dance Art - In Defense of Youth, 2023.\n- Modos de (non) ver, self-published, 2023.\n- Interview by Carmen Elsa Conversing with Cora Novoa, Dot Magazine, 2023.\n- Ex ± acto - ANIAV, VI International Research Congress UPV, 2024.\nCatalogs:\n   - Nomes Propios, manager, editor and curator – I and II Edition (2019-2023).\n   - Unha Odisea no pazo, Do final e do comezo, 2021.\n   - Intersección festival, 2022.\n   - Unha pincelada a Paco, 2022.\n   - Nada Contemporary art fair, 2022.\n   - IX Performance Days Fundació Caixa Castelló, Sala Sant Miquel, 2023.\n   - Xuventude crea, 2024.",
+                    "workshops_text": "2024\n- Contemporary dance, A contar mentiras, Paula Romero.\n- Free improvisation, Josep Lluís Galiana, Art D', CCCC, Valencia.\nPerformance:\n - Marilyn Arsem, Dialeg Obert, Teatre el musical, Valencia.\n - LCI research group, UPV – collaborator, IVAM Valencia.\n - Marita Bullman, Dialeg Obert, Teatre el musical, Valencia.\n - Algo de verán Edition III, coordinator, Aldan, Cangas.\n\n2023\n- Contemporary dance, Paula Quintás, Alfaia, Santiago.\n- Free musical improvisation, Wade Matthews. Dialeg Obert, Teatre el musical, Valencia.\nPerformance:\n - Olga Mesa and Francisco Ruiz de Infante. CGAC, Santiago.\n - Ana Gesto, personal workshop and in the context of Plataforma Festival, Santiago.\n - Nieves Correa and Abel Loureda // Martine Viale. Dialeg Obert, Teatre el musical, Valencia.\n - Algo de verán Edition II, Ruben Barroso – coordinator, Aldan.\n - Mario Montoya, CCCC, Valencia.\n\n2022\n- Contemporary dance, Lorine de Azevedo, Seville.\nPerformance:\n- Ernesto Artillo, Cabo de Gata, Almería.\n- Ruben Barroso. Art House Lab Gallery, Seville.\n- Ana Matey Cañada del Hoyo, Cuenca.\n- Ruben Barroso, Sierra de Huelva.\n- Algo de verán Edition I, Isabel León – coordinator, Aldan.\n\n2021\n- Approaches to the everyday from a gender perspective – UVigo, with Iria Vazquez and Chelo Matesanz."
                 }
             };
 
@@ -448,6 +473,12 @@
             document.getElementById("workshops-title").textContent = selectedTranslations.obradoiros;
             document.getElementById("publications-title").textContent = selectedTranslations.publicacions;
             document.getElementById("exhibitions-title").textContent = selectedTranslations.exposicions;
+
+            // Update section content
+            document.getElementById("education-text").textContent = selectedTranslations.education_text;
+            document.getElementById("meetings-text").textContent = selectedTranslations.meetings_text;
+            document.getElementById("publications-text").textContent = selectedTranslations.publications_text;
+            document.getElementById("workshops-text").textContent = selectedTranslations.workshops_text;
 
             document.documentElement.setAttribute("lang", lang);
 
