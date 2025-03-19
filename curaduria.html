@@ -152,6 +152,10 @@
             margin-top: 180px;
             padding-left: 0;
             position: relative;
+            transition: none;
+        }
+
+        body.page-loaded .curaduria-list {
             transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -161,11 +165,17 @@
 
         .curaduria-list li {
             margin-bottom: 10px;
-            transition: margin-bottom 0.8s ease-in-out, transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
+            transition: none;
             position: relative;
             z-index: 1;
             font-size: 15px;
+            text-decoration: none;
+            color: black;
+            cursor: default;
+        }
+
+        body.page-loaded .curaduria-list li {
+            transition: margin-bottom 0.8s ease-in-out, transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .expanded-content {
@@ -208,10 +218,25 @@
             cursor: pointer;
             text-decoration: none;
             position: relative;
+            display: inline-block;
         }
 
-        .curaduria-list li span:hover {
-            text-decoration: underline;
+        .curaduria-list li span::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: black;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-out;
+        }
+
+        .curaduria-list li span:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
         }
 
         /* Desktop navigation specific styles */
@@ -601,6 +626,70 @@
                 display: block;
             }
         }
+
+        .curaduria-list a, 
+        .hover-text a,
+        .curaduria-container a {
+            text-decoration: none;
+            color: black;
+            position: relative;
+        }
+
+        .curaduria-list a::after, 
+        .hover-text a::after,
+        .curaduria-container a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: black;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-out;
+        }
+
+        .curaduria-list a:hover::after, 
+        .hover-text a:hover::after,
+        .curaduria-container a:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        /* Eliminar los estilos del subrayado animado para los elementos li completos */
+        .curaduria-list li::after,
+        .curaduria-list li:hover::after,
+        .curaduria-list-item::after,
+        .curaduria-list-item:hover::after {
+            content: none;
+        }
+
+        /* Mantener solo el subrayado animado para los spans dentro de los li */
+        .curaduria-list li span {
+            cursor: pointer;
+            text-decoration: none;
+            position: relative;
+            display: inline-block;
+        }
+
+        .curaduria-list li span::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: black;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-out;
+        }
+
+        .curaduria-list li span:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
     </style>
     <script>
         let currentLanguage = 'gal';
@@ -885,6 +974,9 @@
 
             const curaduriaList = document.querySelector('.curaduria-list');
             const listItems = document.querySelectorAll('.curaduria-list li');
+            
+            // Add this line to prevent initial animation
+            document.body.classList.add('page-loaded');
 
             // Manejar el botón de retroceso del navegador
             window.addEventListener('popstate', function(event) {
@@ -903,22 +995,25 @@
 
             listItems.forEach(item => {
                 if (!item.classList.contains('no-clickable')) {
-                item.addEventListener('click', function(event) {
-                    if (event.target.tagName === 'SPAN' || event.target === this) {
+                    // Modificar para que solo los spans sean clicables
+                    const spans = item.querySelectorAll('span');
+                    spans.forEach(span => {
+                        span.addEventListener('click', function(event) {
                         event.preventDefault();
+                            event.stopPropagation(); // Evitar que el evento se propague al li
 
                         // Comportamiento diferente para móvil y escritorio
                         if (window.innerWidth <= 768) {
                             // En móvil, abrir página de detalle con transición
-                                const detailId = this.id.replace('-li', '');
+                                const detailId = item.id.replace('-li', '');
                                 openMobileDetail(detailId);
                         } else {
                             // En escritorio, comportamiento original
                                 // Si ya está activo, desactivar todo con una animación suave
-                            if (this.classList.contains('active')) {
+                                if (item.classList.contains('active')) {
                                     // Preparar los elementos para la animación sincronizada
                                     const followingItems = [];
-                                    let nextEl = this.nextElementSibling;
+                                    let nextEl = item.nextElementSibling;
                                     while (nextEl) {
                                         if (nextEl.tagName === 'LI') {
                                             followingItems.push(nextEl);
@@ -927,11 +1022,10 @@
                                     }
                                     
                                     // Coordinar ambas animaciones para que ocurran simultáneamente
-                                    this.classList.add('closing');
+                                    item.classList.add('closing');
                                 curaduriaList.classList.remove('shifted');
                                     
                                     // Aplicar transformaciones de inmediato a los elementos siguientes
-                                    // para sincronizar con la animación de cierre del contenido
                                     followingItems.forEach(li => {
                                         li.style.transition = 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
                                         li.style.transform = 'translateY(0)';
@@ -939,8 +1033,8 @@
                                     
                                     // Esperar a que termine la animación antes de limpiar las clases
                                     setTimeout(() => {
-                                        this.classList.remove('active');
-                                        this.classList.remove('closing');
+                                        item.classList.remove('active');
+                                        item.classList.remove('closing');
                                         
                                         // Limpiar estilos inline
                                         followingItems.forEach(li => {
@@ -977,7 +1071,7 @@
                                         
                                         // Limpiar todo después de la animación
                                         setTimeout(() => {
-                                otherItem.classList.remove('active');
+                                            otherItem.classList.remove('active');
                                             otherItem.classList.remove('closing');
                                             
                                             previouslyFollowingItems.forEach(li => {
@@ -989,15 +1083,17 @@
                                 });
 
                                 // Activar el elemento actual después de un pequeño retraso
-                                // para permitir que cualquier animación de cierre anterior termine
                                 setTimeout(() => {
-                                this.classList.add('active');
+                                    item.classList.add('active');
                                 curaduriaList.classList.add('shifted');
                                 }, 10);
-                            }
-                        }
-                    });
                     }
+                });
+            });
+
+                    // Remover el listener de click del elemento li
+                    item.removeEventListener('click', function() {});
+                }
             });
 
             function openMobileDetail(detailId) {
@@ -1312,3 +1408,4 @@
     </div>
 </body>
 </html>
+

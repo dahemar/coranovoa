@@ -145,7 +145,7 @@
 
         /* Añadir margen superior para la primera sección en versión escritorio */
         .section-title:first-of-type {
-            margin-top: 160px; /* Duplicado de 80px a 160px para crear mucho más espacio */
+            margin-top: 180px; /* Duplicado de 80px a 160px para crear mucho más espacio */
         }
 
         .bio-text {
@@ -167,11 +167,13 @@
 
         /* Section titles */
         .section-title {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: normal;
             margin-top: 40px;
             margin-bottom: 20px;
             text-transform: lowercase;
+            font-family: 'ATB Serif', serif;
+            font-style: italic;
         }
 
         /* Solución más robusta para evitar que el texto aparezca sobre el menú */
@@ -331,6 +333,9 @@
             .language-switcher {
                 font-size: 14px;
             }
+            .section-title {
+                font-size: 14px;
+            }
             }
 
         @media (max-width: 360px) {
@@ -355,6 +360,9 @@
             }
             
             .language-switcher {
+                font-size: 13px;
+            }
+        .section-title {
                 font-size: 13px;
             }
         }
