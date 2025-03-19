@@ -715,7 +715,18 @@
                         Dirección: Joaquin Artime<br>
                         Equipo editorial: M Reme Silvestre<br>
                         Colaboración: Cora Novoa, Carmelo Gabaldón<br>
-                        papelengomado.revistaobjeto@gmail.com`
+                        papelengomado.revistaobjeto@gmail.com`,
+                    "a_que_me_refiro_text": `<span class="atb-title project-title">A que me refiro cando falo de corpo</span> é unha exposición que recolle o corpo de traba-
+                        llo de 15 artistas da diáspora galega —e a colaboración cunha artista de Viena—.<br><br>
+                        «Hai un corpo humano cando entre vidente e visible, entre o que toca e o que é tocado, en-
+                        tre un ollo e outro, entre man e man faise unha especie de cruce, cando se encende a chispa
+                        do sentinte sensible, cando prende o lume que non cesará de arder, ate que tal accidente do
+                        corpo desfaga o que ningún accidente houbese bastado a facer…» Maurice Merleau-Ponty.<br><br>
+                        De qué falo cando falo de corpo? Qué significa ser un corpo? É posible non implica-
+                        lo? Cómo se vive a súa experiencia? Qué entende un corpo en relación a outros cor-
+                        pos? Qué distancia hai entre dous corpos? É corpo o que nos atravesa os corpos?<br><br>
+                        01/02 - 12/03, 2025<br>
+                        Galería Sarao, Ferrol`
                 },
                 "esp": {
                     "obra": "obra",
@@ -768,7 +779,18 @@
                         Dirección: Joaquin Artime<br>
                         Equipo editorial: M Reme Silvestre<br>
                         Colaboración: Cora Novoa, Carmelo Gabaldón<br>
-                        papelengomado.revistaobjeto@gmail.com`
+                        papelengomado.revistaobjeto@gmail.com`,
+                    "a_que_me_refiro_text": `<span class="atb-title project-title">A que me refiro cando falo de corpo</span> es una exposición que recoge el cuerpo de traba-
+                        jo de 15 artistas de la diáspora gallega —y la colaboración con una artista de Viena—.<br><br>
+                        «Hay un cuerpo humano cuando entre vidente y visible, entre lo que toca y lo que es tocado, en-
+                        tre un ojo y otro, entre mano y mano se hace una especie de cruce, cuando se enciende la chispa
+                        de lo sintiente sensible, cuando prende el fuego que no cesará de arder, hasta que tal accidente del
+                        cuerpo deshaga lo que ningún accidente hubiera bastado para hacer…» Maurice Merleau-Ponty.<br><br>
+                        ¿De qué hablo cuando hablo de cuerpo? ¿Qué significa ser un cuerpo? ¿Es posible no implica-
+                        rlo? ¿Cómo se vive su experiencia? ¿Qué entiende un cuerpo en relación a otros cuer-
+                        pos? ¿Qué distancia hay entre dos cuerpos? ¿Es cuerpo lo que nos atraviesa los cuerpos?<br><br>
+                        01/02 - 12/03, 2025<br>
+                        Galería Sarao, Ferrol`
                 },
                 "en": {
                     "obra": "work",
@@ -821,7 +843,18 @@
                         Direction: Joaquin Artime<br>
                         Editorial team: M Reme Silvestre<br>
                         Colaboration: Cora Novoa, Carmelo Gabaldón<br>
-                        papelengomado.revistaobjeto@gmail.com`
+                        papelengomado.revistaobjeto@gmail.com`,
+                    "a_que_me_refiro_text": `<span class="atb-title project-title">A que me refiro cando falo de corpo</span> is an exhibition that collects the body of work
+                        of 15 artists from the Galician diaspora —and the collaboration with an artist from Vienna—.<br><br>
+                        "There is a human body when between seer and visible, between touching and touched, be-
+                        tween one eye and the other, between hand and hand a kind of crossing takes place, when the spark
+                        of the sensing sensible ignites, when the fire starts burning that will not cease until some accident
+                        of the body undoes what no accident would have sufficed to do..." Maurice Merleau-Ponty.<br><br>
+                        What am I talking about when I talk about the body? What does it mean to be a body? Is it possible not 
+                        to involve it? How is its experience lived? What does one body understand in relation to other bod-
+                        ies? What distance is there between two bodies? Is what passes through our bodies also body?<br><br>
+                        01/02 - 12/03, 2025<br>
+                        Galería Sarao, Ferrol`
                 }
             };
 
@@ -905,6 +938,17 @@
             }
             if (papelMobileText) {
                 papelMobileText.innerHTML = selectedTranslations.papel_engomado_text;
+            }
+
+            // Actualizar el texto de A que me refiro cando falo de corpo
+            const aQueRefiroHoverText = document.querySelector('#a-que-me-refiro-li .hover-text');
+            const aQueRefiroMobileText = document.querySelector('#a-que-me-refiro-detail .mobile-detail-text');
+            
+            if (aQueRefiroHoverText) {
+                aQueRefiroHoverText.innerHTML = selectedTranslations.a_que_me_refiro_text;
+            }
+            if (aQueRefiroMobileText) {
+                aQueRefiroMobileText.innerHTML = selectedTranslations.a_que_me_refiro_text;
             }
 
             return false;
@@ -1165,7 +1209,7 @@
                         <div class="expanded-content">
                             <div class="hover-image" style="background-image: url('images/1.png');"></div>
                             <div class="hover-text">
-                                <span class="atb-title project-title">Papel engomado</span> es una iniciativa editorial independente e autoxestionada, unha revista ensamblada de pequeno formato, materializada mediante unha caixiña de tabaco reciclada.<br><br>
+                                <span class="atb-title project-title">Papel engomado</span> é unha iniciativa editorial independente e autoxestionada, unha revista ensamblada de pequeno formato, materializada mediante unha caixiña de tabaco reciclada.<br><br>
                                 Un proxecto colaborativo, de reflexión, diálogo, experimentación, mediación e produción que trata temáticas y contenidos de diversas índoles. Os números realízanse convidando a unhe artista que o dirixa convidando a artistas afíns; mediante a curaduría dun axente da arte contemporánea convidade ou unha liña editorial contactando directamente coas artistas.<br><br>
                                 Dirección: Joaquin Artime<br>
                                 Equipo editorial: M Reme Silvestre<br>
@@ -1336,7 +1380,7 @@
                 equilibrio inestable, situándonos así ante un discontinuo concebido dende a incertidume do
                 proceso, sen una solución concreta ou meta definida máis que a convivencia. Na súa propia
                 incógnita reside a súa relevancia. Onde se xenera un espazo para que as cousas sucedan.
-            </div>
+    </div>
         </div>
 
         <div id="nomes-propios-detail" class="mobile-detail-page">
