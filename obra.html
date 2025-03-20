@@ -423,6 +423,9 @@
             
             .mobile-back-button {
                 margin-top: 30px;
+                margin-bottom: 20px;
+                font-size: 24px;
+                font-weight: normal;
                 display: inline-block;
             }
             
@@ -528,6 +531,45 @@
             background-color: white;
             z-index: -1; /* Colocarlo detrás del contenido del header pero encima del contenido de la página */
         }
+
+        @media (min-width: 769px) {
+            /* Eliminar la transición en escritorio */
+            .overlay-content {
+                transition: none;
+            }
+            
+            /* Asegurar que la página de detalle no tenga transición en escritorio */
+            .mobile-detail-page {
+                transition: none;
+            }
+            
+            /* Ajustar el estilo del botón de volver para que sea solo una flecha */
+            .mobile-back-button {
+                margin-top: 30px;
+                margin-bottom: 20px;
+                font-size: 24px; /* Aumentar tamaño para la flecha */
+                font-weight: normal;
+                display: inline-block;
+            }
+        }
+
+        /* Ajustar el estilo del botón de volver en móvil para mantener la animación */
+        @media (max-width: 768px) {
+            .mobile-back-button {
+                margin-top: 25px;
+                margin-bottom: 15px;
+                font-size: 16px;
+            }
+            
+            /* Mantener las transiciones en móvil */
+            .overlay-content {
+                transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+            }
+            
+            .mobile-detail-page {
+                transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+            }
+        }
     </style>
 
     <script>
@@ -564,7 +606,7 @@
                     "curaduria": "curaduría",
                     "aldan": "aldán",
                     "contacto": "contacto",
-                    "back": "← Volver"
+                    "back": "←"
                 },
                 "esp": {
                     "obra": "obra",
@@ -572,7 +614,7 @@
                     "curaduria": "curaduría",
                     "aldan": "aldán",
                     "contacto": "contacto",
-                    "back": "← Volver"
+                    "back": "←"
                 },
                 "en": {
                     "obra": "work",
@@ -580,7 +622,7 @@
                     "curaduria": "curatorship",
                     "aldan": "aldán",
                     "contacto": "contact",
-                    "back": "← Back"
+                    "back": "←"
                 }
             };
 
@@ -639,6 +681,33 @@
                 }
             }
 
+            // Handle obra item clicks
+            obraItems.forEach((item, index) => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault(); // Evitar navegación predeterminada
+                    
+                    const obraId = this.getAttribute('data-id');
+                    
+                    // Comprobar si estamos en móvil o escritorio
+                    if (window.innerWidth <= 768) {
+                        // En móvil, añadir la clase sliding-left para la animación
+                        document.querySelector('.overlay-content').classList.add('sliding-left');
+                    } else {
+                        // En escritorio, ocultar el contenido sin animación
+                        document.querySelector('.overlay-content').style.display = 'none';
+                    }
+                    
+                    // Mostrar la página de detalles correspondiente
+                    if (mobileDetailPages[index]) {
+                        mobileDetailPages[index].style.visibility = 'visible';
+                        mobileDetailPages[index].classList.add('active');
+                    }
+                    
+                    // Actualizar el historial del navegador
+                    history.pushState({page: obraId}, '', `obra.html?id=${obraId}`);
+                });
+            });
+            
             // Handle back button clicks
             backButtons.forEach(button => {
                 button.addEventListener('click', function(e) {
@@ -654,32 +723,17 @@
                         }, 800);
                     });
                     
-                    // Show the obra grid
-                    document.querySelector('.overlay-content').classList.remove('sliding-left');
+                    // Comprobar si estamos en móvil o escritorio
+                    if (window.innerWidth <= 768) {
+                        // En móvil, quitar la clase sliding-left para la animación
+                        document.querySelector('.overlay-content').classList.remove('sliding-left');
+                    } else {
+                        // En escritorio, mostrar el contenido sin animación
+                        document.querySelector('.overlay-content').style.display = '';
+                    }
                     
                     // Update browser history
                     history.pushState({page: 'main'}, '', 'obra.html');
-                });
-            });
-
-            // Handle obra item clicks
-            obraItems.forEach((item, index) => {
-                item.addEventListener('click', function(e) {
-                    e.preventDefault(); // Evitar navegación predeterminada
-                    
-                    const obraId = this.getAttribute('data-id');
-                    
-                    // Mostrar overlay para todos los dispositivos (móvil y escritorio)
-                    document.querySelector('.overlay-content').classList.add('sliding-left');
-                    
-                    // Mostrar la página de detalles correspondiente
-                    if (mobileDetailPages[index]) {
-                        mobileDetailPages[index].style.visibility = 'visible';
-                        mobileDetailPages[index].classList.add('active');
-                    }
-                    
-                    // Actualizar el historial del navegador
-                    history.pushState({page: obraId}, '', `obra.html?id=${obraId}`);
                 });
             });
             
@@ -695,8 +749,14 @@
                         }, 800);
                     });
                     
-                    // Show the obra grid
-                    document.querySelector('.overlay-content').classList.remove('sliding-left');
+                    // Comprobar si estamos en móvil o escritorio
+                    if (window.innerWidth <= 768) {
+                        // En móvil, quitar la clase sliding-left para la animación
+                        document.querySelector('.overlay-content').classList.remove('sliding-left');
+                    } else {
+                        // En escritorio, mostrar el contenido sin animación
+                        document.querySelector('.overlay-content').style.display = '';
+                    }
                 }
             });
         };
@@ -774,7 +834,7 @@
         <!-- Mobile Detail Pages -->
         <!-- Obra 1 Detail -->
         <div class="mobile-detail-page" id="obra1-detail">
-            <a href="#" class="mobile-back-button">← Volver</a>
+            <a href="#" class="mobile-back-button">←</a>
             <h2 class="mobile-detail-title"></h2>
             <div class="mobile-detail-year">2023</div>
             <img src="images/branco sobre branco.jpg" alt="Obra 1" class="mobile-detail-image">
@@ -785,7 +845,7 @@
 
         <!-- Obra 2 Detail -->
         <div class="mobile-detail-page" id="obra2-detail">
-            <a href="#" class="mobile-back-button">← Volver</a>
+            <a href="#" class="mobile-back-button">←</a>
             <h2 class="mobile-detail-title">Título da obra 2</h2>
             <div class="mobile-detail-year">2022</div>
             <img src="images/obra2.jpg" alt="Obra 2" class="mobile-detail-image">
@@ -796,7 +856,7 @@
 
         <!-- Obra 3 Detail -->
         <div class="mobile-detail-page" id="obra3-detail">
-            <a href="#" class="mobile-back-button">← Volver</a>
+            <a href="#" class="mobile-back-button">←</a>
             <h2 class="mobile-detail-title">Título da obra 3</h2>
             <div class="mobile-detail-year">2021</div>
             <img src="images/obra3.jpg" alt="Obra 3" class="mobile-detail-image">
@@ -807,7 +867,7 @@
 
         <!-- Obra 4 Detail -->
         <div class="mobile-detail-page" id="obra4-detail">
-            <a href="#" class="mobile-back-button">← Volver</a>
+            <a href="#" class="mobile-back-button">←</a>
             <h2 class="mobile-detail-title">Título da obra 4</h2>
             <div class="mobile-detail-year">2020</div>
             <img src="images/obra4.jpg" alt="Obra 4" class="mobile-detail-image">
@@ -818,7 +878,7 @@
 
         <!-- Obra 5 Detail -->
         <div class="mobile-detail-page" id="obra5-detail">
-            <a href="#" class="mobile-back-button">← Volver</a>
+            <a href="#" class="mobile-back-button">←</a>
             <h2 class="mobile-detail-title">Título da obra 5</h2>
             <div class="mobile-detail-year">2019</div>
             <img src="images/obra5.jpg" alt="Obra 5" class="mobile-detail-image">
@@ -829,7 +889,7 @@
 
         <!-- Obra 6 Detail -->
         <div class="mobile-detail-page" id="obra6-detail">
-            <a href="#" class="mobile-back-button">← Volver</a>
+            <a href="#" class="mobile-back-button">←</a>
             <h2 class="mobile-detail-title">Título da obra 6</h2>
             <div class="mobile-detail-year">2018</div>
             <img src="images/obra6.jpg" alt="Obra 6" class="mobile-detail-image">
