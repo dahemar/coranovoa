@@ -123,6 +123,8 @@
             position: relative;
             cursor: pointer;
             overflow: hidden;
+            content-visibility: auto;
+            contain-intrinsic-size: 0 500px;
         }
 
         .obra-image {
@@ -132,6 +134,9 @@
             background-size: cover;
             background-position: center;
             transition: transform 0.3s ease-in-out;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
 
         .obra-item:hover .obra-image {
@@ -570,6 +575,13 @@
                 transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
             }
         }
+
+        /* Optimize animations */
+        @media (prefers-reduced-motion: reduce) {
+            .overlay-content {
+                transition: none;
+            }
+        }
     </style>
 
     <script>
@@ -761,6 +773,12 @@
             });
         };
     </script>
+
+    <!-- Preload critical images -->
+    <link rel="preload" as="image" href="images/branco sobre branco.jpg">
+    
+    <!-- Add fetchpriority for the first visible images -->
+    <link rel="preload" fetchpriority="high" as="image" href="images/branco sobre branco.jpg">
 </head>
 
 <body>
@@ -837,7 +855,20 @@
             <a href="#" class="mobile-back-button">←</a>
             <h2 class="mobile-detail-title"></h2>
             <div class="mobile-detail-year">2023</div>
-            <img src="images/branco sobre branco.jpg" alt="Obra 1" class="mobile-detail-image">
+            <img 
+                src="images/branco sobre branco.jpg" 
+                srcset="images/branco sobre branco-300.jpg 300w,
+                        images/branco sobre branco-600.jpg 600w,
+                        images/branco sobre branco.jpg 1200w"
+                sizes="(max-width: 768px) 100vw,
+                       (max-width: 1200px) 50vw,
+                       33vw"
+                loading="lazy"
+                decoding="async"
+                width="800"
+                height="600"
+                alt="Branco sobre branco"
+                class="mobile-detail-image">
             <div class="mobile-detail-text">
                 Descrición da obra 1 en galego...
             </div>

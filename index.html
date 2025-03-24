@@ -14,11 +14,22 @@
     <!-- Load Tailwind after font preloading -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    
+    <!-- Preconnect to critical domains -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="junicode.webfont/junicode_regular.woff2" as="font" type="font/woff2" crossorigin>
+    
     <style>
         /* Font Definitions */
         @font-face {
             font-family: 'Junicode';
-            src: url('junicode.webfont/junicode_regular.woff') format('woff');
+            src: local('Junicode'),
+                 url('junicode.webfont/junicode_regular.woff2') format('woff2'),
+                 url('junicode.webfont/junicode_regular.woff') format('woff');
             font-weight: normal;
             font-style: normal;
             font-display: swap;
@@ -496,6 +507,50 @@
                 pageContainer.classList.add('fade-enter-active');
             }, 0);
         };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Lazy load images that are off screen
+            if ('loading' in HTMLImageElement.prototype) {
+                const images = document.querySelectorAll('img[loading="lazy"]');
+                images.forEach(img => {
+                    img.src = img.dataset.src;
+                });
+            } else {
+                // Import lazy loading polyfill for older browsers
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
+                document.body.appendChild(script);
+            }
+
+            // Optimize resource timing
+            if (window.requestIdleCallback) {
+                requestIdleCallback(() => {
+                    // Preload next page resources during idle time
+                    const links = document.querySelectorAll('nav a');
+                    links.forEach(link => {
+                        if (link.dataset.preload) {
+                            const preloadLink = document.createElement('link');
+                            preloadLink.rel = 'preload';
+                            preloadLink.href = link.href;
+                            preloadLink.as = 'document';
+                            document.head.appendChild(preloadLink);
+                        }
+                    });
+                });
+            }
+        });
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registered');
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
     </script>
 </head>
 
