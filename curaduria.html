@@ -11,6 +11,14 @@
     <link rel="preload" href="junicode.webfont/junicode_bold.woff" as="font" type="font/woff" crossorigin="anonymous">
     <link rel="preload" href="fonts/demo-atbserif-it.otf" as="font" type="font/opentype" crossorigin="anonymous">
     
+    <!-- Añadir en el <head> después de los preload de las fuentes -->
+    <link rel="preload" as="image" href="images/2.png">
+    <link rel="preload" as="image" href="images/1.png">
+    <link rel="preload" as="image" href="images/3.png">
+    <link rel="preload" as="image" href="images/7.png">
+    <link rel="preload" as="image" href="images/5.png">
+    <link rel="preload" as="image" href="images/6.png">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Font Definitions */
@@ -199,6 +207,13 @@
             background-repeat: no-repeat;
             background-position: left top;
             top: 15px;
+            background-image: url('images/2-small.png');
+        }
+
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .hover-image {
+                background-image: url('images/2.png');
+            }
         }
 
         .hover-text {
@@ -433,6 +448,7 @@
                 margin-bottom: 25px;
                 object-fit: contain;
                 max-height: 50vh;
+                background-color: #f0f0f0; /* Color placeholder mientras carga */
             }
 
             .mobile-detail-text {
@@ -643,6 +659,34 @@
         @media (max-width: 768px) {
             .mobile-detail-page {
                 display: block;
+            }
+        }
+
+        /* Añadir al principio del CSS */
+        .page-container {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .page-container.loaded {
+            opacity: 1;
+        }
+
+        /* Asegurarnos que los estilos móviles se apliquen inmediatamente */
+        @media (max-width: 768px) {
+            body {
+                overflow: hidden !important;
+                position: fixed !important;
+                width: 100% !important;
+                height: 100% !important;
+            }
+            
+            .overlay-content {
+                padding: 10px !important;
+                position: fixed !important;
+                width: 100% !important;
+                height: 100% !important;
+                overflow: hidden !important;
             }
         }
     </style>
@@ -964,6 +1008,9 @@
         }
 
         window.onload = function() {
+            // Añadir al principio de la función onload
+            document.querySelector('.page-container').classList.add('loaded');
+            
             let savedLanguage = getCookie('selectedLanguage');
             if (savedLanguage) {
                 currentLanguage = savedLanguage;
@@ -1170,6 +1217,16 @@
             adjustForMobile();
             window.addEventListener('resize', adjustForMobile);
         };
+
+        // Añadir justo después de la apertura del body
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.innerWidth <= 768) {
+                document.body.style.overflow = 'hidden';
+                document.body.style.position = 'fixed';
+                document.body.style.width = '100%';
+                document.body.style.height = '100%';
+            }
+        });
     </script>
 </head>
 
@@ -1308,7 +1365,17 @@
         <div id="cando-falo-corpo-detail" class="mobile-detail-page">
             <a href="#" class="mobile-back-button">←</a>
             <h2 class="mobile-detail-title"><span class="atb-title">Cando falo de corpo</span> | exposición - Sala Manuel Moldes, Pontevedra, 2026</h2>
-            <img src="images/2.png" alt="Cando falo de corpo" class="mobile-detail-image">
+            <picture>
+                <source srcset="images/2.webp" type="image/webp">
+                <source srcset="images/2.png" type="image/png">
+                <img 
+                    src="images/2.png" 
+                    width="700" 
+                    height="400" 
+                    alt="Cando falo de corpo" 
+                    class="mobile-detail-image" 
+                    loading="lazy">
+            </picture>
             <div class="mobile-detail-text">
                 <span class="atb-title project-title">Cando falo de corpo</span> propón un segundo pensamento e espazo de encontro de corporei-
                 dades esparcidas e subxectividades encarnadas.<br><br>
