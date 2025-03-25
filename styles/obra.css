@@ -1,0 +1,10 @@
+@import 'main.css';
+
+/* Estilos específicos de obra.html */
+.obra-grid {
+    margin-top: 180px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+/* ... otros estilos específicos ... */ 

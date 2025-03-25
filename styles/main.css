@@ -1,0 +1,23 @@
+/* Font Definitions */
+@font-face {
+    font-family: 'Junicode';
+    src: local('Junicode'),
+         url('../junicode.webfont/junicode_regular.woff2') format('woff2'),
+         url('../junicode.webfont/junicode_regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+/* ... resto de definiciones de fuentes ... */
+
+/* Estilos base compartidos */
+body {
+    font-family: 'Junicode', sans-serif;
+    margin: 0;
+    background-color: white;
+    color: black;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+/* ... resto de estilos compartidos ... */ 
