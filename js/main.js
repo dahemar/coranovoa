@@ -1,4 +1,6 @@
-// Funciones compartidas
+let currentLanguage = 'gal';
+
+// Funciones de utilidad
 function setCookie(name, value, days) {
     let expires = "";
     if (days) {

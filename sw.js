@@ -7,6 +7,8 @@ const ASSETS = [
     '/aldan.html',
     '/curaduria.html',
     '/contacto.html',
+    '/styles/main.css',
+    '/js/main.js',
     '/junicode.webfont/junicode_regular.woff2',
     '/junicode.webfont/junicode_bold.woff2',
     '/fonts/demo-atbserif-it.otf'

@@ -8,9 +8,24 @@
     font-style: normal;
     font-display: swap;
 }
-/* ... resto de definiciones de fuentes ... */
 
-/* Estilos base compartidos */
+@font-face {
+    font-family: 'Junicode';
+    src: url('../junicode.webfont/junicode_bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'ATB Serif';
+    src: url('../fonts/demo-atbserif-it.otf') format('opentype');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Base styles */
 body {
     font-family: 'Junicode', sans-serif;
     margin: 0;
@@ -20,4 +35,4 @@ body {
     overflow-x: hidden;
 }
 
-/* ... resto de estilos compartidos ... */ 
+/* ... resto de los estilos comunes ... */ 
