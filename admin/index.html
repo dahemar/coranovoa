@@ -24,7 +24,7 @@
         const schema = {
             collections: [
                 {
-                    name: 'page',
+                    name: 'pages',
                     label: 'Páginas',
                     path: '/',
                     fields: [
@@ -32,11 +32,109 @@
                             name: 'title',
                             label: 'Título',
                             type: 'string'
+                        }
+                    ],
+                    templates: [
+                        {
+                            name: 'bio',
+                            label: 'Bio',
+                            fields: [
+                                {
+                                    name: 'bio_text_gl',
+                                    label: 'Texto Bio (Galego)',
+                                    type: 'rich-text'
+                                },
+                                {
+                                    name: 'bio_text_es',
+                                    label: 'Texto Bio (Español)',
+                                    type: 'rich-text'
+                                },
+                                {
+                                    name: 'bio_text_en',
+                                    label: 'Texto Bio (English)',
+                                    type: 'rich-text'
+                                },
+                                {
+                                    name: 'workshops_text_gl',
+                                    label: 'Obradoiros (Galego)',
+                                    type: 'rich-text'
+                                },
+                                {
+                                    name: 'workshops_text_es',
+                                    label: 'Obradoiros (Español)',
+                                    type: 'rich-text'
+                                },
+                                {
+                                    name: 'workshops_text_en',
+                                    label: 'Obradoiros (English)',
+                                    type: 'rich-text'
+                                },
+                                {
+                                    name: 'exhibitions_text_gl',
+                                    label: 'Exposicións (Galego)',
+                                    type: 'rich-text'
+                                },
+                                {
+                                    name: 'exhibitions_text_es',
+                                    label: 'Exposicións (Español)',
+                                    type: 'rich-text'
+                                },
+                                {
+                                    name: 'exhibitions_text_en',
+                                    label: 'Exposicións (English)',
+                                    type: 'rich-text'
+                                }
+                            ]
                         },
                         {
-                            name: 'content',
-                            label: 'Contenido',
-                            type: 'rich-text'
+                            name: 'aldan',
+                            label: 'Aldán',
+                            fields: [
+                                {
+                                    name: 'text_gl',
+                                    label: 'Texto (Galego)',
+                                    type: 'rich-text'
+                                },
+                                {
+                                    name: 'text_es',
+                                    label: 'Texto (Español)',
+                                    type: 'rich-text'
+                                },
+                                {
+                                    name: 'text_en',
+                                    label: 'Texto (English)',
+                                    type: 'rich-text'
+                                }
+                            ]
+                        },
+                        {
+                            name: 'curaduria',
+                            label: 'Curaduría',
+                            fields: [
+                                {
+                                    name: 'projects_gl',
+                                    label: 'Proyectos (Galego)',
+                                    type: 'object',
+                                    list: true,
+                                    fields: [
+                                        {
+                                            name: 'title',
+                                            label: 'Título',
+                                            type: 'string'
+                                        },
+                                        {
+                                            name: 'description',
+                                            label: 'Descripción',
+                                            type: 'rich-text'
+                                        },
+                                        {
+                                            name: 'image',
+                                            label: 'Imagen',
+                                            type: 'image'
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     ]
                 }
