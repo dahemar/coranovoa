@@ -6,12 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cora Novoa - Curaduría</title>
     
-    <!-- Auth0 Script -->
-    <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
-    
-    <!-- Netlify Identity Widget -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    
     <!-- Preload fonts -->
     <link rel="preload" href="junicode.webfont/junicode_regular.woff" as="font" type="font/woff" crossorigin="anonymous">
     <link rel="preload" href="junicode.webfont/junicode_bold.woff" as="font" type="font/woff" crossorigin="anonymous">
@@ -766,7 +760,7 @@
                     "aldan": "aldán",
                     "contacto": "contacto",
                     "back": "←",
-                    "cando_falo_text": `<span class="atb-title project-title">Cando falo de corpo</span> propón un segundo pensamiento e espazo de encontro de corporei-
+                    "cando_falo_text": `<span class="atb-title project-title">Cando falo de corpo</span> propón un segundo pensamento e espazo de encontro de corporei-
                         dades esparcidas e subxectividades encarnadas.<br><br>
                         Corporeidades presentes, variadas, íntimamente ligadas ao corpo colectivo. Cor-
                         pos que se relacionan, corpos inscritos, testemuñas, encarnados, incompletos e inaca-
@@ -1517,36 +1511,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Netlify Identity Redirect Script -->
-    <script>
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", user => {
-          if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              document.location.href = "/admin/";
-            });
-          }
-        });
-      }
-    </script>
-
-    <!-- Auth0 Configuration Script -->
-    <script>
-      const auth0Client = await auth0.createAuth0Client({
-        domain: 'dev-mpc4uh4n3zm4vayc.auth0.com',
-        clientId: 'dev-mpc4uh4n3zm4vayc',
-        authorizationParams: {
-          redirect_uri: window.location.origin + '/admin'
-        }
-      });
-
-      // Handle authentication and redirect
-      if (window.location.search.includes("code=")) {
-        await auth0Client.handleRedirectCallback();
-        window.location.href = "/admin";
-      }
-    </script>
 </body>
 </html>
 

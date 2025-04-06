@@ -6,12 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cora Novoa</title>
     
-    <!-- Auth0 Script -->
-    <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
-    
-    <!-- Netlify Identity Widget -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    
     <!-- Preload fonts with high priority -->
     <link rel="preload" href="junicode.webfont/junicode_regular.woff" as="font" type="font/woff" crossorigin="anonymous">
     <link rel="preload" href="junicode.webfont/junicode_bold.woff" as="font" type="font/woff" crossorigin="anonymous">
@@ -594,36 +588,6 @@
             <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
         </div>
     </div>
-
-    <!-- Netlify Identity Redirect Script -->
-    <script>
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", user => {
-          if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              document.location.href = "/admin/";
-            });
-          }
-        });
-      }
-    </script>
-
-    <!-- Auth0 Configuration Script -->
-    <script>
-      const auth0Client = await auth0.createAuth0Client({
-        domain: 'dev-mpc4uh4n3zm4vayc.auth0.com',
-        clientId: 'dev-mpc4uh4n3zm4vayc',
-        authorizationParams: {
-          redirect_uri: window.location.origin + '/admin'
-        }
-      });
-
-      // Handle authentication and redirect
-      if (window.location.search.includes("code=")) {
-        await auth0Client.handleRedirectCallback();
-        window.location.href = "/admin";
-      }
-    </script>
 </body>
 
 </html>
