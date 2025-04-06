@@ -17,17 +17,13 @@
         CMS.init({
             config: {
                 backend: {
-                    name: 'git-gateway',
+                    name: 'github',
+                    repo: 'dahemar/coranovoa',
                     branch: 'main',
-                    identity_url: "https://coranovoa.netlify.app/.netlify/identity",
-                    gateway_url: "https://coranovoa.netlify.app/.netlify/git/github",
-                    commit_messages: {
-                        create: 'Create {{collection}} "{{slug}}"',
-                        update: 'Update {{collection}} "{{slug}}"',
-                        delete: 'Delete {{collection}} "{{slug}}"',
-                        uploadMedia: 'Upload "{{path}}"',
-                        deleteMedia: 'Delete "{{path}}"'
-                    }
+                    auth_endpoint: 'https://api.netlify.com/auth',
+                    base_url: 'https://api.netlify.com',
+                    auth_type: 'implicit',
+                    app_id: 'Ov23li9Bd9fudYzANB0g', // Tu Client ID
                 },
                 load_config_file: false,
                 media_folder: "images",
