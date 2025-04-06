@@ -1,27 +1,80 @@
 backend:
-  name: "github"
-  repo: "dahemar/coranovoa"  # Replace with your actual GitHub repository
-  branch: "main"
-  base_url: "https://coranovoa.netlify.app"
-  auth_endpoint: "auth"
+  name: git-gateway
+  branch: main # o master, dependiendo de tu rama principal
 
-local_backend: true  # Optional: enables local development
-
-# Auth0 configuration should be in your index.html, not here in config.yml
-# (which you already have correctly set up)
-
-media_library:
-  name: "uploadcare"
-  config:
-    publicKey: "your-uploadcare-public-key"  # Replace with your actual Uploadcare public key
+media_folder: "images" # Donde se guardarán las imágenes subidas
+public_folder: "/images" # URL pública para las imágenes
 
 collections:
   - name: "pages"
-    label: "Pages"
+    label: "Páginas"
     files:
-      - label: "Home"
-        name: "home"
-        file: "index.html"
+      - name: "bio"
+        label: "Bio"
+        file: "bio.html"
         fields:
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Body", name: "body", widget: "markdown" }
+          - {label: "Título", name: "title", widget: "string"}
+          - {label: "Educación (Galego)", name: "education_gal", widget: "markdown"}
+          - {label: "Educación (Español)", name: "education_esp", widget: "markdown"}
+          - {label: "Educación (English)", name: "education_en", widget: "markdown"}
+          - {label: "Encontros (Galego)", name: "meetings_gal", widget: "markdown"}
+          - {label: "Encontros (Español)", name: "meetings_esp", widget: "markdown"}
+          - {label: "Meetings (English)", name: "meetings_en", widget: "markdown"}
+          - {label: "Publicacións (Galego)", name: "publications_gal", widget: "markdown"}
+          - {label: "Publicaciones (Español)", name: "publications_esp", widget: "markdown"}
+          - {label: "Publications (English)", name: "publications_en", widget: "markdown"}
+          - {label: "Obradoiros (Galego)", name: "workshops_gal", widget: "markdown"}
+          - {label: "Talleres (Español)", name: "workshops_esp", widget: "markdown"}
+          - {label: "Workshops (English)", name: "workshops_en", widget: "markdown"}
+          - {label: "Exposicións (Galego)", name: "exhibitions_gal", widget: "markdown"}
+          - {label: "Exposiciones (Español)", name: "exhibitions_esp", widget: "markdown"}
+          - {label: "Exhibitions (English)", name: "exhibitions_en", widget: "markdown"}
+
+      - name: "aldan"
+        label: "Aldán"
+        file: "aldan.html"
+        fields:
+          - {label: "Título", name: "title", widget: "string"}
+          - {label: "Texto (Galego)", name: "content_gal", widget: "markdown"}
+          - {label: "Texto (Español)", name: "content_esp", widget: "markdown"}
+          - {label: "Text (English)", name: "content_en", widget: "markdown"}
+          - {label: "Instagram", name: "instagram", widget: "string"}
+
+      - name: "curaduria"
+        label: "Curaduría"
+        file: "curaduria.html"
+        fields:
+          - {label: "Título", name: "title", widget: "string"}
+          - label: "Proyectos"
+            name: "projects"
+            widget: "list"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Subtítulo", name: "subtitle", widget: "string"}
+              - {label: "Imagen", name: "image", widget: "image"}
+              - {label: "Texto (Galego)", name: "content_gal", widget: "markdown"}
+              - {label: "Texto (Español)", name: "content_esp", widget: "markdown"}
+              - {label: "Text (English)", name: "content_en", widget: "markdown"}
+
+      - name: "obra"
+        label: "Obra"
+        file: "obra.html"
+        fields:
+          - {label: "Título", name: "title", widget: "string"}
+          - label: "Obras"
+            name: "works"
+            widget: "list"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Imagen", name: "image", widget: "image"}
+              - {label: "Descripción (Galego)", name: "description_gal", widget: "text"}
+              - {label: "Descripción (Español)", name: "description_esp", widget: "text"}
+              - {label: "Description (English)", name: "description_en", widget: "text"}
+
+      - name: "contacto"
+        label: "Contacto"
+        file: "contacto.html"
+        fields:
+          - {label: "Título", name: "title", widget: "string"}
+          - {label: "Email", name: "email", widget: "string"}
+          - {label: "Instagram", name: "instagram", widget: "string"} 
