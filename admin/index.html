@@ -9,15 +9,59 @@
     <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
 </head>
 <body>
+    <div id="nc-root"></div>
     <script>
-        CMS.registerBackend('github', {
-            name: 'github',
-            repo: 'dahemar/coranovoa',
-            branch: 'main',
-            api_root: 'https://api.github.com',
-            site_domain: 'coranovoa.netlify.app',
-            auth_endpoint: 'https://github.com/login/oauth/authorize',
-            client_id: 'Ov23li9Bd9fudYzANB0g'
+        window.addEventListener('load', function() {
+            // Esperar a que el CMS esté disponible
+            if (window.netlifyIdentity) {
+                window.netlifyIdentity.on("init", user => {
+                    if (!user) {
+                        window.netlifyIdentity.on("login", () => {
+                            document.location.href = "/admin/";
+                        });
+                    }
+                });
+            }
+
+            // Configuración del backend
+            window.netlifyConfig = {
+                backend: {
+                    name: 'github',
+                    repo: 'dahemar/coranovoa',
+                    branch: 'main',
+                    auth_endpoint: 'https://github.com/login/oauth/authorize',
+                    client_id: 'Ov23li9Bd9fudYzANB0g'
+                },
+                media_folder: "images",
+                public_folder: "/images",
+                collections: [
+                    {
+                        name: "pages",
+                        label: "Páginas",
+                        files: [
+                            {
+                                name: "bio",
+                                label: "Bio",
+                                file: "bio.html",
+                                fields: [
+                                    {label: "Título", name: "title", widget: "string"},
+                                    {label: "Texto Bio (Galego)", name: "bio_text_gl", widget: "text"},
+                                    {label: "Texto Bio (Español)", name: "bio_text_es", widget: "text"},
+                                    {label: "Texto Bio (English)", name: "bio_text_en", widget: "text"}
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            };
+
+            // Inicializar CMS cuando esté listo
+            if (window.CMS) {
+                window.CMS.init(window.netlifyConfig);
+            } else {
+                console.error('CMS not loaded');
+                document.body.innerHTML = '<h1>Error: CMS not loaded</h1>';
+            }
         });
     </script>
 </body>
