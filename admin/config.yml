@@ -1,6 +1,7 @@
 backend:
-  name: git-gateway
-  branch: main # o master, dependiendo de tu rama principal
+  name: auth0
+  domain: dev-mpc4uh4n3zm4vayc.auth0.com
+  clientId: dev-mpc4uh4n3zm4vayc
 
 media_folder: "images" # Donde se guardarán las imágenes subidas
 public_folder: "/images" # URL pública para las imágenes
@@ -14,62 +15,59 @@ collections:
         file: "bio.html"
         fields:
           - {label: "Título", name: "title", widget: "string"}
-          - {label: "Educación (Galego)", name: "education_gal", widget: "markdown"}
-          - {label: "Educación (Español)", name: "education_esp", widget: "markdown"}
-          - {label: "Educación (English)", name: "education_en", widget: "markdown"}
-          - {label: "Encontros (Galego)", name: "meetings_gal", widget: "markdown"}
-          - {label: "Encontros (Español)", name: "meetings_esp", widget: "markdown"}
-          - {label: "Meetings (English)", name: "meetings_en", widget: "markdown"}
-          - {label: "Publicacións (Galego)", name: "publications_gal", widget: "markdown"}
-          - {label: "Publicaciones (Español)", name: "publications_esp", widget: "markdown"}
-          - {label: "Publications (English)", name: "publications_en", widget: "markdown"}
-          - {label: "Obradoiros (Galego)", name: "workshops_gal", widget: "markdown"}
-          - {label: "Talleres (Español)", name: "workshops_esp", widget: "markdown"}
-          - {label: "Workshops (English)", name: "workshops_en", widget: "markdown"}
-          - {label: "Exposicións (Galego)", name: "exhibitions_gal", widget: "markdown"}
-          - {label: "Exposiciones (Español)", name: "exhibitions_esp", widget: "markdown"}
-          - {label: "Exhibitions (English)", name: "exhibitions_en", widget: "markdown"}
+          - {label: "Texto Bio (Galego)", name: "bio_text_gl", widget: "text"}
+          - {label: "Texto Bio (Español)", name: "bio_text_es", widget: "text"}
+          - {label: "Texto Bio (English)", name: "bio_text_en", widget: "text"}
+          - {label: "Obradoiros (Galego)", name: "workshops_text_gl", widget: "text"}
+          - {label: "Obradoiros (Español)", name: "workshops_text_es", widget: "text"}
+          - {label: "Obradoiros (English)", name: "workshops_text_en", widget: "text"}
+          - {label: "Exposicións (Galego)", name: "exhibitions_text_gl", widget: "text"}
+          - {label: "Exposicións (Español)", name: "exhibitions_text_es", widget: "text"}
+          - {label: "Exposicións (English)", name: "exhibitions_text_en", widget: "text"}
 
       - name: "aldan"
         label: "Aldán"
         file: "aldan.html"
         fields:
           - {label: "Título", name: "title", widget: "string"}
-          - {label: "Texto (Galego)", name: "content_gal", widget: "markdown"}
-          - {label: "Texto (Español)", name: "content_esp", widget: "markdown"}
-          - {label: "Text (English)", name: "content_en", widget: "markdown"}
-          - {label: "Instagram", name: "instagram", widget: "string"}
+          - {label: "Texto (Galego)", name: "text_gl", widget: "text"}
+          - {label: "Texto (Español)", name: "text_es", widget: "text"}
+          - {label: "Texto (English)", name: "text_en", widget: "text"}
 
       - name: "curaduria"
         label: "Curaduría"
         file: "curaduria.html"
         fields:
           - {label: "Título", name: "title", widget: "string"}
-          - label: "Proyectos"
-            name: "projects"
-            widget: "list"
-            fields:
-              - {label: "Título", name: "title", widget: "string"}
-              - {label: "Subtítulo", name: "subtitle", widget: "string"}
-              - {label: "Imagen", name: "image", widget: "image"}
-              - {label: "Texto (Galego)", name: "content_gal", widget: "markdown"}
-              - {label: "Texto (Español)", name: "content_esp", widget: "markdown"}
-              - {label: "Text (English)", name: "content_en", widget: "markdown"}
+          - {label: "Proyectos (Galego)", name: "projects_gl", widget: "list", fields: [
+              {label: "Título", name: "title", widget: "string"},
+              {label: "Descripción", name: "description", widget: "text"},
+              {label: "Imagen", name: "image", widget: "image"}
+            ]}
+          - {label: "Proyectos (Español)", name: "projects_es", widget: "list", fields: [
+              {label: "Título", name: "title", widget: "string"},
+              {label: "Descripción", name: "description", widget: "text"},
+              {label: "Imagen", name: "image", widget: "image"}
+            ]}
+          - {label: "Proyectos (English)", name: "projects_en", widget: "list", fields: [
+              {label: "Título", name: "title", widget: "string"},
+              {label: "Descripción", name: "description", widget: "text"},
+              {label: "Imagen", name: "image", widget: "image"}
+            ]}
 
       - name: "obra"
         label: "Obra"
         file: "obra.html"
         fields:
           - {label: "Título", name: "title", widget: "string"}
-          - label: "Obras"
-            name: "works"
-            widget: "list"
-            fields:
-              - {label: "Título", name: "title", widget: "string"}
-              - {label: "Imagen", name: "image", widget: "image"}
-              - {label: "Descripción (Galego)", name: "description_gal", widget: "text"}
-              - {label: "Descripción (Español)", name: "description_esp", widget: "text"}
-              - {label: "Description (English)", name: "description_en", widget: "text"}
+          - {label: "Obras", name: "works", widget: "list", fields: [
+              {label: "Título", name: "title", widget: "string"},
+              {label: "Año", name: "year", widget: "string"},
+              {label: "Imagen", name: "image", widget: "image"},
+              {label: "Descripción (Galego)", name: "description_gl", widget: "text"},
+              {label: "Descripción (Español)", name: "description_es", widget: "text"},
+              {label: "Descripción (English)", name: "description_en", widget: "text"}
+            ]}
 
       - name: "contacto"
         label: "Contacto"

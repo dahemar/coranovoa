@@ -3,10 +3,29 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Panel de administración - Cora Novoa</title>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <title>Panel de Administración</title>
+    <!-- Incluir Netlify CMS -->
+    <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+    <!-- Incluir Auth0 -->
+    <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
 </head>
 <body>
-    <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+    <script>
+        // Configurar Auth0 para Netlify CMS
+        window.netlifyIdentity = {
+            on: (event, callback) => {
+                if (event === 'init') {
+                    const auth0 = new Auth0Client({
+                        domain: 'dev-mpc4uh4n3zm4vayc.auth0.com',
+                        clientId: 'dev-mpc4uh4n3zm4vayc',
+                        authorizationParams: {
+                            redirect_uri: window.location.origin + '/admin'
+                        }
+                    });
+                    callback(auth0.isAuthenticated());
+                }
+            }
+        };
+    </script>
 </body>
 </html> 
