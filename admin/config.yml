@@ -1,5 +1,7 @@
 backend:
   name: auth0
+  auth_endpoint: https://dev-mpc4uh4n3zm4vayc.auth0.com/authorize
+  auth_token_endpoint: https://dev-mpc4uh4n3zm4vayc.auth0.com/oauth/token
   domain: dev-mpc4uh4n3zm4vayc.auth0.com
   clientId: dev-mpc4uh4n3zm4vayc
 
@@ -39,35 +41,43 @@ collections:
         file: "curaduria.html"
         fields:
           - {label: "Título", name: "title", widget: "string"}
-          - {label: "Proyectos (Galego)", name: "projects_gl", widget: "list", fields: [
-              {label: "Título", name: "title", widget: "string"},
-              {label: "Descripción", name: "description", widget: "text"},
-              {label: "Imagen", name: "image", widget: "image"}
-            ]}
-          - {label: "Proyectos (Español)", name: "projects_es", widget: "list", fields: [
-              {label: "Título", name: "title", widget: "string"},
-              {label: "Descripción", name: "description", widget: "text"},
-              {label: "Imagen", name: "image", widget: "image"}
-            ]}
-          - {label: "Proyectos (English)", name: "projects_en", widget: "list", fields: [
-              {label: "Título", name: "title", widget: "string"},
-              {label: "Descripción", name: "description", widget: "text"},
-              {label: "Imagen", name: "image", widget: "image"}
-            ]}
+          - label: "Proyectos (Galego)"
+            name: "projects_gl"
+            widget: "list"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Descripción", name: "description", widget: "text"}
+              - {label: "Imagen", name: "image", widget: "image"}
+          - label: "Proyectos (Español)"
+            name: "projects_es"
+            widget: "list"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Descripción", name: "description", widget: "text"}
+              - {label: "Imagen", name: "image", widget: "image"}
+          - label: "Proyectos (English)"
+            name: "projects_en"
+            widget: "list"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Descripción", name: "description", widget: "text"}
+              - {label: "Imagen", name: "image", widget: "image"}
 
       - name: "obra"
         label: "Obra"
         file: "obra.html"
         fields:
           - {label: "Título", name: "title", widget: "string"}
-          - {label: "Obras", name: "works", widget: "list", fields: [
-              {label: "Título", name: "title", widget: "string"},
-              {label: "Año", name: "year", widget: "string"},
-              {label: "Imagen", name: "image", widget: "image"},
-              {label: "Descripción (Galego)", name: "description_gl", widget: "text"},
-              {label: "Descripción (Español)", name: "description_es", widget: "text"},
-              {label: "Descripción (English)", name: "description_en", widget: "text"}
-            ]}
+          - label: "Obras"
+            name: "works"
+            widget: "list"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Año", name: "year", widget: "string"}
+              - {label: "Imagen", name: "image", widget: "image"}
+              - {label: "Descripción (Galego)", name: "description_gl", widget: "text"}
+              - {label: "Descripción (Español)", name: "description_es", widget: "text"}
+              - {label: "Descripción (English)", name: "description_en", widget: "text"}
 
       - name: "contacto"
         label: "Contacto"

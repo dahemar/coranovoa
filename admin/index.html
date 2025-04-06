@@ -3,29 +3,146 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Panel de Administración</title>
-    <!-- Incluir Netlify CMS -->
-    <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+    <title>Panel de Administración - Cora Novoa</title>
+    
+    <!-- Incluir Decap CMS (anteriormente Netlify CMS) -->
+    <script src="https://unpkg.com/@staticcms/app@^3.4.5/dist/static-cms-app.js"></script>
+    
     <!-- Incluir Auth0 -->
     <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
 </head>
 <body>
     <script>
-        // Configurar Auth0 para Netlify CMS
-        window.netlifyIdentity = {
-            on: (event, callback) => {
-                if (event === 'init') {
-                    const auth0 = new Auth0Client({
-                        domain: 'dev-mpc4uh4n3zm4vayc.auth0.com',
-                        clientId: 'dev-mpc4uh4n3zm4vayc',
-                        authorizationParams: {
-                            redirect_uri: window.location.origin + '/admin'
-                        }
-                    });
-                    callback(auth0.isAuthenticated());
-                }
+        // Inicializar Auth0
+        const auth0 = new Auth0Client({
+            domain: 'dev-mpc4uh4n3zm4vayc.auth0.com',
+            clientId: 'dev-mpc4uh4n3zm4vayc',
+            authorizationParams: {
+                redirect_uri: window.location.origin + '/admin'
             }
-        };
+        });
+
+        // Configurar CMS
+        window.CMS.init({
+            config: {
+                backend: {
+                    name: 'auth0',
+                    auth_endpoint: 'https://dev-mpc4uh4n3zm4vayc.auth0.com/authorize',
+                    auth_token_endpoint: 'https://dev-mpc4uh4n3zm4vayc.auth0.com/oauth/token',
+                    domain: 'dev-mpc4uh4n3zm4vayc.auth0.com',
+                    clientId: 'dev-mpc4uh4n3zm4vayc',
+                    auth0: true
+                },
+                load_config_file: false,
+                media_folder: "images",
+                public_folder: "/images",
+                collections: [
+                    {
+                        name: "pages",
+                        label: "Páginas",
+                        files: [
+                            {
+                                name: "bio",
+                                label: "Bio",
+                                file: "bio.html",
+                                fields: [
+                                    {label: "Título", name: "title", widget: "string"},
+                                    {label: "Texto Bio (Galego)", name: "bio_text_gl", widget: "text"},
+                                    {label: "Texto Bio (Español)", name: "bio_text_es", widget: "text"},
+                                    {label: "Texto Bio (English)", name: "bio_text_en", widget: "text"},
+                                    {label: "Obradoiros (Galego)", name: "workshops_text_gl", widget: "text"},
+                                    {label: "Obradoiros (Español)", name: "workshops_text_es", widget: "text"},
+                                    {label: "Obradoiros (English)", name: "workshops_text_en", widget: "text"},
+                                    {label: "Exposicións (Galego)", name: "exhibitions_text_gl", widget: "text"},
+                                    {label: "Exposicións (Español)", name: "exhibitions_text_es", widget: "text"},
+                                    {label: "Exposicións (English)", name: "exhibitions_text_en", widget: "text"}
+                                ]
+                            },
+                            {
+                                name: "aldan",
+                                label: "Aldán",
+                                file: "aldan.html",
+                                fields: [
+                                    {label: "Título", name: "title", widget: "string"},
+                                    {label: "Texto (Galego)", name: "text_gl", widget: "text"},
+                                    {label: "Texto (Español)", name: "text_es", widget: "text"},
+                                    {label: "Texto (English)", name: "text_en", widget: "text"}
+                                ]
+                            },
+                            {
+                                name: "curaduria",
+                                label: "Curaduría",
+                                file: "curaduria.html",
+                                fields: [
+                                    {label: "Título", name: "title", widget: "string"},
+                                    {
+                                        label: "Proyectos (Galego)",
+                                        name: "projects_gl",
+                                        widget: "list",
+                                        fields: [
+                                            {label: "Título", name: "title", widget: "string"},
+                                            {label: "Descripción", name: "description", widget: "text"},
+                                            {label: "Imagen", name: "image", widget: "image"}
+                                        ]
+                                    },
+                                    {
+                                        label: "Proyectos (Español)",
+                                        name: "projects_es",
+                                        widget: "list",
+                                        fields: [
+                                            {label: "Título", name: "title", widget: "string"},
+                                            {label: "Descripción", name: "description", widget: "text"},
+                                            {label: "Imagen", name: "image", widget: "image"}
+                                        ]
+                                    },
+                                    {
+                                        label: "Proyectos (English)",
+                                        name: "projects_en",
+                                        widget: "list",
+                                        fields: [
+                                            {label: "Título", name: "title", widget: "string"},
+                                            {label: "Descripción", name: "description", widget: "text"},
+                                            {label: "Imagen", name: "image", widget: "image"}
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                name: "obra",
+                                label: "Obra",
+                                file: "obra.html",
+                                fields: [
+                                    {label: "Título", name: "title", widget: "string"},
+                                    {
+                                        label: "Obras",
+                                        name: "works",
+                                        widget: "list",
+                                        fields: [
+                                            {label: "Título", name: "title", widget: "string"},
+                                            {label: "Año", name: "year", widget: "string"},
+                                            {label: "Imagen", name: "image", widget: "image"},
+                                            {label: "Descripción (Galego)", name: "description_gl", widget: "text"},
+                                            {label: "Descripción (Español)", name: "description_es", widget: "text"},
+                                            {label: "Descripción (English)", name: "description_en", widget: "text"}
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                name: "contacto",
+                                label: "Contacto",
+                                file: "contacto.html",
+                                fields: [
+                                    {label: "Título", name: "title", widget: "string"},
+                                    {label: "Email", name: "email", widget: "string"},
+                                    {label: "Instagram", name: "instagram", widget: "string"}
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        });
     </script>
 </body>
 </html> 
