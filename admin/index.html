@@ -5,156 +5,138 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Panel de Administración - Cora Novoa</title>
     
-    <!-- Incluir Decap CMS (anteriormente Netlify CMS) -->
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <!-- Incluir Netlify Identity Widget -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     
-    <!-- Incluir Auth0 -->
-    <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+    <!-- Incluir Decap CMS -->
+    <script src="https://unpkg.com/decap-cms@3.6.2/dist/decap-cms.js"></script>
 </head>
 <body>
     <script>
-        // Esperar a que el DOM esté cargado
-        window.addEventListener('DOMContentLoaded', async () => {
-            try {
-                // Inicializar Auth0
-                const auth0 = await createAuth0Client({
-                    domain: 'dev-mpc4uh4n3zm4vayc.auth0.com',
-                    clientId: 'dev-mpc4uh4n3zm4vayc',
-                    authorizationParams: {
-                        redirect_uri: 'https://coranovoa.netlify.app/admin'
+        // Configuración básica de Decap CMS
+        CMS.init({
+            config: {
+                backend: {
+                    name: 'git-gateway',
+                    branch: 'main',
+                    identity_url: "https://coranovoa.netlify.app/.netlify/identity",
+                    gateway_url: "https://coranovoa.netlify.app/.netlify/git/github",
+                    commit_messages: {
+                        create: 'Create {{collection}} "{{slug}}"',
+                        update: 'Update {{collection}} "{{slug}}"',
+                        delete: 'Delete {{collection}} "{{slug}}"',
+                        uploadMedia: 'Upload "{{path}}"',
+                        deleteMedia: 'Delete "{{path}}"'
                     }
-                });
-
-                // Configurar CMS
-                window.CMS.init({
-                    config: {
-                        backend: {
-                            name: 'auth0',
-                            auth_endpoint: 'https://dev-mpc4uh4n3zm4vayc.auth0.com/authorize',
-                            auth_token_endpoint: 'https://dev-mpc4uh4n3zm4vayc.auth0.com/oauth/token',
-                            domain: 'dev-mpc4uh4n3zm4vayc.auth0.com',
-                            clientId: 'dev-mpc4uh4n3zm4vayc',
-                            base_url: 'https://coranovoa.netlify.app',
-                            auth0: true
-                        },
-                        load_config_file: false,
-                        media_folder: "images",
-                        public_folder: "/images",
-                        collections: [
+                },
+                load_config_file: false,
+                media_folder: "images",
+                public_folder: "/images",
+                collections: [
+                    {
+                        name: "pages",
+                        label: "Páginas",
+                        files: [
                             {
-                                name: "pages",
-                                label: "Páginas",
-                                files: [
+                                name: "bio",
+                                label: "Bio",
+                                file: "bio.html",
+                                fields: [
+                                    {label: "Título", name: "title", widget: "string"},
+                                    {label: "Texto Bio (Galego)", name: "bio_text_gl", widget: "text"},
+                                    {label: "Texto Bio (Español)", name: "bio_text_es", widget: "text"},
+                                    {label: "Texto Bio (English)", name: "bio_text_en", widget: "text"},
+                                    {label: "Obradoiros (Galego)", name: "workshops_text_gl", widget: "text"},
+                                    {label: "Obradoiros (Español)", name: "workshops_text_es", widget: "text"},
+                                    {label: "Obradoiros (English)", name: "workshops_text_en", widget: "text"},
+                                    {label: "Exposicións (Galego)", name: "exhibitions_text_gl", widget: "text"},
+                                    {label: "Exposicións (Español)", name: "exhibitions_text_es", widget: "text"},
+                                    {label: "Exposicións (English)", name: "exhibitions_text_en", widget: "text"}
+                                ]
+                            },
+                            {
+                                name: "aldan",
+                                label: "Aldán",
+                                file: "aldan.html",
+                                fields: [
+                                    {label: "Título", name: "title", widget: "string"},
+                                    {label: "Texto (Galego)", name: "text_gl", widget: "text"},
+                                    {label: "Texto (Español)", name: "text_es", widget: "text"},
+                                    {label: "Texto (English)", name: "text_en", widget: "text"}
+                                ]
+                            },
+                            {
+                                name: "curaduria",
+                                label: "Curaduría",
+                                file: "curaduria.html",
+                                fields: [
+                                    {label: "Título", name: "title", widget: "string"},
                                     {
-                                        name: "bio",
-                                        label: "Bio",
-                                        file: "bio.html",
+                                        label: "Proyectos (Galego)",
+                                        name: "projects_gl",
+                                        widget: "list",
                                         fields: [
                                             {label: "Título", name: "title", widget: "string"},
-                                            {label: "Texto Bio (Galego)", name: "bio_text_gl", widget: "text"},
-                                            {label: "Texto Bio (Español)", name: "bio_text_es", widget: "text"},
-                                            {label: "Texto Bio (English)", name: "bio_text_en", widget: "text"},
-                                            {label: "Obradoiros (Galego)", name: "workshops_text_gl", widget: "text"},
-                                            {label: "Obradoiros (Español)", name: "workshops_text_es", widget: "text"},
-                                            {label: "Obradoiros (English)", name: "workshops_text_en", widget: "text"},
-                                            {label: "Exposicións (Galego)", name: "exhibitions_text_gl", widget: "text"},
-                                            {label: "Exposicións (Español)", name: "exhibitions_text_es", widget: "text"},
-                                            {label: "Exposicións (English)", name: "exhibitions_text_en", widget: "text"}
+                                            {label: "Descripción", name: "description", widget: "text"},
+                                            {label: "Imagen", name: "image", widget: "image"}
                                         ]
                                     },
                                     {
-                                        name: "aldan",
-                                        label: "Aldán",
-                                        file: "aldan.html",
+                                        label: "Proyectos (Español)",
+                                        name: "projects_es",
+                                        widget: "list",
                                         fields: [
                                             {label: "Título", name: "title", widget: "string"},
-                                            {label: "Texto (Galego)", name: "text_gl", widget: "text"},
-                                            {label: "Texto (Español)", name: "text_es", widget: "text"},
-                                            {label: "Texto (English)", name: "text_en", widget: "text"}
+                                            {label: "Descripción", name: "description", widget: "text"},
+                                            {label: "Imagen", name: "image", widget: "image"}
                                         ]
                                     },
                                     {
-                                        name: "curaduria",
-                                        label: "Curaduría",
-                                        file: "curaduria.html",
+                                        label: "Proyectos (English)",
+                                        name: "projects_en",
+                                        widget: "list",
                                         fields: [
                                             {label: "Título", name: "title", widget: "string"},
-                                            {
-                                                label: "Proyectos (Galego)",
-                                                name: "projects_gl",
-                                                widget: "list",
-                                                fields: [
-                                                    {label: "Título", name: "title", widget: "string"},
-                                                    {label: "Descripción", name: "description", widget: "text"},
-                                                    {label: "Imagen", name: "image", widget: "image"}
-                                                ]
-                                            },
-                                            {
-                                                label: "Proyectos (Español)",
-                                                name: "projects_es",
-                                                widget: "list",
-                                                fields: [
-                                                    {label: "Título", name: "title", widget: "string"},
-                                                    {label: "Descripción", name: "description", widget: "text"},
-                                                    {label: "Imagen", name: "image", widget: "image"}
-                                                ]
-                                            },
-                                            {
-                                                label: "Proyectos (English)",
-                                                name: "projects_en",
-                                                widget: "list",
-                                                fields: [
-                                                    {label: "Título", name: "title", widget: "string"},
-                                                    {label: "Descripción", name: "description", widget: "text"},
-                                                    {label: "Imagen", name: "image", widget: "image"}
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        name: "obra",
-                                        label: "Obra",
-                                        file: "obra.html",
-                                        fields: [
-                                            {label: "Título", name: "title", widget: "string"},
-                                            {
-                                                label: "Obras",
-                                                name: "works",
-                                                widget: "list",
-                                                fields: [
-                                                    {label: "Título", name: "title", widget: "string"},
-                                                    {label: "Año", name: "year", widget: "string"},
-                                                    {label: "Imagen", name: "image", widget: "image"},
-                                                    {label: "Descripción (Galego)", name: "description_gl", widget: "text"},
-                                                    {label: "Descripción (Español)", name: "description_es", widget: "text"},
-                                                    {label: "Descripción (English)", name: "description_en", widget: "text"}
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        name: "contacto",
-                                        label: "Contacto",
-                                        file: "contacto.html",
-                                        fields: [
-                                            {label: "Título", name: "title", widget: "string"},
-                                            {label: "Email", name: "email", widget: "string"},
-                                            {label: "Instagram", name: "instagram", widget: "string"}
+                                            {label: "Descripción", name: "description", widget: "text"},
+                                            {label: "Imagen", name: "image", widget: "image"}
                                         ]
                                     }
+                                ]
+                            },
+                            {
+                                name: "obra",
+                                label: "Obra",
+                                file: "obra.html",
+                                fields: [
+                                    {label: "Título", name: "title", widget: "string"},
+                                    {
+                                        label: "Obras",
+                                        name: "works",
+                                        widget: "list",
+                                        fields: [
+                                            {label: "Título", name: "title", widget: "string"},
+                                            {label: "Año", name: "year", widget: "string"},
+                                            {label: "Imagen", name: "image", widget: "image"},
+                                            {label: "Descripción (Galego)", name: "description_gl", widget: "text"},
+                                            {label: "Descripción (Español)", name: "description_es", widget: "text"},
+                                            {label: "Descripción (English)", name: "description_en", widget: "text"}
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                name: "contacto",
+                                label: "Contacto",
+                                file: "contacto.html",
+                                fields: [
+                                    {label: "Título", name: "title", widget: "string"},
+                                    {label: "Email", name: "email", widget: "string"},
+                                    {label: "Instagram", name: "instagram", widget: "string"}
                                 ]
                             }
                         ]
                     }
-                });
-
-                // Manejar la autenticación
-                if (window.location.search.includes("code=")) {
-                    await auth0.handleRedirectCallback();
-                    window.location.href = "/admin";
-                }
-            } catch (error) {
-                console.error('Error initializing:', error);
+                ]
             }
         });
     </script>
