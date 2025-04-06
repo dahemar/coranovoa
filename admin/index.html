@@ -5,52 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Panel de Administración - Cora Novoa</title>
     
-    <!-- Cargar el script del CMS -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script src="https://unpkg.com/netlify-cms@2.10.192/dist/netlify-cms.js"></script>
+    <!-- TinaCMS -->
+    <script src="https://unpkg.com/@tinacms/toolkit@1.5.28/dist/tinacms-toolkit.umd.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@tinacms/toolkit@1.5.28/dist/tinacms-toolkit.css" />
 </head>
 <body>
-    <!-- Elemento root para el CMS -->
-    <div id="nc-root"></div>
-
+    <div id="tina-root"></div>
     <script>
-        // Configuración básica
-        var config = {
-            backend: {
-                name: 'github',
-                repo: 'dahemar/coranovoa',
-                branch: 'main',
-                client_id: 'Ov23li9Bd9fudYzANB0g'
-            },
-            media_folder: 'images',
-            public_folder: '/images',
-            collections: [{
-                name: 'pages',
-                label: 'Páginas',
-                files: [{
-                    name: 'bio',
-                    label: 'Bio',
-                    file: 'bio.html',
-                    fields: [{
-                        label: 'Título',
-                        name: 'title',
-                        widget: 'string'
-                    }]
-                }]
-            }]
+        const tinacms = new TinaCloudClient({
+            clientId: 'Ov23li9Bd9fudYzANB0g',
+            branch: 'main',
+            tokenStorage: 'LOCAL_STORAGE',
+            organization: 'dahemar',
+            repositoryName: 'coranovoa',
+            baseUrl: 'https://dahemar.github.io/coranovoa'
+        });
+
+        const schema = {
+            collections: [
+                {
+                    name: 'page',
+                    label: 'Páginas',
+                    path: '/',
+                    fields: [
+                        {
+                            name: 'title',
+                            label: 'Título',
+                            type: 'string'
+                        },
+                        {
+                            name: 'content',
+                            label: 'Contenido',
+                            type: 'rich-text'
+                        }
+                    ]
+                }
+            ]
         };
 
-        // Inicializar cuando el documento esté listo
-        document.addEventListener('DOMContentLoaded', function() {
-            // Inicializar CMS con la configuración
-            window.netlifyIdentity && netlifyIdentity.on('init', user => {
-                if (!user) {
-                    netlifyIdentity.on('login', () => {
-                        document.location.href = '/admin/';
-                    });
-                }
-            });
-        });
+        tinacms.init({ schema });
     </script>
 </body>
 </html> 
