@@ -236,7 +236,8 @@
 
         .curaduria-list li span:hover,
         .curaduria-list li span:hover .atb-title {
-            text-decoration: underline;
+            color: #a0a0a0;
+            text-decoration: none;
         }
 
         .curaduria-list li.active span,
@@ -255,12 +256,14 @@
         .curaduria-container a {
             text-decoration: none;
             color: black;
+            transition: color 0.2s ease-in-out;
         }
 
         .curaduria-list a:hover, 
         .hover-text a:hover,
         .curaduria-container a:hover {
-            text-decoration: underline;
+            color: #a0a0a0;
+            text-decoration: none;
         }
 
         /* Desktop navigation specific styles */
@@ -688,6 +691,38 @@
                 height: 100% !important;
                 overflow: hidden !important;
             }
+        }
+
+        /* Modificar los estilos de los enlaces en .aldan-text */
+        .aldan-text a {
+            text-decoration: none;
+            color: black;
+            transition: color 0.2s ease-in-out; /* Añadir transición suave */
+        }
+
+        .aldan-text a:hover {
+            color: #a0a0a0; /* Mismo color gris que el menú */
+            text-decoration: none; /* Eliminar el subrayado */
+        }
+
+        .aldan-text a::after {
+            content: none;
+        }
+
+        /* Asegurar que los enlaces dentro de .curaduria-text también sigan el mismo estilo */
+        .curaduria-text a {
+            text-decoration: none;
+            color: black;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .curaduria-text a:hover {
+            color: #a0a0a0;
+            text-decoration: none;
+        }
+
+        .curaduria-text a::after {
+            content: none;
         }
     </style>
     <script>
