@@ -2,22 +2,20 @@ backend:
   name: github
   repo: dahemar/coranovoa
   branch: main
-  site_domain: coranovoa.netlify.app
-  auth_endpoint: https://github.com/login/oauth/authorize
   client_id: Ov23li9Bd9fudYzANB0g
 
-media_folder: "images"
-public_folder: "/images"
+media_folder: 'images'
+public_folder: '/images'
 
 collections:
-  - name: "pages"
-    label: "Páginas"
+  - name: 'pages'
+    label: 'Páginas'
     files:
-      - name: "bio"
-        label: "Bio"
-        file: "bio.html"
+      - name: 'bio'
+        label: 'Bio'
+        file: 'bio.html'
         fields:
-          - {label: "Título", name: "title", widget: "string"}
+          - {label: 'Título', name: 'title', widget: 'string'}
           - {label: "Texto Bio (Galego)", name: "bio_text_gl", widget: "text"}
           - {label: "Texto Bio (Español)", name: "bio_text_es", widget: "text"}
           - {label: "Texto Bio (English)", name: "bio_text_en", widget: "text"}
