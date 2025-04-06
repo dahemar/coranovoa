@@ -227,8 +227,7 @@
             .aldan-text {
                 margin-top: 0;
                 font-size: 15px;
-                text-align: justify;
-                padding-left: 0;
+                text-align: left;
             }
 
             .language-switcher {
@@ -278,7 +277,6 @@
 
             .aldan-text {
                 font-size: 14px;
-                text-align: justify;
             }
             
             .language-switcher {
@@ -342,15 +340,16 @@
             font-style: italic;
         }
 
+        /* Modificar los estilos del enlace de Instagram */
         .instagram-link {
             text-decoration: none;
             color: black;
-            position: relative;
+            transition: color 0.2s ease-in-out; /* Añadir transición suave */
         }
 
         .instagram-link:hover {
-            text-decoration: underline;
-            color: black;
+            color: #a0a0a0; /* Mismo color gris que el menú */
+            text-decoration: none; /* Eliminar el subrayado */
         }
 
         .instagram-link::after {
