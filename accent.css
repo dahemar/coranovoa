@@ -11,7 +11,7 @@
 .atb-a-accent .accent {
     position: absolute;
     left: 50%;
-    top: -0.05em;
+    top: 0em;
     transform: translateX(-50%);
     font-family: 'Junicode', serif;
     font-size: 0.9em;
@@ -31,7 +31,7 @@
 .atb-i-accent .accent {
     position: absolute;
     left: 50%;
-    top: -0.05em;
+    top: 0em;
     transform: translateX(-50%);
     font-family: 'Junicode', serif;
     font-size: 0.9em;
@@ -51,7 +51,7 @@
 .atb-o-accent .accent {
     position: absolute;
     left: 50%;
-    top: -0.05em;
+    top: 0em;
     transform: translateX(-50%);
     font-family: 'Junicode', serif;
     font-size: 0.9em;
@@ -71,7 +71,7 @@
 .atb-u-accent .accent {
     position: absolute;
     left: 50%;
-    top: -0.05em;
+    top: 0em;
     transform: translateX(-50%);
     font-family: 'Junicode', serif;
     font-size: 0.9em;
@@ -91,7 +91,7 @@
 .atb-e-accent .accent {
     position: absolute;
     left: 50%;
-    top: -0.05em;
+    top: 0em;
     transform: translateX(-50%);
     font-family: 'Junicode', serif;
     font-size: 0.9em;
