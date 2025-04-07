@@ -95,4 +95,15 @@
     transform: translateX(-50%);
     font-family: 'Junicode', serif;
     font-size: 0.9em;
+}
+
+/* Media query para dispositivos móviles */
+@media (max-width: 768px) {
+    .atb-a-accent .accent,
+    .atb-i-accent .accent,
+    .atb-o-accent .accent,
+    .atb-u-accent .accent,
+    .atb-e-accent .accent {
+        top: 0.1em; /* Baja los acentos aún más en dispositivos móviles */
+    }
 } 
