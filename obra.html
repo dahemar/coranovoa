@@ -38,6 +38,7 @@
         body {
             font-family: 'Junicode', sans-serif;
             margin: 0;
+            padding: 0;
             background-color: white;
             color: black;
             overflow-x: hidden;
@@ -48,7 +49,7 @@
             z-index: 10;
             padding: 40px 0 40px 160px;
             max-width: 1600px;
-            margin: 0 auto;
+            margin: 0;
             transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
@@ -107,7 +108,7 @@
             position: relative;
             margin-top: 135px;
             min-height: 500px;
-            padding: 0 80px;
+            padding: 0;
             max-width: 1600px;
         }
 
@@ -221,7 +222,7 @@
             }
             
             .overlay-content {
-                padding: 10px;
+                padding: 0;
                 position: fixed;
                 width: 100%;
                 height: 100%;
@@ -279,7 +280,7 @@
 
             .obra-container {
                 margin-top: 165px;
-                padding: 0 20px;
+                padding: 0;
                 overflow-y: auto;
                 height: calc(100% - 165px);
                 position: fixed;
@@ -292,6 +293,19 @@
                 grid-template-columns: 1fr;
                 gap: 20px;
                 padding: 0;
+                width: 100%;
+            }
+
+            .obra-item {
+                width: 100%;
+                margin: 0;
+                padding: 0 20px;
+                box-sizing: border-box;
+            }
+
+            .obra-image {
+                padding-bottom: 90.0%;
+                margin: 0;
             }
 
             .obra-title {
@@ -317,11 +331,6 @@
                 bottom: -2px;
                 height: 2px;
                 z-index: 99;
-            }
-
-            .obra-image {
-                padding-bottom: 84.7%;
-                margin: 0 auto;
             }
         }
 
