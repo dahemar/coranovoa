@@ -114,7 +114,29 @@
 
         @media (min-width: 769px) {
             .obra-container {
-                margin-left: -80px;
+                margin-left: 0px;
+                max-width: 1200px;
+                margin-right: auto;
+            }
+
+            .obra-grid {
+                margin-top: 180px;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+                padding: 0;
+                max-width: 100%;
+                justify-items: start;
+            }
+
+            .obra-item {
+                width: 100%;
+                margin: 0;
+                position: relative;
+                cursor: pointer;
+                overflow: hidden;
+                content-visibility: auto;
+                contain-intrinsic-size: 0 500px;
             }
         }
 
@@ -144,15 +166,21 @@
             padding-bottom: 77%;
             background-size: cover;
             background-position: center;
-            transition: transform 0.3s ease-in-out;
             will-change: transform;
             transform: translateZ(0);
             backface-visibility: hidden;
             margin: 0 auto;
         }
 
-        .obra-item:hover .obra-image {
-            transform: scale(1.05);
+        /* Move hover animation to desktop only */
+        @media (min-width: 769px) {
+            .obra-image {
+                transition: transform 0.3s ease-in-out;
+            }
+
+            .obra-item:hover .obra-image {
+                transform: scale(1.05);
+            }
         }
 
         .obra-title {
@@ -847,7 +875,7 @@
                         <div class="obra-title"></div>
                         <div class="obra-title">c/ Ana Gesto</div>
                         <div class="obra-year">2022</div>
-                </div>
+                    </div>
 
                     <!-- Obra 8 -->
                     <div class="obra-item" data-id="obra8">
@@ -855,7 +883,7 @@
                         <div class="obra-title"></div>
                         <div class="obra-title">desvelado de imaxe</div>
                         <div class="obra-year">2022</div>
-            </div>
+                    </div>
 
                     <!-- Obra 9 -->
                     <div class="obra-item" data-id="obra9">
@@ -863,7 +891,7 @@
                         <div class="obra-title"></div>
                         <div class="obra-title">acción - inacción</div>
                         <div class="obra-year">2022</div>
-        </div>
+                    </div>
 
                     <!-- Obra 10 -->
                     <div class="obra-item" data-id="obra10">
