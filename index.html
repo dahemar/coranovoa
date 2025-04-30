@@ -23,7 +23,7 @@
     <!-- Preload critical fonts -->
     <link rel="preload" href="junicode.webfont/junicode_regular.woff2" as="font" type="font/woff2" crossorigin>
     
-    <!-- Navigation styles -->
+    <!-- Load navigation styles -->
     <link rel="stylesheet" href="navigation.css">
     
     <style>
@@ -111,17 +111,6 @@
             transform: translateX(-100%);
         }
 
-        .overlay-header {
-            display: flex;
-            flex-direction: column;
-            margin-top: 30px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            padding: 40px 0 30px 160px;
-        }
 
         /* Styles for navigation links */
         .no-underline-link {
@@ -165,30 +154,7 @@
             color: white !important;
         }
 
-        /* Desktop navigation specific styles */
-        .overlay-header h1 {
-            font-size: 16px;
-            margin-bottom: 50px;
-            font-weight: normal;
-            font-style: italic;
-            font-family: 'ATB Serif', serif;
-        }
 
-        .overlay-header nav {
-            display: flex;
-            flex-wrap: nowrap;
-            gap: 110px;
-            width: 90%;
-            max-width: 1000px;
-        }
-
-        .overlay-header nav a {
-            font-size: 16px;
-            font-weight: normal;
-            letter-spacing: 0px;
-            padding: 0;
-            margin-right: 0;
-        }
         
         /* Mobile responsive styles */
         @media (max-width: 768px) {
@@ -220,106 +186,11 @@
                 touch-action: none;
             }
 
-            .overlay-header {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 20px 0 20px 20px !important;
-                margin-top: 20px !important;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                z-index: 100;
-                background-color: transparent;
-            }
 
-            .overlay-header h1 {
-                font-size: 16px;
-                margin-bottom: 45px;
-                text-align: left;
-                width: 100%;
-                padding-left: 2px;
-                margin-left: 2px;
-                color: white !important;
-            }
 
-            .overlay-header nav {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: space-between;
-                gap: 18px 0;
-                width: 95%;
-                margin: 0 auto;
-            }
-
-            .overlay-header nav a {
-                margin-bottom: 0;
-                font-size: 16px;
-                letter-spacing: 0px;
-                padding: 5px;
-                width: auto;
-                text-align: center;
-                color: white !important;
-            }
-
-            .language-switcher {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                font-size: 15px;
-                opacity: 1 !important;
-                pointer-events: auto !important;
-                z-index: 2000 !important;
-            }
         }
 
-        @media (max-width: 480px) {
-            .overlay-header {
-                margin-top: 20px !important;
-                padding: 15px 0 15px 20px !important;
-            }
 
-            .overlay-header h1 {
-                font-size: 15px;
-                margin-bottom: 40px;
-                padding-left: 2px;
-                margin-left: 2px;
-            }
-
-            .overlay-header nav {
-                gap: 15px 0;
-            }
-
-            .overlay-header nav a {
-                font-size: 15px;
-                padding: 4px;
-            }
-            
-            .language-switcher {
-                font-size: 14px;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .overlay-header {
-                padding: 10px 0 10px 20px !important;
-            }
-            
-            .overlay-header nav {
-                gap: 12px 0;
-                width: 100%;
-            }
-
-            .overlay-header nav a {
-                font-size: 14px;
-                padding: 3px;
-            }
-            
-            .language-switcher {
-                font-size: 13px;
-            }
-        }
 
         /* Disable sliding transitions on all devices */
         .overlay-content.sliding-left {

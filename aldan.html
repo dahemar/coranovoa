@@ -54,90 +54,6 @@
             margin: 0 auto;
         }
 
-        .overlay-header {
-            text-align: left;
-            display: flex;
-            flex-direction: column;
-            margin-top: 30px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: white;
-            z-index: 1000;
-            padding: 40px 0 30px 160px;
-        }
-
-        .overlay-header h1 {
-            font-size: 16px;
-            margin-bottom: 50px;
-            font-weight: normal;
-            font-style: italic;
-            font-family: 'ATB Serif', serif;
-        }
-
-        .overlay-header nav {
-            display: flex;
-            flex-wrap: nowrap;
-            gap: 110px;
-            width: 90%;
-            max-width: 1000px;
-        }
-
-        .overlay-header nav a {
-            font-size: 16px;
-            font-weight: normal;
-            letter-spacing: 0px;
-            padding: 0;
-            margin-right: 0;
-        }
-
-        /* Styles for navigation links */
-        .no-underline-link {
-            text-decoration: none;
-            transition: color 0.2s ease-in-out;
-            color: black;
-        }
-
-        .no-underline-link:hover {
-            color: #a0a0a0;
-        }
-
-        .no-underline-link.active {
-            color: #a0a0a0;
-        }
-
-        .hover-light-grey {
-            transition: color 0.2s ease-in-out;
-        }
-
-        .hover-light-grey:hover {
-            color: #a0a0a0;
-        }
-
-        .language-switcher {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 2000;
-            color: black;
-            font-size: 15px;
-        }
-
-        .language-switcher a {
-            text-decoration: none;
-            margin-right: 5px;
-            color: black;
-        }
-
-        .language-switcher a:hover {
-            color: #a0a0a0;
-        }
-
-        .language-switcher a.active-lang {
-            color: #a0a0a0 !important;
-        }
-
         /* Aldan container styles */
         .aldan-container {
             position: relative;
@@ -157,7 +73,7 @@
             text-align: justify;
         }
 
-        /* Mobile responsive styles */
+        /* Mobile responsive styles for Aldan only */
         @media (max-width: 768px) {
             body {
                 overflow: hidden;
@@ -172,47 +88,6 @@
                 width: 100%;
                 height: 100%;
                 overflow: hidden;
-            }
-
-            .overlay-header {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 20px 0 20px 20px !important;
-                margin-top: 20px !important;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                background-color: white;
-                z-index: 100;
-            }
-
-            .overlay-header h1 {
-                font-size: 16px;
-                margin-bottom: 45px;
-                text-align: left;
-                width: 100%;
-                padding-left: 2px;
-                margin-left: 2px;
-            }
-
-            .overlay-header nav {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: space-between;
-                gap: 18px 0;
-                width: 95%;
-                margin: 0 auto;
-            }
-
-            .overlay-header nav a {
-                margin-bottom: 0;
-                font-size: 16px;
-                letter-spacing: 0px;
-                padding: 5px;
-                width: auto;
-                text-align: center;
             }
 
             .aldan-container {
@@ -232,46 +107,9 @@
                 font-size: 15px;
                 text-align: left;
             }
-
-            .language-switcher {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                font-size: 15px;
-                opacity: 1 !important;
-                pointer-events: auto !important;
-                z-index: 2000 !important;
-            }
-
-            .overlay-header::after {
-                bottom: -2px;
-                height: 2px;
-                z-index: 99;
-            }
         }
 
         @media (max-width: 480px) {
-            .overlay-header {
-                margin-top: 20px !important;
-                padding: 15px 0 15px 20px !important;
-            }
-
-            .overlay-header h1 {
-                font-size: 15px;
-                margin-bottom: 40px;
-                padding-left: 2px;
-                margin-left: 2px;
-            }
-
-            .overlay-header nav {
-                gap: 15px 0;
-            }
-
-            .overlay-header nav a {
-                font-size: 15px;
-                padding: 4px;
-            }
-
             .aldan-container {
                 margin-top: 155px;
                 padding: 0 20px 0 22px;
@@ -281,60 +119,14 @@
             .aldan-text {
                 font-size: 14px;
             }
-            
-            .language-switcher {
-                font-size: 14px;
-            }
         }
 
         @media (max-width: 360px) {
-            .overlay-header {
-                padding: 10px 0 10px 20px !important;
-            }
-            
-            .overlay-header nav {
-                gap: 12px 0;
-                width: 100%;
-            }
-
-            .overlay-header nav a {
-                font-size: 14px;
-                padding: 3px;
-            }
-
             .aldan-container {
                 margin-top: 145px;
                 padding: 0 20px 0 22px;
                 height: calc(100% - 145px);
             }
-            
-            .language-switcher {
-                font-size: 13px;
-            }
-        }
-
-        /* Solución para evitar que el texto aparezca sobre el menú */
-        .overlay-header::after {
-            content: "";
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background-color: white;
-            z-index: 999;
-        }
-
-        /* Añadir un pseudo-elemento before para cubrir todo el espacio por encima del menú */
-        .overlay-header::before {
-            content: "";
-            position: absolute;
-            top: -100vh; /* Extender hacia arriba para cubrir todo el espacio superior */
-            left: 0;
-            width: 100%;
-            height: 100vh; /* Alto suficiente para cubrir toda la parte superior */
-            background-color: white;
-            z-index: -1; /* Colocarlo detrás del contenido del header pero encima del contenido de la página */
         }
 
         .atb-title {
@@ -343,16 +135,16 @@
             font-style: italic;
         }
 
-        /* Modificar los estilos del enlace de Instagram */
+        /* Instagram link styles */
         .instagram-link {
             text-decoration: none;
             color: black;
-            transition: color 0.2s ease-in-out; /* Añadir transición suave */
+            transition: color 0.2s ease-in-out;
         }
 
         .instagram-link:hover {
-            color: #a0a0a0; /* Mismo color gris que el menú */
-            text-decoration: none; /* Eliminar el subrayado */
+            color: #a0a0a0;
+            text-decoration: none;
         }
 
         .instagram-link::after {
@@ -373,7 +165,6 @@
             content: none;
         }
 
-        /* Añadir después de las definiciones de fuentes existentes */
         .atb-a-accent {
             position: relative;
             display: inline-block;
@@ -450,24 +241,9 @@
 
             let selectedTranslations = translations[lang];
 
-            document.querySelector(".overlay-header nav a:nth-child(1)").textContent = selectedTranslations.obra;
-            document.querySelector(".overlay-header nav a:nth-child(2)").textContent = selectedTranslations.bio;
-            document.querySelector(".overlay-header nav a:nth-child(4)").textContent = selectedTranslations.curaduria;
-            document.querySelector(".overlay-header nav a:nth-child(3)").textContent = selectedTranslations.aldan;
-            document.querySelector(".overlay-header nav a:nth-child(5)").textContent = selectedTranslations.contacto;
-
-            // Update Aldan text with innerHTML instead of textContent to allow HTML tags
-            document.querySelector('.aldan-text').innerHTML = selectedTranslations.aldanText;
+            document.querySelector(".aldan-text").innerHTML = selectedTranslations.aldanText;
 
             document.documentElement.setAttribute("lang", lang);
-
-            document.querySelectorAll('.language-switcher a').forEach(link => {
-                if (link.getAttribute('data-lang') === lang) {
-                    link.classList.add('active-lang');
-                } else {
-                    link.classList.remove('active-lang');
-                }
-            });
 
             setCookie('selectedLanguage', lang, 30);
             
@@ -497,7 +273,6 @@
                     <a href="contacto.html" class="no-underline-link">contacto</a>
                 </nav>
             </header>
-
             <div class="aldan-container">
                 <div class="aldan-text">
                     <span class="atb-title">Algo de ver<span class="atb-a-accent"><span class="base">a</span><span class="accent">´</span></span>n</span> es un encuentro anual autogestionado, donde las únicas certezas son dónde y cuándo: Aldán, Cangas do Morrazo, Galicia, en verano. El qué es indefinido, está por construir mediante el hacer —como la propia práctica—, cambia cada vez. En la búsqueda de profesionalizar los proyectos, implicando a más personas y evitando nuestra precarización, pudiendo sostener la primera residencia, paralela al proyecto de encuentro, dividiendo este en dos, mejorando así la organización al coincidir el taller y lugar de residencia, incrementando el número de participantes (de 17 a 24) y la duración (de 5 a 7 días), concluyendo con una muestra abierta al público. Descentralizando los ejes, favoreciendo el diálogo con lo próximo y lo periférico. Se requiere rodear para comprender, desde la escucha, el respeto y los cuidados con lo que nos rodea y nosotras mismas. Un ejercicio nominal, pero no sólo desde la palabra. Una práctica por y para artistas, sobre y desde el presente y su autonomía. El encuentro se articula como dispositivo relacional, entrelazando arte y vida, desafiando las limitaciones del medio y favoreciendo presencias con lo que hay: autoposibilitándonos. Tiene más que ver con un modo de vida, una forma de estar en el mundo, de manera situada. Se plantea la existencia de un punto de intersección entre la realidad interior y la exterior (H. Michaux), con lo material e inmaterial del espacio. situaciones de realidades complejas que operan como germen de otras realidades larvarias.
@@ -517,3 +292,4 @@
 </body>
 
 </html>
+

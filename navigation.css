@@ -3,14 +3,14 @@
     text-align: left;
     display: flex;
     flex-direction: column;
-    margin-top: 30px;
+    margin-top: 15px;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     background-color: white;
     z-index: 1000;
-    padding: 40px 0 30px 160px;
+    padding: 20px 0 15px 160px;
 }
 
 /* Specific styles for index page */
@@ -29,9 +29,13 @@
     display: none;
 }
 
+.index-page .overlay-header h1 a {
+    color: white !important;
+}
+
 .overlay-header h1 {
     font-size: 16px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     font-weight: normal;
     font-style: italic;
     font-family: 'ATB Serif', serif;
@@ -130,8 +134,8 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        padding: 20px 0 20px 20px !important;
-        margin-top: 20px !important;
+        padding: 15px 0 10px 20px !important;
+        margin-top: 15px !important;
         position: fixed;
         top: 0;
         left: 0;
@@ -147,7 +151,7 @@
 
     .overlay-header h1 {
         font-size: 16px;
-        margin-bottom: 45px;
+        margin-bottom: 30px;
         text-align: left;
         width: 100%;
         padding-left: 2px;
@@ -164,7 +168,7 @@
     }
 
     .overlay-header nav a {
-        margin-bottom: 0;
+        margin-bottom: 0px !important;
         font-size: 16px;
         letter-spacing: 0px;
         padding: 5px;
@@ -183,21 +187,19 @@
     }
 
     .overlay-header::after {
-        bottom: -2px;
-        height: 2px;
-        z-index: 99;
+        display: none !important;
     }
 }
 
 @media (max-width: 480px) {
     .overlay-header {
-        margin-top: 20px !important;
-        padding: 15px 0 15px 20px !important;
+        margin-top: 15px !important;
+        padding: 10px 0 8px 20px !important;
     }
 
     .overlay-header h1 {
         font-size: 15px;
-        margin-bottom: 40px;
+        margin-bottom: 25px;
         padding-left: 2px;
         margin-left: 2px;
     }
@@ -218,7 +220,7 @@
 
 @media (max-width: 360px) {
     .overlay-header {
-        padding: 10px 0 10px 20px !important;
+        padding: 8px 0 6px 20px !important;
     }
     
     .overlay-header nav {

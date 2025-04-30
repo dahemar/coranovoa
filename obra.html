@@ -11,6 +11,8 @@
     <link rel="preload" href="junicode.webfont/junicode_bold.woff" as="font" type="font/woff" crossorigin="anonymous">
     <link rel="preload" href="fonts/demo-atbserif-it.otf" as="font" type="font/opentype" crossorigin="anonymous">
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load navigation styles -->
+    <link rel="stylesheet" href="navigation.css">
     <style>
         /* Font Definitions */
         @font-face {
@@ -43,7 +45,6 @@
             color: black;
             overflow-x: hidden;
         }
-
         .overlay-content {
             position: relative;
             z-index: 10;
@@ -52,58 +53,7 @@
             margin: 0;
             transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
-
-        .overlay-header {
-            text-align: left;
-        }
-
-        /* Styles for navigation links */
-        .no-underline-link {
-            text-decoration: none;
-            transition: color 0.2s ease-in-out;
-            color: black;
-        }
-
-        .no-underline-link:hover {
-            color: #a0a0a0;
-        }
-
-        .no-underline-link.active {
-            color: #a0a0a0;
-        }
-
-        .hover-light-grey {
-            transition: color 0.2s ease-in-out;
-        }
-
-        .hover-light-grey:hover {
-            color: #a0a0a0;
-        }
-
-        .language-switcher {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 2000;
-            color: black;
-            font-size: 15px;
-        }
-
-        .language-switcher a {
-            text-decoration: none;
-            margin-right: 5px;
-            color: black;
-        }
-
-        .language-switcher a:hover {
-            color: #a0a0a0;
-        }
-
-        .language-switcher a.active-lang {
-            color: #a0a0a0 !important;
-        }
-
-        /* Obra container styles */
+        /* Obra container and grid styles */
         .obra-container {
             position: relative;
             margin-top: 135px;
@@ -111,14 +61,12 @@
             padding: 0;
             max-width: 1600px;
         }
-
         @media (min-width: 769px) {
             .obra-container {
                 margin-left: 0px;
                 max-width: 1200px;
                 margin-right: auto;
             }
-
             .obra-grid {
                 margin-top: 180px;
                 display: grid;
@@ -128,7 +76,6 @@
                 max-width: 100%;
                 justify-items: start;
             }
-
             .obra-item {
                 width: 100%;
                 margin: 0;
@@ -139,7 +86,6 @@
                 contain-intrinsic-size: 0 500px;
             }
         }
-
         .obra-grid {
             margin-top: 180px;
             display: grid;
@@ -149,7 +95,6 @@
             max-width: 100%;
             justify-items: start;
         }
-
         .obra-item {
             width: 90%;
             margin: 0 auto 0 0;
@@ -159,7 +104,6 @@
             content-visibility: auto;
             contain-intrinsic-size: 0 500px;
         }
-
         .obra-image {
             width: 100%;
             height: 0;
@@ -171,18 +115,15 @@
             backface-visibility: hidden;
             margin: 0 auto;
         }
-
         /* Move hover animation to desktop only */
         @media (min-width: 769px) {
             .obra-image {
                 transition: transform 0.3s ease-in-out;
             }
-
             .obra-item:hover .obra-image {
                 transform: scale(1.05);
             }
         }
-
         .obra-title {
             margin-top: 10px;
             font-size: 15px;
@@ -191,56 +132,15 @@
             font-weight: normal;
             font-style: italic;
         }
-
         .obra-year {
             font-size: 15px;
             color: #a0a0a0;
         }
-
         .junicode-slash {
             font-family: 'Junicode', serif !important;
             font-style: normal !important;
         }
-
-        /* Desktop navigation specific styles */
-        .overlay-header {
-            display: flex;
-            flex-direction: column;
-            margin-top: 30px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: white;
-            z-index: 1000;
-            padding: 40px 0 30px 160px;
-        }
-
-        .overlay-header h1 {
-            font-size: 16px;
-            margin-bottom: 50px;
-            font-weight: normal;
-            font-style: italic;
-            font-family: 'ATB Serif', serif;
-        }
-
-        .overlay-header nav {
-            display: flex;
-            flex-wrap: nowrap;
-            gap: 110px;
-            width: 90%;
-            max-width: 1000px;
-        }
-
-        .overlay-header nav a {
-            font-size: 16px;
-            font-weight: normal;
-            letter-spacing: 0px;
-            padding: 0;
-            margin-right: 0;
-        }
-
-        /* Mobile responsive styles */
+        /* Mobile and detail page styles remain unchanged */
         @media (max-width: 768px) {
             body {
                 overflow: hidden;
@@ -263,47 +163,6 @@
 
             .overlay-content.sliding-left {
                 transform: translateX(-100%);
-            }
-
-            .overlay-header {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 20px 0 20px 20px !important;
-                margin-top: 20px !important;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                background-color: white;
-                z-index: 100;
-            }
-
-            .overlay-header h1 {
-                font-size: 16px;
-                margin-bottom: 45px;
-                text-align: left;
-                width: 100%;
-                padding-left: 2px;
-                margin-left: 2px;
-            }
-
-            .overlay-header nav {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: space-between;
-                gap: 18px 0;
-                width: 95%;
-                margin: 0 auto;
-            }
-
-            .overlay-header nav a {
-                margin-bottom: 0;
-                font-size: 16px;
-                letter-spacing: 0px;
-                padding: 5px;
-                width: auto;
-                text-align: center;
             }
 
             .obra-container {
@@ -355,34 +214,10 @@
             }
 
             /* Ajuste del pseudoelemento para móvil */
-            .overlay-header::after {
-                bottom: -2px;
-                height: 2px;
-                z-index: 99;
-            }
+
         }
 
         @media (max-width: 480px) {
-            .overlay-header {
-                margin-top: 20px !important;
-                padding: 15px 0 15px 20px !important;
-            }
-
-            .overlay-header h1 {
-                font-size: 15px;
-                margin-bottom: 40px;
-                padding-left: 2px;
-                margin-left: 2px;
-            }
-
-            .overlay-header nav {
-                gap: 15px 0;
-            }
-
-            .overlay-header nav a {
-                font-size: 15px;
-                padding: 4px;
-            }
 
             .obra-container {
                 margin-top: 155px;
@@ -423,19 +258,7 @@
         }
 
         @media (max-width: 360px) {
-            .overlay-header {
-                padding: 10px 0 10px 20px !important;
-            }
-            
-            .overlay-header nav {
-                gap: 12px 0;
-                width: 100%;
-            }
 
-            .overlay-header nav a {
-                font-size: 14px;
-                padding: 3px;
-            }
             
             .obra-container {
                 margin-top: 145px;
@@ -569,28 +392,10 @@
         }
 
         /* Solución para evitar que el texto aparezca sobre el menú */
-        .overlay-header::after {
-            content: "";
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background-color: white;
-            z-index: 999;
-        }
+
 
         /* Añadir un pseudo-elemento before para cubrir todo el espacio por encima del menú */
-        .overlay-header::before {
-            content: "";
-            position: absolute;
-            top: -100vh; /* Extender hacia arriba para cubrir todo el espacio superior */
-            left: 0;
-            width: 100%;
-            height: 100vh; /* Alto suficiente para cubrir toda la parte superior */
-            background-color: white;
-            z-index: -1; /* Colocarlo detrás del contenido del header pero encima del contenido de la página */
-        }
+
 
         @media (min-width: 769px) {
             /* Eliminar la transición en escritorio */

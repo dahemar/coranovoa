@@ -23,6 +23,7 @@
     <link rel="preload" as="image" href="images/6.png">
     
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="navigation.css">
     <style>
         /* Font Definitions */
         @font-face {
@@ -71,86 +72,7 @@
             width: 100%;
         }
 
-        .overlay-header {
-            text-align: left;
-            display: flex;
-            flex-direction: column;
-            margin-top: 30px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: white;
-            z-index: 1000;
-            padding: 40px 0 30px 160px;
-        }
 
-        .overlay-header::after {
-            content: "";
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background-color: white;
-            z-index: 999;
-        }
-
-        .overlay-header::before {
-            content: "";
-            position: absolute;
-            top: -100vh;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background-color: white;
-            z-index: -1;
-        }
-
-        .no-underline-link {
-            text-decoration: none;
-            transition: color 0.2s ease-in-out;
-            color: black;
-        }
-
-        .no-underline-link:hover {
-            color: #a0a0a0;
-        }
-
-        .no-underline-link.active {
-            color: #a0a0a0;
-        }
-
-        .hover-light-grey {
-            transition: color 0.2s ease-in-out;
-        }
-
-        .hover-light-grey:hover {
-            color: #a0a0a0;
-        }
-
-        .language-switcher {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 2000;
-            color: black;
-            font-size: 15px;
-        }
-
-        .language-switcher a {
-            text-decoration: none;
-            margin-right: 5px;
-            color: black;
-        }
-
-        .language-switcher a:hover {
-            color: #a0a0a0;
-        }
-
-        .language-switcher a.active-lang {
-            color: #a0a0a0 !important;
-        }
 
         .curaduria-container {
             position: relative;
@@ -269,36 +191,6 @@
             text-decoration: none;
         }
 
-        /* Desktop navigation specific styles */
-        .overlay-header {
-            display: flex;
-            flex-direction: column;
-            margin-top: 30px;
-        }
-
-        .overlay-header h1 {
-            font-size: 16px;
-            margin-bottom: 50px;
-            font-weight: normal;
-            font-style: italic;
-            font-family: 'ATB Serif', serif;
-        }
-
-        .overlay-header nav {
-            display: flex;
-            flex-wrap: nowrap;
-            gap: 110px;
-            width: 90%;
-            max-width: 1000px;
-        }
-
-        .overlay-header nav a {
-            font-size: 16px;
-            font-weight: normal;
-            letter-spacing: 0px;
-            padding: 0;
-            margin-right: 0;
-        }
 
         /* Mobile responsive styles */
         @media (max-width: 768px) {
@@ -319,46 +211,6 @@
                 will-change: transform;
             }
 
-            .overlay-header {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 20px 0 20px 20px !important;
-                margin-top: 20px !important;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                background-color: white;
-                z-index: 100;
-            }
-
-            .overlay-header h1 {
-                font-size: 16px;
-                margin-bottom: 45px;
-                text-align: left;
-                width: 100%;
-                padding-left: 2px;
-                margin-left: 2px;
-            }
-
-            .overlay-header nav {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: space-between;
-                gap: 18px 0;
-                width: 95%;
-                margin: 0 auto;
-            }
-
-            .overlay-header nav a {
-                margin-bottom: 0;
-                font-size: 16px;
-                letter-spacing: 0px;
-                padding: 5px;
-                width: auto;
-                text-align: center;
-            }
 
             .curaduria-list {
                 padding-left: 20px;
@@ -465,26 +317,6 @@
         }
 
         @media (max-width: 480px) {
-            .overlay-header {
-                margin-top: 20px !important;
-                padding: 15px 0 15px 20px !important;
-            }
-
-            .overlay-header h1 {
-                font-size: 15px;
-                margin-bottom: 40px;
-                padding-left: 2px;
-                margin-left: 2px;
-            }
-
-            .overlay-header nav {
-                gap: 10px 0;
-            }
-
-            .overlay-header nav a {
-                font-size: 15px;
-                padding: 4px;
-            }
 
             .curaduria-list {
                 margin-top: -40px;
@@ -516,19 +348,7 @@
         }
 
         @media (max-width: 360px) {
-            .overlay-header {
-                padding: 10px 0 10px 20px !important;
-            }
-            
-            .overlay-header nav {
-                gap: 12px 0;
-                width: 100%;
-            }
 
-            .overlay-header nav a {
-                font-size: 14px;
-                padding: 3px;
-            }
             
             .curaduria-list li {
                 font-size: 14px;
@@ -763,7 +583,7 @@
                     "aldan": "aldán",
                     "contacto": "contacto",
                     "back": "←",
-                    "cando_falo_text": `<span class="atb-title project-title">Cando falo de corpo</span> propón un segundo pensamento e espazo de encontro de corporei-
+                    "cando_falo_text": `<span class="atb-title project-title">Cando falo de corpo</span> propón un segundo pensamiento e espazo de encontro de corporei-
                         dades esparcidas e subxectividades encarnadas.<br><br>
                         Corporeidades presentes, variadas, íntimamente ligadas ao corpo colectivo. Cor-
                         pos que se relacionan, corpos inscritos, testemuñas, encarnados, incompletos e inaca-
@@ -952,11 +772,11 @@
 
             let selectedTranslations = translations[lang];
 
-            document.querySelector(".overlay-header nav a:nth-child(1)").textContent = selectedTranslations.obra;
-            document.querySelector(".overlay-header nav a:nth-child(2)").textContent = selectedTranslations.bio;
-            document.querySelector(".overlay-header nav a:nth-child(4)").textContent = selectedTranslations.curaduria;
-            document.querySelector(".overlay-header nav a:nth-child(3)").textContent = selectedTranslations.aldan;
-            document.querySelector(".overlay-header nav a:nth-child(5)").textContent = selectedTranslations.contacto;
+            document.querySelector('nav a:nth-child(1)').textContent = selectedTranslations.obra;
+            document.querySelector('nav a:nth-child(2)').textContent = selectedTranslations.bio;
+            document.querySelector('nav a:nth-child(4)').textContent = selectedTranslations.curaduria;
+            document.querySelector('nav a:nth-child(3)').textContent = selectedTranslations.aldan;
+            document.querySelector('nav a:nth-child(5)').textContent = selectedTranslations.contacto;
 
             // Actualizar el texto del botón de volver para que sea solo la flecha
             const backButtons = document.querySelectorAll('.mobile-back-button');
