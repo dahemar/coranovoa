@@ -13,6 +13,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Load navigation styles -->
     <link rel="stylesheet" href="navigation.css">
+    <link rel="stylesheet" href="accent.css">
     <style>
         /* Font Definitions */
         @font-face {
@@ -565,12 +566,15 @@
                 }
             });
 
-            // Reemplazar '/', '-', '_', '´', '*', '˙', '˚', '°' por span con Junicode en los títulos de obra
+            // Reemplazar '/', '-', '_', '´', '*', '˙', '˚', '°' por span con Junicode en los títulos de obra SOLO si no contienen HTML especial
             document.querySelectorAll('.obra-title').forEach(function(el) {
-                el.innerHTML = el.innerHTML
-                    .replace(/[\/\-_´*˙˚°]/g, function(match) {
-                        return '<span class="junicode-slash">' + match + '</span>';
-                    });
+                // Solo modificar si NO contiene etiquetas HTML (es texto plano)
+                if (!el.innerHTML.includes('<span')) {
+                    el.innerHTML = el.innerHTML
+                        .replace(/[\/\-_´*˙˚°]/g, function(match) {
+                            return '<span class="junicode-slash">' + match + '</span>';
+                        });
+                }
             });
         };
     </script>
@@ -644,7 +648,7 @@
                     <!-- Obra 6 -->
                     <div class="obra-item" data-id="obra6">
                         <div class="obra-image" style="background-image: url('images/accion_de_prension.png');"></div>
-                        <div class="obra-title">acción de prensión</div>
+                        <div class="obra-title">acci<span class="atb-o-accent"><span class="base">o</span><span class="accent">´</span></span>n de prensi<span class="atb-o-accent"><span class="base">o</span><span class="accent">´</span></span>n</div>
                         <div class="obra-year">2024</div>
                     </div>
 
