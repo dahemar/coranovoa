@@ -242,19 +242,38 @@
 
             document.documentElement.setAttribute("lang", lang);
 
-            // Update section titles
-            document.getElementById("education-title").innerHTML = selectedTranslations.educacion;
-            document.getElementById("meetings-title").textContent = selectedTranslations.encontros;
-            document.getElementById("workshops-title").textContent = selectedTranslations.obradoiros;
-            document.getElementById("publications-title").textContent = selectedTranslations.publicacions;
-            document.getElementById("exhibitions-title").innerHTML = selectedTranslations.exposicions;
-
-            // Update navigation links
             document.querySelector(".overlay-header nav a:nth-child(1)").textContent = selectedTranslations.obra;
             document.querySelector(".overlay-header nav a:nth-child(2)").textContent = selectedTranslations.bio;
-            document.querySelector(".overlay-header nav a:nth-child(3)").textContent = selectedTranslations.aldan;
             document.querySelector(".overlay-header nav a:nth-child(4)").textContent = selectedTranslations.curaduria;
+            document.querySelector(".overlay-header nav a:nth-child(3)").textContent = selectedTranslations.aldan;
             document.querySelector(".overlay-header nav a:nth-child(5)").textContent = selectedTranslations.contacto;
+
+            // Update section titles
+            if (document.getElementById("education-title")) {
+                document.getElementById("education-title").innerHTML = selectedTranslations.educacion;
+            }
+            if (document.getElementById("meetings-title")) {
+                document.getElementById("meetings-title").textContent = selectedTranslations.encontros;
+            }
+            if (document.getElementById("workshops-title")) {
+                document.getElementById("workshops-title").textContent = selectedTranslations.obradoiros;
+            }
+            if (document.getElementById("publications-title")) {
+                document.getElementById("publications-title").textContent = selectedTranslations.publicacions;
+            }
+            if (document.getElementById("exhibitions-title")) {
+                document.getElementById("exhibitions-title").innerHTML = selectedTranslations.exposicions;
+            }
+
+            document.documentElement.setAttribute("lang", lang);
+
+            document.querySelectorAll('.language-switcher a').forEach(link => {
+                if (link.getAttribute('data-lang') === lang) {
+                    link.classList.add('active-lang');
+                } else {
+                    link.classList.remove('active-lang');
+                }
+            });
             
             return false;
         }
