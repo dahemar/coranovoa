@@ -227,45 +227,19 @@
             document.fonts.ready.then(function() {
                 document.documentElement.classList.add('fonts-loaded');
             });
-            
-            // Fallback in case fonts take too long
             setTimeout(function() {
                 document.documentElement.classList.add('fonts-loaded');
             }, 300);
         } else {
-            // Fallback for browsers that don't support document.fonts
             document.documentElement.classList.add('fonts-loaded');
         }
         
         // JavaScript for language switching (simplified)
-        let currentLanguage = "esp"; // Set a default language to Spanish
-
-        function setCookie(name, value, days) {
-            let expires = "";
-            if (days) {
-                let date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                expires = "; expires=" + date.toUTCString();
-            }
-            document.cookie = name + "=" + (value || "") + expires + "; path=/";
-        }
-
-        function getCookie(name) {
-            let nameEQ = name + "=";
-            let ca = document.cookie.split(';');
-            for (let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-            }
-            return null;
-        }
+        let currentLanguage = localStorage.getItem('language') || 'esp';
 
         function changeLanguage(lang) {
             currentLanguage = lang;
-            
-            // In a real application, you would use a translation library or
-            // fetch translations from a server. This is a simplified example.
+            localStorage.setItem('language', lang);
             let translations = {
                 "gal": {
                     "obra": "obra",
@@ -314,11 +288,7 @@
                     link.classList.remove('active-lang');
                 }
             });
-
-            // Store the selected language in a cookie
-            setCookie('selectedLanguage', lang, 30); // Expires in 30 days
             
-            // Prevent default link behavior
             return false;
         }
 
@@ -353,16 +323,13 @@
         }
 
         window.onload = function() {
-            // Check for existing language preference in cookie
-            let savedLanguage = getCookie('selectedLanguage');
-
+            // Check for existing language preference in localStorage
+            let savedLanguage = localStorage.getItem('language');
             if (savedLanguage) {
                 currentLanguage = savedLanguage;
             }
-
             // Set initial active language
             changeLanguage(currentLanguage);
-            
             // Añadir event listeners para los enlaces de navegación
             document.querySelectorAll('.overlay-header nav a').forEach(link => {
                 link.addEventListener('click', function(e) {
@@ -370,11 +337,9 @@
                     navigateWithTransition(this.getAttribute('href'));
                 });
             });
-
             // Add enter transition class
             const pageContainer = document.querySelector('.page-container');
             pageContainer.classList.add('fade-enter');
-
             // Remove enter transition class after animation
             setTimeout(() => {
                 pageContainer.classList.remove('fade-enter');
@@ -395,7 +360,6 @@
                 script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
                 document.body.appendChild(script);
             }
-
             // Optimize resource timing
             if (window.requestIdleCallback) {
                 requestIdleCallback(() => {

@@ -188,31 +188,11 @@
     </style>
 
     <script>
-        let currentLanguage = 'gal';
-
-        function setCookie(name, value, days) {
-            let expires = "";
-            if (days) {
-                let date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                expires = "; expires=" + date.toUTCString();
-            }
-            document.cookie = name + "=" + (value || "") + expires + "; path=/";
-        }
-
-        function getCookie(name) {
-            let nameEQ = name + "=";
-            let ca = document.cookie.split(';');
-            for (let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-            }
-            return null;
-        }
+        let currentLanguage = localStorage.getItem('language') || 'esp';
 
         function changeLanguage(lang) {
             currentLanguage = lang;
+            localStorage.setItem('language', lang);
 
             const translations = {
                 "gal": {
@@ -262,8 +242,6 @@
 
             document.documentElement.setAttribute("lang", lang);
 
-            setCookie('selectedLanguage', lang, 30);
-            
             // Update section titles
             document.getElementById("education-title").innerHTML = selectedTranslations.educacion;
             document.getElementById("meetings-title").textContent = selectedTranslations.encontros;
@@ -277,15 +255,11 @@
             document.querySelector(".overlay-header nav a:nth-child(3)").textContent = selectedTranslations.aldan;
             document.querySelector(".overlay-header nav a:nth-child(4)").textContent = selectedTranslations.curaduria;
             document.querySelector(".overlay-header nav a:nth-child(5)").textContent = selectedTranslations.contacto;
-
+            
             return false;
         }
 
         window.onload = function() {
-            let savedLanguage = getCookie('selectedLanguage');
-            if (savedLanguage) {
-                currentLanguage = savedLanguage;
-            }
             changeLanguage(currentLanguage);
         };
     </script>
@@ -312,7 +286,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Language Switcher -->
         <div class="language-switcher">
             <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /

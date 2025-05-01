@@ -549,31 +549,11 @@
         }
     </style>
     <script>
-        let currentLanguage = 'gal';
-
-        function setCookie(name, value, days) {
-            let expires = "";
-            if (days) {
-                let date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                expires = "; expires=" + date.toUTCString();
-            }
-            document.cookie = name + "=" + (value || "") + expires + "; path=/";
-        }
-
-        function getCookie(name) {
-            let nameEQ = name + "=";
-            let ca = document.cookie.split(';');
-            for (let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-            }
-            return null;
-        }
+        let currentLanguage = localStorage.getItem('language') || 'esp';
 
         function changeLanguage(lang) {
             currentLanguage = lang;
+            localStorage.setItem('language', lang);
 
             const translations = {
                 "gal": {
@@ -598,8 +578,7 @@
                         obra, desafiando as limitacións do medio e autoposibilitándonos, dando lugar a espazos e
                         resistencias, exercendo unha desaprendizaxe comprometida coa materialidade que xorde.<br><br>
                         Espazos: Cuenca, Almería, Sierra de Huelva, Festival Line up Action (Coimbra), Santiago
-                        de Compostela, Aldán, TEM, Porto de Valencia, El Parterre, El Grao, Escombrera, Fun-
-                        dació Sala Castelló, Universidad Politécnica de Valencia, IVAM, Estudi P, entre outros.`,
+                        de Compostela, Aldán, TEM, Porto de Valencia, El Parterre, El Grao, Escombrera, Fundació Sala Castelló, Universidad Politécnica de Valencia, IVAM, Estudi P, entre outros.`,
                     "algo_veran_text": `<span class="atb-title project-title">Algo de ver<span class="atb-a-accent"><span class="base">a</span><span class="accent">´</span></span>n</span> é un encontro/taller/residencia anual autoxestionado, onde as únicas certezas
                         son onde e cando: Aldán (Cangas do Morrazi, Galiza), en verán. O qué é indefinido, está
                         por construir mediante o facer, coma a práctica, cambia cada vez.<br><br>
@@ -662,8 +641,7 @@
                         obra, desafiando las limitaciones del medio y autoposibilitándonos, dando lugar a espacios y
                         resistencias, ejerciendo un desaprendizaje comprometido con la materialidad que surge.<br><br>
                         Espacios: Cuenca, Almería, Sierra de Huelva, Festival Line up Action (Coimbra), Santiago
-                        de Compostela, Aldán, TEM, Puerto de Valencia, El Parterre, El Grao, Escombrera, Fun-
-                        dació Sala Castelló, Universidad Politécnica de Valencia, IVAM, Estudi P, entre otros.`,
+                        de Compostela, Aldán, TEM, Puerto de Valencia, El Parterre, El Grao, Escombrera, Fundació Sala Castelló, Universidad Politécnica de Valencia, IVAM, Estudi P, entre otros.`,
                     "algo_veran_text": `<span class="atb-title project-title">Algo de ver<span class="atb-a-accent"><span class="base">a</span><span class="accent">´</span></span>n</span> es un encuentro anual autogestionado, donde las únicas certezas
                         son dónde y cuándo: Aldán (Cangas do Morrazo, Galicia), en verano. El qué es indefinido, está
                         por construir mediante el hacer, como la práctica, cambia cada vez.<br><br>
@@ -726,8 +704,7 @@
                         work, challenging the limitations of the medium and enabling ourselves, giving rise to spaces and
                         resistances, exercising an unlearning committed to the materiality that emerges.<br><br>
                         Spaces: Cuenca, Almería, Sierra de Huelva, Festival Line up Action (Coimbra), Santiago
-                        de Compostela, Aldán, TEM, Port of Valencia, El Parterre, El Grao, Escombrera, Fun-
-                        dació Sala Castelló, Polytechnic University of Valencia, IVAM, Estudi P, among others.`,
+                        de Compostela, Aldán, TEM, Port of Valencia, El Parterre, El Grao, Escombrera, Fundació Sala Castelló, Polytechnic University of Valencia, IVAM, Estudi P, among others.`,
                     "algo_veran_text": `<span class="atb-title project-title">Algo de ver<span class="atb-a-accent"><span class="base">a</span><span class="accent">´</span></span>n</span> is a self-managed annual encounter/workshop/residency, where the only certainties
                         are where and when: Aldán (Cangas do Morrazo, Galicia), in summer. The what is undefined, it's
                         to be built through doing, like practice, it changes each time.<br><br>
@@ -794,85 +771,47 @@
                 }
             });
 
-            setCookie('selectedLanguage', lang, 30);
-            
             // Actualizar el texto de Cando falo de corpo
             const hoverText = document.querySelector('#cando-falo-corpo-li .hover-text');
             const mobileText = document.querySelector('#cando-falo-corpo-detail .mobile-detail-text');
-            
-            if (hoverText) {
-                hoverText.innerHTML = selectedTranslations.cando_falo_text;
-            }
-            if (mobileText) {
-                mobileText.innerHTML = selectedTranslations.cando_falo_text;
-            }
+            if (hoverText) hoverText.innerHTML = selectedTranslations.cando_falo_text;
+            if (mobileText) mobileText.innerHTML = selectedTranslations.cando_falo_text;
 
             // Actualizar el texto de Ciclos de acciones
             const ciclosHoverText = document.querySelector('#ciclos-acciones-li .hover-text');
             const ciclosMobileText = document.querySelector('#ciclos-acciones-detail .mobile-detail-text');
-            
-            if (ciclosHoverText) {
-                ciclosHoverText.innerHTML = selectedTranslations.ciclos_text;
-            }
-            if (ciclosMobileText) {
-                ciclosMobileText.innerHTML = selectedTranslations.ciclos_text;
-            }
+            if (ciclosHoverText) ciclosHoverText.innerHTML = selectedTranslations.ciclos_text;
+            if (ciclosMobileText) ciclosMobileText.innerHTML = selectedTranslations.ciclos_text;
 
             // Actualizar el texto de Algo de verán
             const veranHoverText = document.querySelector('#algo-de-veran-li .hover-text');
             const veranMobileText = document.querySelector('#algo-de-veran-detail .mobile-detail-text');
-            
-            if (veranHoverText) {
-                veranHoverText.innerHTML = selectedTranslations.algo_veran_text;
-            }
-            if (veranMobileText) {
-                veranMobileText.innerHTML = selectedTranslations.algo_veran_text;
-            }
+            if (veranHoverText) veranHoverText.innerHTML = selectedTranslations.algo_veran_text;
+            if (veranMobileText) veranMobileText.innerHTML = selectedTranslations.algo_veran_text;
 
             // Actualizar el texto de Nomes Propios
             const nomesHoverText = document.querySelector('#nomes-propios-li .hover-text');
             const nomesMobileText = document.querySelector('#nomes-propios-detail .mobile-detail-text');
-            
-            if (nomesHoverText) {
-                nomesHoverText.innerHTML = selectedTranslations.nomes_propios_text;
-            }
-            if (nomesMobileText) {
-                nomesMobileText.innerHTML = selectedTranslations.nomes_propios_text;
-            }
+            if (nomesHoverText) nomesHoverText.innerHTML = selectedTranslations.nomes_propios_text;
+            if (nomesMobileText) nomesMobileText.innerHTML = selectedTranslations.nomes_propios_text;
 
             // Actualizar el texto de Papel engomado
             const papelHoverText = document.querySelector('#papel-engomado-li .hover-text');
             const papelMobileText = document.querySelector('#papel-engomado-detail .mobile-detail-text');
-            
-            if (papelHoverText) {
-                papelHoverText.innerHTML = selectedTranslations.papel_engomado_text;
-            }
-            if (papelMobileText) {
-                papelMobileText.innerHTML = selectedTranslations.papel_engomado_text;
-            }
+            if (papelHoverText) papelHoverText.innerHTML = selectedTranslations.papel_engomado_text;
+            if (papelMobileText) papelMobileText.innerHTML = selectedTranslations.papel_engomado_text;
 
             // Actualizar el texto de A que me refiro cando falo de corpo
             const aQueRefiroHoverText = document.querySelector('#a-que-me-refiro-li .hover-text');
             const aQueRefiroMobileText = document.querySelector('#a-que-me-refiro-detail .mobile-detail-text');
-            
-            if (aQueRefiroHoverText) {
-                aQueRefiroHoverText.innerHTML = selectedTranslations.a_que_me_refiro_text;
-            }
-            if (aQueRefiroMobileText) {
-                aQueRefiroMobileText.innerHTML = selectedTranslations.a_que_me_refiro_text;
-            }
+            if (aQueRefiroHoverText) aQueRefiroHoverText.innerHTML = selectedTranslations.a_que_me_refiro_text;
+            if (aQueRefiroMobileText) aQueRefiroMobileText.innerHTML = selectedTranslations.a_que_me_refiro_text;
 
             return false;
         }
 
         window.onload = function() {
-            // Añadir al principio de la función onload
             document.querySelector('.page-container').classList.add('loaded');
-            
-            let savedLanguage = getCookie('selectedLanguage');
-            if (savedLanguage) {
-                currentLanguage = savedLanguage;
-            }
             changeLanguage(currentLanguage);
 
             const curaduriaList = document.querySelector('.curaduria-list');
