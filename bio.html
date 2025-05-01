@@ -258,6 +258,13 @@
             document.getElementById("publications-title").textContent = selectedTranslations.publicacions;
             document.getElementById("exhibitions-title").innerHTML = selectedTranslations.exposicions;
 
+            // Update navigation links
+            document.querySelector(".overlay-header nav a:nth-child(1)").textContent = selectedTranslations.obra;
+            document.querySelector(".overlay-header nav a:nth-child(2)").textContent = selectedTranslations.bio;
+            document.querySelector(".overlay-header nav a:nth-child(3)").textContent = selectedTranslations.aldan;
+            document.querySelector(".overlay-header nav a:nth-child(4)").textContent = selectedTranslations.curaduria;
+            document.querySelector(".overlay-header nav a:nth-child(5)").textContent = selectedTranslations.contacto;
+
             // Corregir el acento en exposicións para el idioma gallego
             if (lang === 'gal') {
                 document.getElementById("exhibitions-title").innerHTML = 'exposici<span class="atb-o-accent"><span class="base">o</span><span class="accent">´</span></span>ns';
