@@ -121,9 +121,9 @@
             .obra-image {
                 transition: transform 0.3s ease-in-out;
             }
-            .obra-item:hover .obra-image {
-                transform: scale(1.05);
-            }
+        .obra-item:hover .obra-image {
+            transform: scale(1.05);
+        }
         }
         .obra-title {
             margin-top: 10px;
@@ -570,10 +570,10 @@
             document.querySelectorAll('.obra-title').forEach(function(el) {
                 // Solo modificar si NO contiene etiquetas HTML (es texto plano)
                 if (!el.innerHTML.includes('<span')) {
-                    el.innerHTML = el.innerHTML
-                        .replace(/[\/\-_´*˙˚°]/g, function(match) {
-                            return '<span class="junicode-slash">' + match + '</span>';
-                        });
+                el.innerHTML = el.innerHTML
+                    .replace(/[\/\-_´*˙˚°]/g, function(match) {
+                        return '<span class="junicode-slash">' + match + '</span>';
+                    });
                 }
             });
         };
@@ -658,7 +658,7 @@
                         <div class="obra-title"></div>
                         <div class="obra-title">c/ Ana Gesto</div>
                         <div class="obra-year">2022</div>
-                    </div>
+                </div>
 
                     <!-- Obra 8 -->
                     <div class="obra-item" data-id="obra8">
@@ -666,7 +666,7 @@
                         <div class="obra-title"></div>
                         <div class="obra-title">desvelado de imaxe</div>
                         <div class="obra-year">2022</div>
-                    </div>
+            </div>
 
                     <!-- Obra 9 -->
                     <div class="obra-item" data-id="obra9">
@@ -674,7 +674,7 @@
                         <div class="obra-title"></div>
                         <div class="obra-title">acci<span class="atb-o-accent"><span class="base">o</span><span class="accent">´</span></span>n - inacci<span class="atb-o-accent"><span class="base">o</span><span class="accent">´</span></span>n</div>
                         <div class="obra-year">2022</div>
-                    </div>
+        </div>
 
                     <!-- Obra 10 -->
                     <div class="obra-item" data-id="obra10">

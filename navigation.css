@@ -119,7 +119,7 @@
 }
 
 /* Mobile responsive styles */
-@media screen and (max-device-width: 768px), screen and (max-width: 768px) and (orientation: portrait) {
+@media (max-width: 768px) {
     .overlay-header {
         display: flex;
         flex-direction: column;
@@ -181,7 +181,7 @@
     }
 }
 
-@media screen and (max-device-width: 480px), screen and (max-width: 480px) and (orientation: portrait) {
+@media (max-width: 480px) {
     .overlay-header {
         padding: 15px 0px 0px 18px !important;
         margin-top: 15px !important;
@@ -205,7 +205,7 @@
     }
 }
 
-@media screen and (max-device-width: 440px), screen and (max-width: 440px) and (orientation: portrait) {
+@media (max-width: 440px) {
     .overlay-header {
         padding: 15px 0px 0px 22px !important;
         margin-top: 15px !important;
@@ -229,7 +229,7 @@
     }
 }
 
-@media screen and (max-device-width: 368px), screen and (max-width: 368px) and (orientation: portrait) {
+@media (max-width: 368px) {
     .overlay-header {
         padding: 15px 0px 0px 22px !important;
         margin-top: 15px !important;
@@ -248,7 +248,7 @@
     }
 }
 
-@media screen and (max-device-width: 324px), screen and (max-width: 324px) and (orientation: portrait) {
+@media (max-width: 324px) {
     .overlay-header {
         padding: 15px 0px 0px 22px !important;
         margin-top: 15px !important;
@@ -267,7 +267,7 @@
     }
 }
 
-@media screen and (max-device-width: 302px), screen and (max-width: 302px) and (orientation: portrait) {
+@media (max-width: 302px) {
     .overlay-header {
         padding: 15px 0px 0px 22px !important;
         margin-top: 15px !important;
@@ -286,7 +286,7 @@
     }
 }
 
-@media screen and (max-device-width: 287px), screen and (max-width: 287px) and (orientation: portrait) {
+@media (max-width: 287px) {
     .overlay-header {
         padding: 15px 0px 0px 22px !important;
         margin-top: 15px !important;
@@ -305,7 +305,7 @@
     }
 }
 
-@media screen and (max-device-width: 272px), screen and (max-width: 272px) and (orientation: portrait) {
+@media (max-width: 272px) {
     .overlay-header {
         padding: 15px 0px 0px 22px !important;
         margin-top: 15px !important;
@@ -324,7 +324,7 @@
     }
 }
 
-@media screen and (max-device-width: 255px), screen and (max-width: 255px) and (orientation: portrait) {
+@media (max-width: 255px) {
     .overlay-header {
         padding: 15px 0px 0px 22px !important;
         margin-top: 15px !important;
