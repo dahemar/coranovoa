@@ -1,0 +1,449 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cora Novoa - Bio</title>
+    <link rel="stylesheet" href="accent.css">
+    <link rel="stylesheet" href="navigation.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @font-face {
+            font-family: 'Junicode';
+            src: url('junicode.webfont/junicode_regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Junicode';
+            src: url('junicode.webfont/junicode_bold.woff') format('woff');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'ATB Serif';
+            src: url('fonts/demo-atbserif-it.otf') format('opentype');
+            font-weight: normal;
+            font-style: italic;
+            font-display: swap;
+        }
+        
+        body {
+            font-family: 'Junicode', sans-serif;
+            margin: 0;
+            background-color: white;
+            color: black;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+
+        .overlay-content {
+            position: relative;
+            z-index: 10;
+            padding: 40px 0 40px 160px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* Bio container styles */
+        .bio-container {
+            position: relative;
+            margin-top: 135px;
+            min-height: 500px;
+            max-width: 800px;
+            margin-left: 0;
+            margin-right: auto;
+            padding: 0;
+            line-height: 1.6;
+            z-index: 1;
+        }
+
+        /* Añadir margen superior para la primera sección en versión escritorio */
+        .section-title:first-of-type {
+            margin-top: 140px;
+        }
+
+        .bio-text {
+            font-size: 15px;
+            margin-bottom: 30px;
+            white-space: pre-line;
+        }
+
+        .bio-text a {
+            text-decoration: none;
+            color: black;
+            transition: text-decoration 0.2s ease-in-out;
+        }
+
+        .bio-text a:hover {
+            text-decoration: underline;
+            color: black;
+        }
+
+        /* Section titles */
+        .section-title {
+            font-size: 16px;
+            font-weight: normal;
+            margin-top: 40px;
+            margin-bottom: 10px;
+            text-transform: lowercase;
+            font-family: 'ATB Serif', serif;
+            font-style: italic;
+        }
+
+        /* Mobile responsive styles for bio only */
+        @media (max-width: 768px) {
+            body {
+                overflow: hidden;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+            }
+            .overlay-content {
+                padding: 0 !important;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+            .bio-container {
+                margin-top: 120px !important;
+                padding: 0 20px 0 22px !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                overflow-y: auto;
+                height: calc(100% - 150px);
+                position: fixed;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            .bio-container .bio-text {
+                font-size: 15px;
+                text-align: left;
+                padding-left: 0 !important;
+                margin-left: 0 !important;
+            }
+            .bio-container .section-title {
+                margin-bottom: 8px;
+                padding-left: 0 !important;
+                margin-left: 0 !important;
+            }
+            .bio-container .section-title:first-of-type {
+                margin-top: 15px;
+            }
+        }
+        @media (max-width: 480px) {
+            .bio-container {
+                margin-top: 140px;
+                padding: 0 20px 0 22px;
+                height: calc(100% - 140px);
+            }
+            .bio-text {
+                font-size: 14px;
+            }
+            .section-title {
+                font-size: 14px;
+            }
+            .section-title:first-of-type {
+                margin-top: 10px;
+            }
+            .section-title {
+                margin-bottom: 6px;
+            }
+        }
+        @media (max-width: 360px) {
+            .bio-container {
+                margin-top: 130px;
+                padding: 0 20px 0 22px;
+                height: calc(100% - 130px);
+            }
+            .section-title {
+                font-size: 13px;
+            }
+            .section-title:first-of-type {
+                margin-top: 5px;
+            }
+        }
+    </style>
+
+    <script>
+        let currentLanguage = localStorage.getItem('language') || 'esp';
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('language', lang);
+
+            const translations = {
+                "gal": {
+                    "obra": "obra",
+                    "bio": "bio",
+                    "curaduria": "curaduría",
+                    "aldan": "aldán",
+                    "contacto": "contacto",
+                    "educacion": "educaci<span class=\"atb-o-accent\"><span class=\"base\">o</span><span class=\"accent\">´</span></span>n e formaci<span class=\"atb-o-accent\"><span class=\"base\">o</span><span class=\"accent\">´</span></span>n",
+                    "encontros": "encontros",
+                    "obradoiros": "obradoiros",
+                    "publicacions": "publicacions",
+                    "exposicions": "exposici<span class=\"atb-o-accent\"><span class=\"base\">o</span><span class=\"accent\">´</span></span>ns",
+                    "education_text": "Contrato predoctoral en Arte: Producción e Investigación, UPV (actualmente) 2025.\nMáster en Artes do Espectáculo Vivo, US Sevilla, 2023.\nBolseira: Sala X de exposicións (Pontevedra) / Productora Audiovisual Saint Denis, Sevilla, 2023.\n/ Prácticas extracurriculares: taller La Madriguera de Paula Bonet, Barcelona, 2020.\nGrao en Belas Artes, UVigo - Campus de Pontevedra, 2021.\nKingston School of Art, Londres. Programa Erasmus, 2018-2019.\nConservatorio de música de Tui, Segundo de Profesional, piano, 2014.",
+                    "meetings_text": "- Seminario EAN, Santiago de Compostela, 2023. Organiza Rafa Doctor, a Xunta de\nGalicia e a Fundación Cidade da Cultura. Colabora a Fundación Banco Sabadell.\n- Encontros Paraíso illa San Simón, 2023. Organiza o Colectivo RPM (oínte).\n- Algo de verán, Aldán, 2024 – coordinadora (3 edicións).\n- Xuventude crea, Igrexa da universidade, Santiago, 2025 – 3º premio.",
+                    "publications_text": "- Espazo do Eu, autoedición, 2020.\n- Youth Dance Art - En defensa da xuventude, 2023.\n- Modos de (non) ver, autoedición, 2023.\n- Entrevista por Carmen Elsa Conversando con Cora Novoa, Revista Dot, 2023.\n- Ex ± acto - ANIAV, VI Congreso Internacional de investigación UPV, 2024.\nCatálogos:\n   - Nomes Propios, xestora, editora e comisaria – I e II Edición (2019-2023).\n   - Unha Odisea no pazo, Do final e do comezo, 2021.\n   - Intersección festival, 2022.\n   - Unha pincelada a Paco, 2022.\n   - Nada Contemporary art fair, 2022.\n   - Xornadas IX de Performance Fundació Caixa Castelló, Sala Sant Miquel, 2023.\n   - Xuventude crea, 2024.",
+                    "workshops_text": "2024\n- Danza contemporánea, A contar mentiras, Paula Romero.\n- Libre improvisación, Josep Lluís Galiana, Art D', CCCC, Valencia.\nPerformance:\n - Marilyn Arsem, Dialeg Obert, Teatre el musical, Valencia.\n - Grupo de investigación LCI, UPV – colaboradora, IVAM Valencia.\n - Marita Bullman, Dialeg Obert, Teatre el musical, Valencia.\n - Algo de verán Edición III, coordinadora, Aldan, Cangas.\n\n2023\n- Danza contemporánea, Paula Quintás, Alfaia, Santiago.\n- Libre improvisación musical, Wade Matthews. Dialeg Obert, Teatre el musical, Valencia.\nPerformance:\n - Olga Mesa e Francisco Ruiz de Infante. CGAC, Santiago.\n - Ana Gesto, taller persoal e no contexto de Plataforma Festival, Santiago.\n - Nieves Correa e Abel Loureda // Martine Viale. Dialeg Obert, Teatre el musical, Valencia.\n - Algo de verán Edición II, Ruben Barroso – coordinadora, Aldan.\n - Mario Montoya, CCCC, Valencia.\n\n2022\n- Danza contemporánea, Lorine de Azevedo, Sevilla.\nPerformance:\n- Ernesto Artillo, Cabo de Gata, Almería.\n- Ruben Barroso. Galería Art House Lab, Sevilla.\n- Ana Matey Cañada del Hoyo, Cuenca.\n- Ruben Barroso, Sierra de Huelva.\n- Algo de verán Edición I, Isabel León – coordinadora, Aldan.\n\n2021\n- Enfoques sobre o cotián dende unha perspectiva de xénero – UVigo, con Iria Vazquez e Chelo Matesanz.",
+                    "exhibitions_text": "2026\n- Cando falo de corpo, Sala Manuel Moldes, coa UVigo – comisaria.\n\n2025\n- Xuventude crea, 3eiro premio - artes plásticas.\n- A que me refiro cando falo de corpo, Galería Sarao – comisaria.\n\n2024\n- Valencia, TEM, mostra aberta de accións Considerando o tempo con Marilyn Arsem \n- Valencia, TEM, mostra aberta de accións con Marita Bullman\n- Valencia, práctica de campo acciones-inacciones en distintos espazos.\n- Valencia, hall do IVAM, acción-inacción (fóra de programación).\n- Madrid, Accion Spring(t), Universidad Complutense de Madrid.\n- Almería, Agua Amarga, accions no Limbo.\n- Valencia, IVAM, concerto performativo Bailar os arquivos arquivos.\n- Santiago de Compostela, Colexio de Fonseca, con apoio institucional USC. \n\n2023\n- Valencia, TEM mostra aberta de accions con Wade Matthews\n- Valencia, TEM mostra aberta de accions con Martine Viale\n- Valencia, TEM mostra aberta de accions con Nieves Correa e Abel Loureda\n- Valencia, Equinox to Equinox . Global Performance Art Day.\n- Ferrol, Ser artista - Explorar, Galería Sarao.\n- Santiago, Modos de (non) ver, Galería O Gabinete performance.\n- Santiago, performance Lorem Ipsum, Plataforma Festival.\n- Coimbra, Cartografia dum corpo, Festival Line up Action, Casa da esquina.\n- Santiago, Espazo do Eu, Galería Defímeras.\n- Galicia, Nomes propios - Edición II, comisaria (colectiva).\n- Castellón, IX Jornadas de performances , Fundación Sala Castelló, Sala Sant Miquel.\n- Valencia, Acción Lab, performance colectiva, con el Colectivo PAERsche y Dialeg Obert.\n- Valencia, Pluto, performance recaudación para Artist Against Aparheid.\n- A Estrada, Habitar el yo, Espacio Dispara (colectiva).\n\n2022\n- Monção, The Year We Make Contact, Galeria de Arte CTJV (colectiva).\n- Sevilla, Espazo do Eu, Galería Art Sevilla.\n- Sevilla, Sobre el amor y el azar, incluso, Galería Art Sevilla, sesión de accions.\n- Cuenca, sesión de acciones, Estación de Cañada del Hoyo.\n- Huelva, sesión de acciones, Residencia Cortelazor La Flamenca.\n- Sevilla, The performance conversation, Soda art House Museum.\n- A Coruña, Contracción da atracción, proyección, Intersección Festival.\n- Lalín, Casa para marchar a casa, Museo Municipal Ramón María Aller Ulloa.\n- Sevilla, performance e exposición, NADA Feria de Arte, Convento de Santa Clara.\n- Madrid, performance O espazo da miña saia, Museo La Neomudejar.\n\n2021\n- Pontevedra, Que tes no teu casilleiro?, Facultade de Belas artes – comisaria.\n- Pontevedra, Espazo do eu , Sala X, Galería de exposiciones.\n- Tui, Espazo do Eu, Sala Municipal de Exposiciones de Tui, Área Panorámica.\n- Pontevedra, Do final e do comezo 2021: Unha Odisea no Pazo, Pazo da Cultura de Pontevedra (colectiva).\n\n2020\n- Tui, Zoom, Espazo Xove (colectiva).\n- A Coruña, Pensar sobre as cousas, muestra itinerante (colectiva), Casa da Cultura de Valdoviño.\n- Ferrol, Pensar sobre as cousas, muestra itinerante (colectiva), Sala de exposiciones Autoridade Portuaria.\n\n2019\n- Kingston, Londres, Stanley Picker Gallery (collective), All you can (r)ea(d)t (colectiva).\n- Pontevedra, Performance Utopías do Camiño, con la artista Lucía Loren (colectiva).\n- Pontevedra, Galeria Musart (colectiva).\n- Galicia, Nomes propios – Edición I, comisaria (colectiva).\n\n2018\n- Madrid, La Mala Mujer."
+                },
+                "esp": {
+                    "obra": "obra",
+                    "bio": "bio",
+                    "curaduria": "curaduría",
+                    "aldan": "aldán",
+                    "contacto": "contacto",
+                    "educacion": "educaci<span class=\"atb-o-accent\"><span class=\"base\">o</span><span class=\"accent\">´</span></span>n y formación",
+                    "encontros": "encuentros",
+                    "obradoiros": "talleres",
+                    "publicacions": "publicaciones",
+                    "exposicions": "exposiciones",
+                    "education_text": "Contrato predoctoral en Arte: Producción e Investigación, UPV (actualmente) 2025.\nMáster en Artes del Espectáculo Vivo, US Sevilla, 2023.\nBecaria: Sala X de exposiciones (Pontevedra) / Productora Audiovisual Saint Denis, Sevilla, 2023.\n/ Prácticas extracurriculares: taller La Madriguera de Paula Bonet, Barcelona, 2020.\nGrado en Bellas Artes, UVigo - Campus de Pontevedra, 2021.\nKingston School of Art, Londres. Programa Erasmus, 2018-2019.\nConservatorio de música de Tui, Segundo de Profesional, piano, 2014.",
+                    "meetings_text": "- Seminario EAN, Santiago de Compostela, 2023. Organiza Rafa Doctor, la Xunta de\nGalicia y la Fundación Ciudad de la Cultura. Colabora la Fundación Banco Sabadell.\n- Encuentros Paraíso isla San Simón, 2023. Organiza el Colectivo RPM (oyente).\n- Algo de verano, Aldán, 2024 – coordinadora (3 ediciones).\n- Juventud crea, Iglesia de la universidad, Santiago, 2025 – 3º premio.",
+                    "publications_text": "- Espazo do Eu, autoedición, 2020.\n- Youth Dance Art - En defensa de la juventud, 2023.\n- Modos de (non) ver, autoedición, 2023.\n- Entrevista por Carmen Elsa Conversando con Cora Novoa, Revista Dot, 2023.\n- Ex ± acto - ANIAV, VI Congreso Internacional de investigación UPV, 2024.\nCatálogos:\n   - Nomes Propios, gestora, editora y comisaria – I y II Edición (2019-2023).\n   - Unha Odisea no pazo, Do final e do comezo, 2021.\n   - Intersección festival, 2022.\n   - Unha pincelada a Paco, 2022.\n   - Nada Contemporary art fair, 2022.\n   - Jornadas IX de Performance Fundació Caixa Castelló, Sala Sant Miquel, 2023.\n   - Xuventude crea, 2024.",
+                    "workshops_text": "2024\n- Danza contemporánea, A contar mentiras, Paula Romero.\n- Libre improvisación, Josep Lluís Galiana, Art D', CCCC, Valencia.\nPerformance:\n - Marilyn Arsem, Dialeg Obert, Teatre el musical, Valencia.\n - Grupo de investigación LCI, UPV – colaboradora, IVAM Valencia.\n - Marita Bullman, Dialeg Obert, Teatre el musical, Valencia.\n - Algo de verán Edición III, coordinadora, Aldan, Cangas.\n\n2023\n- Danza contemporánea, Paula Quintás, Alfaia, Santiago.\n- Libre improvisación musical, Wade Matthews. Dialeg Obert, Teatre el musical, Valencia.\nPerformance:\n - Olga Mesa y Francisco Ruiz de Infante. CGAC, Santiago.\n - Ana Gesto, taller personal y en el contexto de Plataforma Festival, Santiago.\n - Nieves Correa y Abel Loureda // Martine Viale. Dialeg Obert, Teatre el musical, Valencia.\n - Algo de verán Edición II, Ruben Barroso – coordinadora, Aldan.\n - Mario Montoya, CCCC, Valencia.\n\n2022\n- Danza contemporánea, Lorine de Azevedo, Sevilla.\nPerformance:\n- Ernesto Artillo, Cabo de Gata, Almería.\n- Ruben Barroso. Galería Art House Lab, Sevilla.\n- Ana Matey Cañada del Hoyo, Cuenca.\n- Ruben Barroso, Sierra de Huelva.\n- Algo de verán Edición I, Isabel León – coordinadora, Aldan.\n\n2021\n- Enfoques sobre lo cotidiano desde una perspectiva de género – UVigo, con Iria Vazquez y Chelo Matesanz.",
+                    "exhibitions_text": "2026\n- Cando falo de corpo, Sala Manuel Moldes, con la UVigo – comisaria.\n\n2025\n- Xuventude crea, 3er premio - artes plásticas.\n- A que me refiro cando falo de corpo, Galería Sarao – comisaria.\n\n2024\n- Valencia, TEM, muestra abierta de acciones Considerando o tempo con Marilyn Arsem \n- Valencia, TEM, muestra abierta de acciones con Marita Bullman\n- Valencia, práctica de campo acciones-inacciones en distintos espacios.\n- Valencia, hall del IVAM, acción-inacción (fuera de programación).\n- Madrid, Accion Spring(t), Universidad Complutense de Madrid.\n- Almería, Agua Amarga, acciones en el Limbo.\n- Valencia, IVAM, concierto performativo Bailar los archivos archivos.\n- Santiago de Compostela, Colegio de Fonseca, con apoyo institucional USC. \n\n2023\n- Valencia, TEM muestra abierta de acciones con Wade Matthews\n- Valencia, TEM muestra abierta de acciones con Martine Viale\n- Valencia, TEM muestra abierta de acciones con Nieves Correa y Abel Loureda\n- Valencia, Equinox to Equinox. Global Performance Art Day.\n- Ferrol, Ser artista - Explorar, Galería Sarao.\n- Santiago, Modos de (non) ver, Galería O Gabinete performance.\n- Santiago, performance Lorem Ipsum, Plataforma Festival.\n- Coimbra, Cartografia dum corpo, Festival Line up Action, Casa da esquina.\n- Santiago, Espazo do Eu, Galería Defímeras.\n- Galicia, Nomes propios - Edición II, comisaria (colectiva).\n- Castellón, IX Jornadas de performances, Fundación Sala Castelló, Sala Sant Miquel.\n- Valencia, Acción Lab, performance colectiva, con el Colectivo PAERsche y Dialeg Obert.\n- Valencia, Pluto, performance recaudación para Artist Against Aparheid.\n- A Estrada, Habitar el yo, Espacio Dispara (colectiva).\n\n2022\n- Monção, The Year We Make Contact, Galeria de Arte CTJV (colectiva).\n- Sevilla, Espazo do Eu, Galería Art Sevilla.\n- Sevilla, Sobre el amor y el azar, incluso, Galería Art Sevilla, sesión de acciones.\n- Cuenca, sesión de acciones, Estación de Cañada del Hoyo.\n- Huelva, sesión de acciones, Residencia Cortelazor La Flamenca.\n- Sevilla, The performance conversation, Soda art House Museum.\n- A Coruña, Contracción da atracción, proyección, Intersección Festival.\n- Lalín, Casa para marchar a casa, Museo Municipal Ramón María Aller Ulloa.\n- Sevilla, performance e exposición, NADA Feria de Arte, Convento de Santa Clara.\n- Madrid, performance O espazo da miña saia, Museo La Neomudejar.\n\n2021\n- Pontevedra, Que tes no teu casilleiro?, Facultad de Bellas Artes – comisaria.\n- Pontevedra, Espazo do eu, Sala X, Galería de exposiciones.\n- Tui, Espazo do Eu, Sala Municipal de Exposiciones de Tui, Área Panorámica.\n- Pontevedra, Do final e do comezo 2021: Unha Odisea no Pazo, Pazo da Cultura de Pontevedra (colectiva).\n\n2020\n- Tui, Zoom, Espazo Xove (colectiva).\n- A Coruña, Pensar sobre as cousas, muestra itinerante (colectiva), Casa da Cultura de Valdoviño.\n- Ferrol, Pensar sobre as cousas, muestra itinerante (colectiva), Sala de exposiciones Autoridad Portuaria.\n\n2019\n- Kingston, Londres, Stanley Picker Gallery (colectiva), All you can (r)ea(d)t (collective).\n- Pontevedra, Performance Utopías do Camiño, con la artista Lucía Loren (colectiva).\n- Pontevedra, Galeria Musart (colectiva).\n- Galicia, Nomes propios – Edición I, comisaria (colectiva).\n\n2018\n- Madrid, La Mala Mujer."
+                },
+                "en": {
+                    "obra": "work",
+                    "bio": "bio",
+                    "curaduria": "curatorship",
+                    "aldan": "aldán",
+                    "contacto": "contact",
+                    "educacion": "education and training",
+                    "encontros": "meetings",
+                    "obradoiros": "workshops",
+                    "publicacions": "publications",
+                    "exposicions": "exhibitions",
+                    "education_text": "Predoctoral contract in Art: Production and Research, UPV (currently) 2025.\nMaster's in Live Performing Arts, US Seville, 2023.\nFellow: Sala X exhibition hall (Pontevedra) / Saint Denis Audiovisual Production, Seville, 2023.\n/ Extracurricular internship: La Madriguera workshop by Paula Bonet, Barcelona, 2020.\nDegree in Fine Arts, UVigo - Pontevedra Campus, 2021.\nKingston School of Art, London. Erasmus Program, 2018-2019.\nTui Music Conservatory, Second Professional Level, piano, 2014.",
+                    "meetings_text": "- EAN Seminar, Santiago de Compostela, 2023. Organized by Rafa Doctor, the Galician\nGovernment and the City of Culture Foundation. With collaboration from Banco Sabadell Foundation.\n- Paraíso Encounters San Simón Island, 2023. Organized by RPM Collective (listener).\n- Algo de verán (Something of Summer), Aldán, 2024 – coordinator (3 editions).\n- Xuventude crea (Youth Creates), University Church, Santiago, 2025 – 3rd prize.",
+                    "publications_text": "- Espazo do Eu, self-published, 2020.\n- Youth Dance Art - In Defense of Youth, 2023.\n- Modos de (non) ver, self-published, 2023.\n- Interview by Carmen Elsa Conversing with Cora Novoa, Dot Magazine, 2023.\n- Ex ± acto - ANIAV, VI International Research Congress UPV, 2024.\nCatalogs:\n   - Nomes Propios, manager, editor and curator – I and II Edition (2019-2023).\n   - Unha Odisea no pazo, Do final e do comezo, 2021.\n   - Intersección festival, 2022.\n   - Unha pincelada a Paco, 2022.\n   - Nada Contemporary art fair, 2022.\n   - IX Performance Days Fundació Caixa Castelló, Sala Sant Miquel, 2023.\n   - Xuventude crea, 2024.",
+                    "workshops_text": "2024\n- Contemporary dance, A contar mentiras, Paula Romero.\n- Free improvisation, Josep Lluís Galiana, Art D', CCCC, Valencia.\nPerformance:\n - Marilyn Arsem, Dialeg Obert, Teatre el musical, Valencia.\n - LCI research group, UPV – collaborator, IVAM Valencia.\n - Marita Bullman, Dialeg Obert, Teatre el musical, Valencia.\n - Algo de verán Edition III, coordinator, Aldan, Cangas.\n\n2023\n- Contemporary dance, Paula Quintás, Alfaia, Santiago.\n- Free musical improvisation, Wade Matthews. Dialeg Obert, Teatre el musical, Valencia.\nPerformance:\n - Olga Mesa and Francisco Ruiz de Infante. CGAC, Santiago.\n - Ana Gesto, personal workshop and in the context of Plataforma Festival, Santiago.\n - Nieves Correa and Abel Loureda // Martine Viale. Dialeg Obert, Teatre el musical, Valencia.\n - Algo de verán Edition II, Ruben Barroso – coordinator, Aldan.\n - Mario Montoya, CCCC, Valencia.\n\n2022\n- Contemporary dance, Lorine de Azevedo, Seville.\nPerformance:\n- Ernesto Artillo, Cabo de Gata, Almería.\n- Ruben Barroso. Art House Lab Gallery, Seville.\n- Ana Matey Cañada del Hoyo, Cuenca.\n- Ruben Barroso, Sierra de Huelva.\n- Algo de verán Edition I, Isabel León – coordinator, Aldan.\n\n2021\n- Approaches to the everyday from a gender perspective – UVigo, with Iria Vazquez and Chelo Matesanz.",
+                    "exhibitions_text": "2026\n- Cando falo de corpo (When I Talk About Body), Manuel Moldes Hall, with UVigo – curator.\n\n2025\n- Xuventude crea (Youth Creates), 3rd prize - plastic arts.\n- A que me refiro cando falo de corpo (What I Mean When I Talk About Body), Sarao Gallery – curator.\n\n2024\n- Valencia, TEM, open showing of actions Considerando o tempo (Considering Time) with Marilyn Arsem \n- Valencia, TEM, open showing of actions with Marita Bullman\n- Valencia, field practice actions-inactions in different spaces.\n- Valencia, IVAM hall, action-inaction (not part of official program).\n- Madrid, Accion Spring(t), Universidad Complutense of Madrid.\n- Almería, Agua Amarga, actions in the Limbo.\n- Valencia, IVAM, performative concert Bailar los archivos (Dancing the Archives).\n- Santiago de Compostela, Fonseca College, with institutional support from USC. \n\n2023\n- Valencia, TEM open showing of actions with Wade Matthews\n- Valencia, TEM open showing of actions with Martine Viale\n- Valencia, TEM open showing of actions with Nieves Correa and Abel Loureda\n- Valencia, Equinox to Equinox. Global Performance Art Day.\n- Ferrol, Ser artista - Explorar (Being an Artist - Exploring), Sarao Gallery.\n- Santiago, Modos de (non) ver (Ways of (Not) Seeing), O Gabinete performance Gallery.\n- Santiago, Lorem Ipsum performance, Plataforma Festival.\n- Coimbra, Cartografia dum corpo (Cartography of a Body), Line up Action Festival, Casa da esquina.\n- Santiago, Espazo do Eu (Space of the Self), Defímeras Gallery.\n- Galicia, Nomes propios (Proper Names) - Edition II, curator (collective).\n- Castellón, IX Performance Days, Fundació Caixa Castelló, Sala Sant Miquel.\n- Valencia, Acción Lab, collective performance, with PAERsche Collective and Dialeg Obert.\n- Valencia, Pluto, fundraising performance for Artist Against Aparheid.\n- A Estrada, Habitar el yo (Inhabiting the Self), Espacio Dispara (collective).\n\n2022\n- Monção, The Year We Make Contact, CTJV Art Gallery (collective).\n- Seville, Espazo do Eu (Space of the Self), Art Seville Gallery.\n- Seville, Sobre el amor y el azar (About Love and Chance), incluso, Art Seville Gallery, action session.\n- Cuenca, action session, Cañada del Hoyo Station.\n- Huelva, action session, Cortelazor La Flamenca Residence.\n- Seville, The Performance Conversation, Soda Art House Museum.\n- A Coruña, Contracción da atracción (Contraction of Attraction), projection, Intersección Festival.\n- Lalín, Casa para marchar a casa (House to Go Home), Ramón María Aller Ulloa Municipal Museum.\n- Seville, performance and exhibition, NADA Art Fair, Santa Clara Convent.\n- Madrid, O espazo da miña saia (The Space of My Skirt) performance, La Neomudejar Museum.\n\n2021\n- Pontevedra, Que tes no teu casilleiro? (What Do You Have in Your Locker?), Faculty of Fine Arts – curator.\n- Pontevedra, Espazo do eu (Space of the Self), Sala X, Exhibition Gallery.\n- Tui, Espazo do Eu (Space of the Self), Tui Municipal Exhibition Hall, Área Panorámica.\n- Pontevedra, Do final e do comezo 2021: Unha Odisea no Pazo (From the End and the Beginning 2021: An Odyssey in the Palace), Pontevedra Culture Palace (collective).\n\n2020\n- Tui, Zoom, Espazo Xove (Youth Space) (collective).\n- A Coruña, Pensar sobre as cousas (Thinking About Things), traveling exhibition (collective), Valdoviño Culture House.\n- Ferrol, Pensar sobre as cousas (Thinking About Things), traveling exhibition (collective), Port Authority Exhibition Hall.\n\n2019\n- Kingston, London, Stanley Picker Gallery (collective), All you can (r)ea(d)t (collective).\n- Pontevedra, Utopías do Camiño (Utopias of the Way) Performance, with artist Lucía Loren (collective).\n- Pontevedra, Musart Gallery (collective).\n- Galicia, Nomes propios (Proper Names) – Edition I, curator (collective).\n\n2018\n- Madrid, La Mala Mujer (The Bad Woman)."
+                }
+            };
+
+            let selectedTranslations = translations[lang];
+
+            // Update section titles
+            document.getElementById("education-title").innerHTML = selectedTranslations.educacion;
+            document.getElementById("meetings-title").textContent = selectedTranslations.encontros;
+            document.getElementById("workshops-title").textContent = selectedTranslations.obradoiros;
+            document.getElementById("publications-title").textContent = selectedTranslations.publicacions;
+            document.getElementById("exhibitions-title").innerHTML = selectedTranslations.exposicions;
+
+            // Update navigation links
+            document.querySelector(".overlay-header nav a:nth-child(1)").textContent = selectedTranslations.obra;
+            document.querySelector(".overlay-header nav a:nth-child(2)").textContent = selectedTranslations.bio;
+            document.querySelector(".overlay-header nav a:nth-child(3)").textContent = selectedTranslations.aldan;
+            document.querySelector(".overlay-header nav a:nth-child(4)").textContent = selectedTranslations.curaduria;
+            document.querySelector(".overlay-header nav a:nth-child(5)").textContent = selectedTranslations.contacto;
+
+            // Corregir el acento en exposicións para el idioma gallego
+            if (lang === 'gal') {
+                document.getElementById("exhibitions-title").innerHTML = 'exposici<span class="atb-o-accent"><span class="base">o</span><span class="accent">´</span></span>ns';
+            }
+
+            // Update section content
+            document.getElementById("education-text").textContent = selectedTranslations.education_text;
+            document.getElementById("meetings-text").textContent = selectedTranslations.meetings_text;
+            document.getElementById("publications-text").textContent = selectedTranslations.publications_text;
+            document.getElementById("workshops-text").textContent = selectedTranslations.workshops_text;
+            document.getElementById("exhibitions-text").textContent = selectedTranslations.exhibitions_text;
+
+            document.documentElement.setAttribute("lang", lang);
+
+            document.querySelectorAll('.language-switcher a').forEach(link => {
+                if (link.getAttribute('data-lang') === lang) {
+                    link.classList.add('active-lang');
+                } else {
+                    link.classList.remove('active-lang');
+                }
+            });
+            
+            return false;
+        }
+
+        window.onload = function() {
+            changeLanguage(currentLanguage);
+            document.documentElement.classList.add('fonts-loaded');
+            // Corregir el acento en exposicións
+            const exhibitionsTitle = document.getElementById('exhibitions-title');
+            if (exhibitionsTitle) {
+                exhibitionsTitle.innerHTML = 'exposici<span class="atb-o-accent"><span class="base">o</span><span class="accent">´</span></span>ns';
+            }
+        };
+    </script>
+</head>
+
+<body>
+    <div class="page-container">
+        <div class="overlay-content">
+            <header class="overlay-header">
+                <h1 class="hover-light-grey"><a href="index.html" class="no-underline-link">Cora Novoa</a></h1>
+                <nav>
+                    <a href="obra.html" class="no-underline-link">obra</a>
+                    <a href="bio.html" class="no-underline-link active">bio</a>
+                    <a href="aldan.html" class="no-underline-link">aldán</a>
+                    <a href="curaduria.html" class="no-underline-link">curaduría</a>
+                    <a href="contacto.html" class="no-underline-link">contacto</a>
+                </nav>
+            </header>
+
+            <div class="bio-container">
+                <h2 id="education-title" class="section-title">educaci<span class="atb-o-accent"><span class="base">o</span><span class="accent">´</span></span>n e formación</h2>
+                <div id="education-text" class="bio-text">
+                    Contrato predoctoral en Arte: Producción e Investigación, UPV (actualmente) 2025.
+                    Máster en Artes del Espectáculo Vivo , US Sevilla, 2023.
+                    Becaria: Sala X de exposiciones (Pontevedra) / Productora Audiovisual Saint Denis , Sevilla, 2023.
+                    / Prácticas extracurriculares: taller La Madriguera de Paula Bonet, Barcelona, 2020.
+                    Grado en Bellas Artes, UVigo - Campus de Pontevedra, 2021.
+                    Kingston School of Art, Londres. Programa Erasmus, 2018-2019.
+                    Conservatorio de música de Tui, Segundo de Profesional, piano, 2014.
+                </div>
+                
+                <h2 id="meetings-title" class="section-title">encontros</h2>
+                <div id="meetings-text" class="bio-text">
+- Seminario EAN, Santiago de Compostela, 2023. Organiza Rafa Doctor, a Xunta de
+Galicia e a Fundación Cidade da Cultura. Colabora a Fundación Banco Sabadell.
+- Encontros Paraíso illa San Simón, 2023. Organiza el Colectivo RPM (ointe).
+- Algo de verán, Aldán, 2024 – coordinadora (3 edicións).
+- Xuventude crea, Igrexa da universidade, Santiago, 2025 – 3º premio.
+                </div>
+                
+                <h2 id="publications-title" class="section-title">publicacions</h2>
+                <div id="publications-text" class="bio-text">
+- Espazo do Eu, autoedición, 2020.
+- Youth Dance Art - En defensa de la juventud, 2023.
+- Modos de (non) ver, autoedición, 2023.
+- Entrevista por Carmen Elsa Conversando con Cora Novoa, Revista Dot, 2023.
+- Ex ± acto - ANIAV, VI Congreso Internacional de investigación UPV, 2024.
+Catálogos:
+   - Nomes Propios, xestora, editora e comisaria – I e II Edición (2019-2023).
+   - Unha Odisea no pazo, Do final e do comezo, 2021.
+   - Intersección festival, 2022.
+   - Unha pincelada a Paco, 2022.
+   - Nada Contemporary art fair, 2022.
+   - Xornadas IX de Performance Fundació Caixa Castelló, Sala Sant Miquel, 2023.
+   - Xuventude crea, 2024.
+                </div>
+                
+                <h2 id="workshops-title" class="section-title">obradoiros</h2>
+                <div id="workshops-text" class="bio-text">
+2024
+- Danza contemporánea, A contar mentiras, Paula Romero.
+- Libre improvisación, Josep Lluís Galiana, Art D', CCCC, Valencia.
+Performance:
+ - Marilyn Arsem, Dialeg Obert, Teatre el musical, Valencia.
+ - Grupo de investigación LCI, UPV – colaboradora, IVAM Valencia.
+ - Marita Bullman, Dialeg Obert, Teatre el musical, Valencia.
+ - Algo de verán Edición III, coordinadora, Aldan, Cangas.
+
+2023
+- Danza contemporánea, Paula Quintás, Alfaia, Santiago.
+- Libre improvisación musical, Wade Matthews. Dialeg Obert, Teatre el musical, Valencia.
+Performance:
+ - Olga Mesa e Francisco Ruiz de Infante. CGAC, Santiago.
+ - Ana Gesto, taller persoal e no contexto de Plataforma Festival, Santiago.
+ - Nieves Correa e Abel Loureda // Martine Viale. Dialeg Obert, Teatre el musical, Valencia.
+ - Algo de verán Edición II, Ruben Barroso – coordinadora, Aldan.
+ - Mario Montoya, CCCC, Valencia.
+
+2022
+- Danza contemporánea, Lorine de Azevedo, Sevilla.
+Performance:
+- Ernesto Artillo, Cabo de Gata, Almería.
+- Ruben Barroso. Galería Art House Lab, Sevilla.
+- Ana Matey Cañada del Hoyo, Cuenca.
+- Ruben Barroso, Sierra de Huelva.
+- Algo de verán Edición I, Isabel León – coordinadora, Aldan.
+
+2021
+- Enfoques sobre o cotián dende unha perspectiva de xénero – UVigo, con Iria Vazquez e Chelo Matesanz.
+                </div>
+                
+                <h2 id="exhibitions-title" class="section-title">exposici<span class="atb-o-accent"><span class="base">o</span><span class="accent">´</span></span>ns</h2>
+                <div id="exhibitions-text" class="bio-text">
+2026
+- Cando falo de corpo, Sala Manuel Moldes, coa UVigo – comisaria.
+
+2025
+- Xuventude crea, 3eiro premio - artes plásticas.
+- A que me refiro cando falo de corpo, Galería Sarao – comisaria.
+
+2024
+- Valencia, TEM, mostra aberta de accións Considerando o tempo con Marilyn Arsem 
+- Valencia, TEM, mostra aberta de accións con Marita Bullman
+- Valencia, práctica de campo acciones-inacciones en distintos espacios.
+- Valencia, hall del IVAM, acción-inacción (fuera de programación).
+- Madrid, Accion Spring(t), Universidad Complutense de Madrid.
+- Almería, Agua Amarga, acciones en el Limbo.
+- Valencia, IVAM, concierto performativo Bailar os arquivos arquivos.
+- Santiago de Compostela, Colexio de Fonseca, con apoio institucional USC. 
+
+2023
+- Valencia, TEM mostra aberta de accions con Wade Matthews
+- Valencia, TEM mostra aberta de accions con Martine Viale
+- Valencia, TEM mostra aberta de accions con Nieves Correa e Abel Loureda
+- Valencia, Equinox to Equinox . Global Performance Art Day.
+- Ferrol, Ser artista - Explorar, Galería Sarao.
+- Santiago, Modos de (non) ver, Galería O Gabinete performance.
+- Santiago, performance Lorem Ipsum, Plataforma Festival.
+- Coimbra, Cartografia dum corpo, Festival Line up Action, Casa da esquina.
+- Santiago, Espazo do Eu, Galería Defímeras.
+- Galicia, Nomes propios - Edición II, comisaria (colectiva).
+- Castellón, IX Jornadas de performances , Fundación Sala Castelló, Sala Sant Miquel.
+- Valencia, Acción Lab, performance colectiva, con el Colectivo PAERsche y Dialeg Obert.
+- Valencia, Pluto, performance recaudación para Artist Against Aparheid.
+- A Estrada, Habitar el yo, Espacio Dispara (colectiva).
+
+2022
+- Monção, The Year We Make Contact, Galeria de Arte CTJV (colectiva).
+- Sevilla, Espazo do Eu, Galería Art Sevilla.
+- Sevilla, Sobre el amor y el azar, incluso, Galería Art Sevilla, sesión de acciones.
+- Cuenca, sesión de acciones, Estación de Cañada del Hoyo.
+- Huelva, sesión de acciones, Residencia Cortelazor La Flamenca.
+- Sevilla, The performance conversation, Soda art House Museum.
+- A Coruña, Contracción da atracción, proyección, Intersección Festival.
+- Lalín, Casa para marchar a casa, Museo Municipal Ramón María Aller Ulloa.
+- Sevilla, performance y exposición, NADA Feria de Arte, Convento de Santa Clara.
+- Madrid, performance O espazo da miña saia, Museo La Neomudejar.
+
+2021
+- Pontevedra, Que tes no teu casilleiro?, Facultade de Belas artes – comisaria.
+- Pontevedra, Espazo do eu , Sala X, Galería de exposiciones.
+- Tui, Espazo do Eu, Sala Municipal de Exposiciones de Tui, Área Panorámica.
+- Pontevedra, Do final e do comezo 2021: Unha Odisea no Pazo, Pazo da Cultura de Pontevedra (colectiva).
+
+2020
+- Tui, Zoom, Espazo Xove (colectiva).
+- A Coruña, Pensar sobre as cousas, muestra itinerante (colectiva), Casa da Cultura de Valdoviño.
+- Ferrol, Pensar sobre as cousas, muestra itinerante (colectiva), Sala de exposiciones Autoridade Portuaria.
+
+2019
+- Kingston, Londres, Stanley Picker Gallery (collective), All you can (r)ea(d)t (colectiva).
+- Pontevedra, Performance Utopías do Camiño, con la artista Lucía Loren (colectiva).
+- Pontevedra, Galeria Musart (colectiva).
+- Galicia, Nomes propios – Edición I, comisaria (colectiva).
+
+2018
+- Madrid, La Mala Mujer.
+                </div>
+            </div>
+        </div>
+
+        <div class="language-switcher">
+            <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
+            <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
+            <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
+        </div>
+    </div>
+</body>
+
+</html>

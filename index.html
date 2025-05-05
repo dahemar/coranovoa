@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cora Novoa</title>
+    
+    <!-- Preload fonts with high priority -->
+    <link rel="preload" href="junicode.webfont/junicode_regular.woff" as="font" type="font/woff" crossorigin="anonymous">
+    <link rel="preload" href="junicode.webfont/junicode_bold.woff" as="font" type="font/woff" crossorigin="anonymous">
+    <link rel="preload" href="fonts/demo-atbserif-it.otf" as="font" type="font/opentype" crossorigin="anonymous">
+    
+    <!-- Load Tailwind after font preloading -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    
+    <!-- Preconnect to critical domains -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="junicode.webfont/junicode_regular.woff2" as="font" type="font/woff2" crossorigin>
+    
+    <!-- Load navigation styles -->
+    <link rel="stylesheet" href="navigation.css">
+    
+    <style>
+        /* Font Definitions */
+        @font-face {
+            font-family: 'Junicode';
+            src: local('Junicode'),
+                 url('junicode.webfont/junicode_regular.woff2') format('woff2'),
+                 url('junicode.webfont/junicode_regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Junicode';
+            src: url('junicode.webfont/junicode_bold.woff') format('woff');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'ATB Serif';
+            src: url('fonts/demo-atbserif-it.otf') format('opentype');
+            font-weight: normal;
+            font-style: italic;
+            font-display: swap;
+        }
+        
+        /* Force font loading before page render */
+        html {
+            opacity: 0;
+            transition: opacity 0.1s ease-in;
+        }
+        html.fonts-loaded {
+            opacity: 1;
+        }
+        
+        /* Custom CSS for video and text overlay */
+        body {
+            margin: 0;
+            overflow: hidden; /* Prevent scrolling on all devices */
+            font-family: 'Junicode', sans-serif;
+        }
+
+        .page-container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            overflow: hidden; /* Additional overflow prevention */
+        }
+
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .video-container video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        .overlay-content {
+            position: relative;
+            z-index: 10;
+            color: white;
+            padding: 40px 0 40px 160px;
+            max-width: 1600px;
+            margin: 0 auto;
+            transition: transform 0.5s ease-out;
+        }
+
+        .overlay-content.sliding-left {
+            transform: translateX(-100%);
+        }
+
+
+        /* Styles for navigation links */
+        .no-underline-link {
+            text-decoration: none;
+            color: white;
+        }
+
+        .no-underline-link:hover {
+            color: white;
+        }
+
+        .hover-light-grey {
+            color: white;
+        }
+
+        .hover-light-grey:hover {
+            color: white;
+        }
+
+        /* Language Switcher Styles */
+        .language-switcher {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 2000;
+            color: white;
+            font-size: 15px;
+        }
+
+        .language-switcher a {
+            color: white;
+            text-decoration: none;
+            margin-right: 5px;
+        }
+
+        .language-switcher a:hover {
+            color: white;
+        }
+        
+        .language-switcher a.active-lang {
+            color: white !important;
+        }
+
+
+        
+        /* Mobile responsive styles */
+        @media (max-width: 768px) {
+            body, html {
+                overflow: hidden !important;
+                position: fixed !important;
+                width: 100%;
+                height: 100%;
+                touch-action: none;
+                -webkit-overflow-scrolling: none;
+            }
+            
+            .overlay-content {
+                padding: 10px;
+                overflow: hidden !important;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                touch-action: none;
+            }
+
+            .page-container {
+                overflow: hidden !important;
+                position: fixed !important;
+                width: 100%;
+                height: 100%;
+                touch-action: none;
+            }
+
+
+
+        }
+
+
+
+        /* Disable sliding transitions on all devices */
+        .overlay-content.sliding-left {
+            transform: none !important;
+        }
+
+        /* Fade transitions */
+        .fade-enter {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .fade-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-exit {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .fade-exit-active {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+    </style>
+
+    <script>
+        // Check if fonts are already loaded from cache
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(function() {
+                document.documentElement.classList.add('fonts-loaded');
+            });
+            setTimeout(function() {
+                document.documentElement.classList.add('fonts-loaded');
+            }, 300);
+        } else {
+            document.documentElement.classList.add('fonts-loaded');
+        }
+        
+        // JavaScript for language switching (simplified)
+        let currentLanguage = localStorage.getItem('language') || 'esp';
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('language', lang);
+            let translations = {
+                "gal": {
+                    "obra": "obra",
+                    "bio": "bio",
+                    "curaduria": "curaduría",
+                    "aldan": "aldán",
+                    "contacto": "contacto"
+                },
+                "esp": {
+                    "obra": "obra",
+                    "bio": "bio",
+                    "curaduria": "curaduría",
+                    "aldan": "aldán",
+                    "contacto": "contacto"
+                },
+                "en": {
+                    "obra": "work",
+                    "bio": "bio",
+                    "curaduria": "curatorship",
+                    "aldan": "aldán",
+                    "contacto": "contact"
+                }
+            };
+
+            let selectedTranslations = translations[lang];
+
+            if (selectedTranslations) {
+                // Update navigation links
+                document.querySelector(".overlay-header nav a:nth-child(1)").textContent = selectedTranslations.obra;
+                document.querySelector(".overlay-header nav a:nth-child(2)").textContent = selectedTranslations.bio;
+                document.querySelector(".overlay-header nav a:nth-child(4)").textContent = selectedTranslations.curaduria;
+                document.querySelector(".overlay-header nav a:nth-child(3)").textContent = selectedTranslations.aldan;
+                document.querySelector(".overlay-header nav a:nth-child(5)").textContent = selectedTranslations.contacto;
+            } else {
+                console.error("Language not supported:", lang);
+            }
+
+            // Update the HTML lang attribute
+            document.documentElement.setAttribute("lang", lang);
+            
+            // Update active language visual indicator
+            document.querySelectorAll('.language-switcher a').forEach(link => {
+                if (link.getAttribute('data-lang') === lang) {
+                    link.classList.add('active-lang');
+                } else {
+                    link.classList.remove('active-lang');
+                }
+            });
+            
+            return false;
+        }
+
+        // Modified navigation function to preload fonts for destination page
+        function navigateWithTransition(url) {
+            // Preload the fonts for the next page
+            const fontPreloader = document.createElement('link');
+            fontPreloader.rel = 'preload';
+            fontPreloader.href = 'junicode.webfont/junicode_regular.woff';
+            fontPreloader.as = 'font';
+            fontPreloader.type = 'font/woff';
+            fontPreloader.crossOrigin = 'anonymous';
+            document.head.appendChild(fontPreloader);
+            
+            const boldFontPreloader = document.createElement('link');
+            boldFontPreloader.rel = 'preload';
+            boldFontPreloader.href = 'junicode.webfont/junicode_bold.woff';
+            boldFontPreloader.as = 'font';
+            boldFontPreloader.type = 'font/woff';
+            boldFontPreloader.crossOrigin = 'anonymous';
+            document.head.appendChild(boldFontPreloader);
+            
+            const pageContainer = document.querySelector('.page-container');
+            
+            // Add exit transition class
+            pageContainer.classList.add('fade-exit');
+            
+            // Wait for the transition to complete before navigating
+            setTimeout(() => {
+                window.location.href = url;
+            }, 500); // Match the duration of the CSS transition
+        }
+
+        window.onload = function() {
+            // Check for existing language preference in localStorage
+            let savedLanguage = localStorage.getItem('language');
+            if (savedLanguage) {
+                currentLanguage = savedLanguage;
+            }
+            // Set initial active language
+            changeLanguage(currentLanguage);
+            // Añadir event listeners para los enlaces de navegación
+            document.querySelectorAll('.overlay-header nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    navigateWithTransition(this.getAttribute('href'));
+                });
+            });
+            // Add enter transition class
+            const pageContainer = document.querySelector('.page-container');
+            pageContainer.classList.add('fade-enter');
+            // Remove enter transition class after animation
+            setTimeout(() => {
+                pageContainer.classList.remove('fade-enter');
+                pageContainer.classList.add('fade-enter-active');
+            }, 0);
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Lazy load images that are off screen
+            if ('loading' in HTMLImageElement.prototype) {
+                const images = document.querySelectorAll('img[loading="lazy"]');
+                images.forEach(img => {
+                    img.src = img.dataset.src;
+                });
+            } else {
+                // Import lazy loading polyfill for older browsers
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
+                document.body.appendChild(script);
+            }
+            // Optimize resource timing
+            if (window.requestIdleCallback) {
+                requestIdleCallback(() => {
+                    // Preload next page resources during idle time
+                    const links = document.querySelectorAll('nav a');
+                    links.forEach(link => {
+                        if (link.dataset.preload) {
+                            const preloadLink = document.createElement('link');
+                            preloadLink.rel = 'preload';
+                            preloadLink.href = link.href;
+                            preloadLink.as = 'document';
+                            document.head.appendChild(preloadLink);
+                        }
+                    });
+                });
+            }
+        });
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registered');
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
+</head>
+
+<body class="bg-white text-black index-page">
+    <div class="page-container">
+        <!-- Video Background -->
+        <div class="video-container">
+            <video autoplay loop muted playsinline disablePictureInPicture controlsList="nodownload nofullscreen noremoteplayback">
+                <source src="video.mov" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <!-- Overlay Content -->
+        <div class="overlay-content">
+            <!-- Header -->
+            <header class="overlay-header">
+                <h1 class="hover-light-grey"><a href="index.html" class="no-underline-link">Cora Novoa</a></h1>
+                <nav>
+                    <a href="obra.html" class="no-underline-link">obra</a>
+                    <a href="bio.html" class="no-underline-link">bio</a>
+                    <a href="aldan.html" class="no-underline-link">aldán</a>
+                    <a href="curaduria.html" class="no-underline-link">curaduría</a>
+                    <a href="contacto.html" class="no-underline-link">contacto</a>
+                </nav>
+            </header>
+
+            <!-- Other Content (if any) -->
+        </div>
+
+        <!-- Language Switcher -->
+        <div class="language-switcher">
+            <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
+            <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
+            <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
+        </div>
+    </div>
+</body>
+
+</html>

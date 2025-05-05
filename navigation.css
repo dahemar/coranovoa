@@ -1,0 +1,344 @@
+/* Navigation Menu Styles */
+.overlay-header {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    z-index: 1000;
+    padding: 20px 0 15px 160px;
+}
+
+/* Specific styles for index page */
+.index-page .overlay-header {
+    background-color: transparent;
+}
+
+.index-page .overlay-header h1,
+.index-page .overlay-header nav a,
+.index-page .language-switcher a {
+    color: white;
+}
+
+.index-page .overlay-header::before {
+    display: none;
+}
+
+.index-page .overlay-header h1 a {
+    color: white !important;
+}
+
+.overlay-header h1 {
+    font-size: 16px;
+    margin-bottom: 30px;
+    font-weight: normal;
+    font-style: italic;
+    font-family: 'ATB Serif', serif;
+}
+
+.overlay-header nav {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 110px;
+    width: 90%;
+    max-width: 1000px;
+}
+
+.overlay-header nav a {
+    font-size: 16px;
+    font-weight: normal;
+    letter-spacing: 0px;
+    padding: 0;
+    margin-right: 0;
+}
+
+/* Styles for navigation links */
+.no-underline-link {
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+    color: black;
+}
+
+.no-underline-link:hover {
+    color: #a0a0a0;
+}
+
+.no-underline-link.active {
+    color: #a0a0a0;
+}
+
+.hover-light-grey {
+    transition: color 0.2s ease-in-out;
+}
+
+.hover-light-grey:hover {
+    color: #a0a0a0;
+}
+
+/* Language Switcher Styles */
+.language-switcher {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 2000;
+    color: black;
+    font-size: 15px;
+}
+
+.language-switcher a {
+    text-decoration: none;
+    margin-right: 5px;
+    color: black;
+}
+
+.language-switcher a:hover {
+    color: #a0a0a0;
+}
+
+.language-switcher a.active-lang, 
+.language-switcher a.active-lang {
+    color: #a0a0a0 !important;
+}
+
+
+
+/* Add a pseudo-element before to cover all space above the menu */
+.overlay-header::before {
+    content: "";
+    position: absolute;
+    top: -100vh;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: white;
+    z-index: -1;
+}
+
+/* Mobile responsive styles */
+@media screen and (max-device-width: 768px), screen and (max-width: 768px) and (orientation: portrait) {
+    .overlay-header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px 0px 0px 22px !important;
+        margin-top: 15px !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: transparent !important;
+        z-index: 100;
+    }
+
+    /* Specific styles for index page on mobile */
+    .index-page .overlay-header {
+        background-color: transparent;
+    }
+
+    .overlay-header h1 {
+        font-size: 16px;
+        margin-bottom: 30px;
+        text-align: left;
+        width: 100%;
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .overlay-header nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 18px 60px;
+        width: 95%;
+        margin: 0;
+        padding-left: 0;
+    }
+
+    .overlay-header nav a {
+        margin-bottom: 0px !important;
+        font-size: 16px;
+        letter-spacing: 0px;
+        padding: 5px 0;
+        width: auto;
+        text-align: left;
+    }
+
+    .language-switcher {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 15px;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        z-index: 2000 !important;
+    }
+    .language-switcher a.active-lang {
+        color: #a0a0a0 !important;
+    }
+}
+
+@media screen and (max-device-width: 480px), screen and (max-width: 480px) and (orientation: portrait) {
+    .overlay-header {
+        padding: 15px 0px 0px 18px !important;
+        margin-top: 15px !important;
+    }
+
+    .overlay-header h1 {
+        font-size: 15px;
+        margin-bottom: 25px;
+    }
+
+    .overlay-header nav {
+        gap: 18px 55px;
+    }
+
+    .overlay-header nav a {
+        font-size: 15px;
+    }
+    
+    .language-switcher {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-device-width: 440px), screen and (max-width: 440px) and (orientation: portrait) {
+    .overlay-header {
+        padding: 15px 0px 0px 22px !important;
+        margin-top: 15px !important;
+    }
+
+    .overlay-header h1 {
+        font-size: 15px;
+        margin-bottom: 25px;
+    }
+
+    .overlay-header nav {
+        gap: 15px 38px;
+    }
+
+    .overlay-header nav a {
+        font-size: 15px;
+    }
+    
+    .language-switcher {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-device-width: 368px), screen and (max-width: 368px) and (orientation: portrait) {
+    .overlay-header {
+        padding: 15px 0px 0px 22px !important;
+        margin-top: 15px !important;
+    }
+    
+    .overlay-header nav {
+        gap: 15px 30px;
+    }
+
+    .overlay-header nav a {
+        font-size: 14px;
+    }
+    
+    .language-switcher {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-device-width: 324px), screen and (max-width: 324px) and (orientation: portrait) {
+    .overlay-header {
+        padding: 15px 0px 0px 22px !important;
+        margin-top: 15px !important;
+    }
+    
+    .overlay-header nav {
+        gap: 15px 25px;
+    }
+
+    .overlay-header nav a {
+        font-size: 14px;
+    }
+    
+    .language-switcher {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-device-width: 302px), screen and (max-width: 302px) and (orientation: portrait) {
+    .overlay-header {
+        padding: 15px 0px 0px 22px !important;
+        margin-top: 15px !important;
+    }
+    
+    .overlay-header nav {
+        gap: 15px 20px;
+    }
+
+    .overlay-header nav a {
+        font-size: 14px;
+    }
+    
+    .language-switcher {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-device-width: 287px), screen and (max-width: 287px) and (orientation: portrait) {
+    .overlay-header {
+        padding: 15px 0px 0px 22px !important;
+        margin-top: 15px !important;
+    }
+    
+    .overlay-header nav {
+        gap: 15px 16px;
+    }
+
+    .overlay-header nav a {
+        font-size: 14px;
+    }
+    
+    .language-switcher {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-device-width: 272px), screen and (max-width: 272px) and (orientation: portrait) {
+    .overlay-header {
+        padding: 15px 0px 0px 22px !important;
+        margin-top: 15px !important;
+    }
+    
+    .overlay-header nav {
+        gap: 15px 12px;
+    }
+
+    .overlay-header nav a {
+        font-size: 14px;
+    }
+    
+    .language-switcher {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-device-width: 255px), screen and (max-width: 255px) and (orientation: portrait) {
+    .overlay-header {
+        padding: 15px 0px 0px 22px !important;
+        margin-top: 15px !important;
+    }
+    
+    .overlay-header nav {
+        gap: 15px 8px;
+    }
+
+    .overlay-header nav a {
+        font-size: 14px;
+    }
+    
+    .language-switcher {
+        font-size: 13px;
+    }
+}

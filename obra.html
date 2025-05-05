@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cora Novoa - Obra</title>
+    <!-- Preload fonts -->
+    <link rel="preload" href="junicode.webfont/junicode_regular.woff" as="font" type="font/woff" crossorigin="anonymous">
+    <link rel="preload" href="junicode.webfont/junicode_bold.woff" as="font" type="font/woff" crossorigin="anonymous">
+    <link rel="preload" href="fonts/demo-atbserif-it.otf" as="font" type="font/opentype" crossorigin="anonymous">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load navigation styles -->
+    <link rel="stylesheet" href="navigation.css">
+    <link rel="stylesheet" href="accent.css">
+    <style>
+        /* Font Definitions */
+        @font-face {
+            font-family: 'Junicode';
+            src: url('junicode.webfont/junicode_regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Junicode';
+            src: url('junicode.webfont/junicode_bold.woff') format('woff');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'ATB Serif';
+            src: url('fonts/demo-atbserif-it.otf') format('opentype');
+            font-weight: normal;
+            font-style: italic;
+            font-display: swap;
+        }
+        
+        body {
+            font-family: 'Junicode', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            color: black;
+            overflow-x: hidden;
+        }
+        .overlay-content {
+            position: relative;
+            z-index: 10;
+            padding: 40px 0 40px 160px;
+            max-width: 1600px;
+            margin: 0;
+            transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        /* Obra container and grid styles */
+        .obra-container {
+            position: relative;
+            margin-top: 120px;
+            min-height: 500px;
+            padding: 0;
+            max-width: 1600px;
+        }
+        @media (min-width: 769px) {
+            .obra-container {
+                margin-left: 0px;
+                max-width: 1200px;
+                margin-right: auto;
+            }
+            .obra-grid {
+                margin-top: 120px !important;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+                padding: 0;
+                max-width: 100%;
+                justify-items: start;
+            }
+            .obra-item {
+                width: 100%;
+                margin: 0;
+                position: relative;
+                cursor: pointer;
+                overflow: hidden;
+                content-visibility: auto;
+                contain-intrinsic-size: 0 500px;
+            }
+        }
+        .obra-grid {
+            margin-top: 120px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px;
+            padding: 0;
+            max-width: 100%;
+            justify-items: start;
+        }
+        .obra-item {
+            width: 90%;
+            margin: 0 auto 0 0;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            content-visibility: auto;
+            contain-intrinsic-size: 0 500px;
+        }
+        .obra-image {
+            width: 100%;
+            height: 0;
+            padding-bottom: 77%;
+            background-size: cover;
+            background-position: center;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            margin: 0 auto;
+        }
+        /* Move hover animation to desktop only */
+        @media (min-width: 769px) {
+            .obra-image {
+                transition: transform 0.3s ease-in-out;
+            }
+            .obra-item:hover .obra-image {
+                transform: scale(1.05);
+            }
+        }
+        .obra-title {
+            margin-top: 10px;
+            font-size: 15px;
+            color: black;
+            font-family: 'ATB Serif', serif;
+            font-weight: normal;
+            font-style: italic;
+        }
+        .obra-year {
+            font-size: 15px;
+            color: #a0a0a0;
+        }
+        .junicode-slash {
+            font-family: 'Junicode', serif !important;
+            font-style: normal !important;
+        }
+        /* Mobile and detail page styles remain unchanged */
+        @media (max-width: 768px) {
+            body {
+                overflow: hidden;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+            }
+            
+            .overlay-content {
+                padding: 0;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+                will-change: transform;
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+            }
+
+            .overlay-content.sliding-left {
+                transform: translateX(-100%);
+            }
+
+            .obra-container {
+                margin-top: 120px;
+                padding: 0;
+                overflow-y: auto;
+                height: calc(100% - 165px);
+                position: fixed;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .obra-grid {
+                margin-top: 0;
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 0;
+                width: 100%;
+            }
+
+            .obra-item {
+                width: 100%;
+                margin: 0;
+                padding: 0 20px;
+                box-sizing: border-box;
+            }
+
+            .obra-image {
+                padding-bottom: 90.0%;
+                margin: 0;
+            }
+
+            .obra-title {
+                font-size: 15px;
+            }
+
+            .obra-year {
+                font-size: 15px;
+            }
+
+            .language-switcher {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                font-size: 15px;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                z-index: 2000 !important;
+            }
+
+            /* Ajuste del pseudoelemento para móvil */
+
+        }
+
+        @media (max-width: 480px) {
+
+            .obra-container {
+                margin-top: 120px;
+                height: calc(100% - 155px);
+            }
+
+            .obra-grid {
+                gap: 25px;
+            }
+            
+            .obra-title {
+                font-size: 14px;
+            }
+
+            .obra-year {
+                font-size: 14px;
+            }
+            
+            .language-switcher {
+                font-size: 14px;
+            }
+            
+            .mobile-back-button {
+                font-size: 15px;
+            }
+            
+            .mobile-detail-title {
+                font-size: 15px;
+            }
+            
+            .mobile-detail-year {
+                font-size: 14px;
+            }
+            
+            .mobile-detail-text {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 360px) {
+
+            
+            .obra-container {
+                margin-top: 120px;
+                height: calc(100% - 145px);
+            }
+            
+            .language-switcher {
+                font-size: 13px;
+            }
+            
+            .mobile-back-button {
+                font-size: 14px;
+            }
+        }
+
+        /* Mobile detail page styles - actualizar para que funcione tanto en móvil como en escritorio */
+        .mobile-detail-page {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+            transform: translateX(100%);
+            transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+            visibility: hidden;
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+
+        .mobile-detail-page.active {
+            transform: translateX(0);
+            visibility: visible;
+        }
+
+        /* Ajustar los estilos para pantallas más grandes */
+        @media (min-width: 769px) {
+            .mobile-detail-page {
+                padding: 40px 0 40px 160px;
+            }
+            
+            .mobile-back-button {
+                margin-top: 30px;
+                margin-bottom: 20px;
+                font-size: 24px;
+                font-weight: normal;
+                display: inline-block;
+            }
+            
+            .mobile-detail-image {
+                max-width: 800px;
+            }
+            
+            .mobile-detail-text {
+                max-width: 800px;
+            }
+        }
+
+        /* Asegurar que el contenido también se deslice en escritorio */
+        .overlay-content.sliding-left {
+            transform: translateX(-100%);
+        }
+
+        .mobile-back-button {
+            display: inline-block;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            color: black;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .mobile-detail-title {
+            font-family: 'ATB Serif', serif;
+            font-weight: normal;
+            font-style: italic;
+            font-size: 16px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .mobile-detail-year {
+            font-size: 15px;
+            color: #a0a0a0;
+            margin-bottom: 20px;
+        }
+
+        .mobile-detail-image {
+            width: 100%;
+            height: auto;
+            margin-bottom: 25px;
+            will-change: transform;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .mobile-detail-text {
+            color: #a0a0a0;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 480px) {
+            .mobile-back-button {
+                font-size: 15px;
+            }
+            
+            .mobile-detail-title {
+                font-size: 15px;
+            }
+            
+            .mobile-detail-year {
+                font-size: 14px;
+            }
+            
+            .mobile-detail-text {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .mobile-back-button {
+                font-size: 14px;
+            }
+        }
+
+        /* Solución para evitar que el texto aparezca sobre el menú */
+
+
+        /* Añadir un pseudo-elemento before para cubrir todo el espacio por encima del menú */
+
+
+        @media (min-width: 769px) {
+            /* Eliminar la transición en escritorio */
+            .overlay-content {
+                transition: none;
+            }
+            
+            /* Asegurar que la página de detalle no tenga transición en escritorio */
+            .mobile-detail-page {
+                transition: none;
+            }
+            
+            /* Ajustar el estilo del botón de volver para que sea solo una flecha */
+            .mobile-back-button {
+                margin-top: 30px;
+                margin-bottom: 20px;
+                font-size: 24px; /* Aumentar tamaño para la flecha */
+                font-weight: normal;
+                display: inline-block;
+            }
+        }
+
+        /* Ajustar el estilo del botón de volver en móvil para mantener la animación */
+        @media (max-width: 768px) {
+            .mobile-back-button {
+                margin-top: 25px;
+                margin-bottom: 15px;
+                font-size: 16px;
+            }
+            
+            /* Mantener las transiciones en móvil */
+            .overlay-content {
+                transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+            }
+            
+            .mobile-detail-page {
+                transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+            }
+        }
+
+        /* Optimize animations */
+        @media (prefers-reduced-motion: reduce) {
+            .overlay-content {
+                transition: none;
+            }
+        }
+    </style>
+
+    <script>
+        let currentLanguage = localStorage.getItem('language') || 'esp';
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('language', lang);
+
+            const translations = {
+                "gal": {
+                    "obra": "obra",
+                    "bio": "bio",
+                    "curaduria": "curaduría",
+                    "aldan": "aldán",
+                    "contacto": "contacto",
+                    "back": "←"
+                },
+                "esp": {
+                    "obra": "obra",
+                    "bio": "bio",
+                    "curaduria": "curaduría",
+                    "aldan": "aldán",
+                    "contacto": "contacto",
+                    "back": "←"
+                },
+                "en": {
+                    "obra": "work",
+                    "bio": "bio",
+                    "curaduria": "curatorship",
+                    "aldan": "aldán",
+                    "contacto": "contact",
+                    "back": "←"
+                }
+            };
+
+            let selectedTranslations = translations[lang];
+
+            // Actualizar los elementos del menú
+            document.querySelector('nav a[href="obra.html"]').textContent = selectedTranslations.obra;
+            document.querySelector('nav a[href="bio.html"]').textContent = selectedTranslations.bio;
+            document.querySelector('nav a[href="aldan.html"]').textContent = selectedTranslations.aldan;
+            document.querySelector('nav a[href="curaduria.html"]').textContent = selectedTranslations.curaduria;
+            document.querySelector('nav a[href="contacto.html"]').textContent = selectedTranslations.contacto;
+
+            // Actualizar los botones de "volver" en las páginas de detalle móvil
+            document.querySelectorAll('.mobile-back-button').forEach(button => {
+                button.textContent = selectedTranslations.back;
+            });
+
+            // Actualizar el selector de idioma
+            document.querySelectorAll('.language-switcher a').forEach(link => {
+                if (link.getAttribute('data-lang') === lang) {
+                    link.classList.add('active-lang');
+                } else {
+                    link.classList.remove('active-lang');
+                }
+            });
+            
+            return false;
+        }
+
+        function closeAllDetailPages() {
+            document.querySelectorAll('.mobile-detail-page').forEach(page => {
+                page.classList.remove('active');
+                page.style.visibility = 'hidden';
+            });
+            document.querySelector('.overlay-content').classList.remove('sliding-left');
+            document.querySelector('.overlay-content').style.display = '';
+        }
+
+        function openDetailPageById(obraId) {
+            closeAllDetailPages();
+            const detailPage = document.getElementById(obraId + '-detail');
+            if (detailPage) {
+                detailPage.style.visibility = 'visible';
+                detailPage.classList.add('active');
+                document.querySelector('.overlay-content').classList.add('sliding-left');
+            }
+        }
+
+        window.onload = function() {
+            changeLanguage(currentLanguage);
+
+            // Mobile detail page handling
+            const obraItems = document.querySelectorAll('.obra-item');
+            const backButtons = document.querySelectorAll('.mobile-back-button');
+
+            // Comprobar si hay un ID de obra en la URL al cargar la página
+            const urlParams = new URLSearchParams(window.location.search);
+            const obraId = urlParams.get('id');
+            if (obraId) {
+                openDetailPageById(obraId);
+            }
+
+            // Handle obra item clicks
+            obraItems.forEach((item) => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const obraId = this.getAttribute('data-id');
+                    openDetailPageById(obraId);
+                    history.pushState({page: obraId}, '', `obra.html?id=${obraId}`);
+                });
+            });
+            
+            // Handle back button clicks
+            backButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    closeAllDetailPages();
+                    history.pushState({page: 'main'}, '', 'obra.html');
+                });
+            });
+            
+            // Handle browser back button
+            window.addEventListener('popstate', function(event) {
+                if (!event.state || event.state.page === 'main') {
+                    closeAllDetailPages();
+                } else if (event.state.page) {
+                    openDetailPageById(event.state.page);
+                }
+            });
+
+            // Reemplazar '/', '-', '_', '´', '*', '˙', '˚', '°' por span con Junicode en los títulos de obra SOLO si no contienen HTML especial
+            document.querySelectorAll('.obra-title').forEach(function(el) {
+                // Solo modificar si NO contiene etiquetas HTML (es texto plano)
+                if (!el.innerHTML.includes('<span')) {
+                    el.innerHTML = el.innerHTML
+                        .replace(/[\/\-_´*˙˚°]/g, function(match) {
+                            return '<span class="junicode-slash">' + match + '</span>';
+                        });
+                }
+            });
+        };
+    </script>
+
+    <!-- Preload critical images -->
+    <link rel="preload" as="image" href="images/branco sobre branco.webp">
+    
+    <!-- Add fetchpriority for the first visible images -->
+    <link rel="preload" fetchpriority="high" as="image" href="images/branco sobre branco.webp">
+</head>
+
+<body>
+    <div class="page-container">
+        <!-- Single language switcher that stays fixed -->
+        <div class="language-switcher">
+            <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
+            <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
+            <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
+        </div>
+        
+        <div class="overlay-content">
+            <header class="overlay-header">
+                <h1 class="hover-light-grey"><a href="index.html" class="no-underline-link">Cora Novoa</a></h1>
+                <nav>
+                    <a href="obra.html" class="no-underline-link active">obra</a>
+                    <a href="bio.html" class="no-underline-link">bio</a>
+                    <a href="aldan.html" class="no-underline-link">aldán</a>
+                    <a href="curaduria.html" class="no-underline-link">curaduría</a>
+                    <a href="contacto.html" class="no-underline-link">contacto</a>
+                </nav>
+            </header>
+
+            <div class="obra-container">
+                <div class="obra-grid">
+                    <!-- Obra 1 -->
+                    <div class="obra-item" data-id="obra1">
+                        <div class="obra-image" style="background-image: url('images/branco_sobre_branco.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">b s b</div>
+                        <div class="obra-year">2024</div>
+                    </div>
+                    
+                    <!-- Obra 2 -->
+                    <div class="obra-item" data-id="obra2">
+                        <div class="obra-image" style="background-image: url('images/masa_para_empanada.webp');"></div>
+                        <div class="obra-title">masa para empanada</div>
+                        <div class="obra-year">2024</div>
+                    </div>
+                    
+                    <!-- Obra 3 -->
+                    <div class="obra-item" data-id="obra3">
+                        <div class="obra-image" style="background-image: url('images/moas_do_xuizo.webp');"></div>
+                        <div class="obra-title">moas do xuizo</div>
+                        <div class="obra-year">2025</div>
+                    </div>
+                    
+                    <!-- Obra 4 -->
+                    <div class="obra-item" data-id="obra4">
+                        <div class="obra-image" style="background-image: url('images/=.webp');"></div>
+                        <div class="obra-title">´* ˙ ˚ ° ˚</div>
+                        <div class="obra-year">2024</div>
+                    </div>
+                    
+                    <!-- Obra 5 -->
+                    <div class="obra-item" data-id="obra5">
+                        <div class="obra-image" style="background-image: url('images/xesto_materia.webp');"></div>
+                        <div class="obra-title">xesto materia</div>
+                        <div class="obra-year">2024</div>
+                    </div>
+                    
+                    <!-- Obra 6 -->
+                    <div class="obra-item" data-id="obra6">
+                        <div class="obra-image" style="background-image: url('images/accion_de_prension.webp');"></div>
+                        <div class="obra-title">acci<span class="atb-o-accent"><span class="base">o</span><span class="accent">´</span></span>n de prensi<span class="atb-o-accent"><span class="base">o</span><span class="accent">´</span></span>n</div>
+                        <div class="obra-year">2024</div>
+                    </div>
+
+                    <!-- Obra 7 -->
+                    <div class="obra-item" data-id="obra7">
+                        <div class="obra-image" style="background-image: url('images/c_ana_gesto.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">c/ Ana Gesto</div>
+                        <div class="obra-year">2022</div>
+                    </div>
+
+                    <!-- Obra 8 -->
+                    <div class="obra-item" data-id="obra8">
+                        <div class="obra-image" style="background-image: url('images/desvelar_a_imaxe.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">desvelado de imaxe</div>
+                        <div class="obra-year">2022</div>
+                    </div>
+
+                    <!-- Obra 9 -->
+                    <div class="obra-item" data-id="obra9">
+                        <div class="obra-image" style="background-image: url('images/accion_inaccion.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">acci<span class="atb-o-accent"><span class="base">o</span><span class="accent">´</span></span>n - inacci<span class="atb-o-accent"><span class="base">o</span><span class="accent">´</span></span>n</div>
+                        <div class="obra-year">2022</div>
+                    </div>
+
+                    <!-- Obra 10 -->
+                    <div class="obra-item" data-id="obra10">
+                        <div class="obra-image" style="background-image: url('images/velados.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">velados</div>
+                        <div class="obra-year">2025</div>
+                    </div>
+
+                    <!-- Obra 11 -->
+                    <div class="obra-item" data-id="obra11">
+                        <div class="obra-image" style="background-image: url('images/percorrido_do_obxecto.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">tempo do obxecto</div>
+                        <div class="obra-year">2024</div>
+                    </div>
+
+                    <!-- Obra 12 -->
+                    <div class="obra-item" data-id="obra12">
+                        <div class="obra-image" style="background-image: url('images/accion_inaccion_abrir_o_oco.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">abrir o oco</div>
+                        <div class="obra-year">2024</div>
+                    </div>
+
+                    <!-- Obra 13 -->
+                    <div class="obra-item" data-id="obra13">
+                        <div class="obra-image" style="background-image: url('images/I.webp');"></div> <!-- Placeholder image name -->
+                        <div class="obra-title"></div>
+                        <div class="obra-title">.</div> <!-- Title missing in image -->
+                        <div class="obra-year">2024</div>
+                    </div>
+
+                    <!-- Obra 14 -->
+                    <div class="obra-item" data-id="obra14">
+                        <div class="obra-image" style="background-image: url('images/montanha_de_cemento.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">montanha de cemento</div>
+                        <div class="obra-year">2024</div>
+                    </div>
+
+                    <!-- Obra 15 -->
+                    <div class="obra-item" data-id="obra15">
+                        <div class="obra-image" style="background-image: url('images/p.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">p</div>
+                        <div class="obra-year">2024</div>
+                    </div>
+
+                    <!-- Obra 16 -->
+                    <div class="obra-item" data-id="obra16">
+                        <div class="obra-image" style="background-image: url('images/vrlux.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">vrlux</div>
+                        <div class="obra-year">2024</div>
+                    </div>
+
+                    <!-- Obra 17 -->
+                    <div class="obra-item" data-id="obra17">
+                        <div class="obra-image" style="background-image: url('images/instalacions.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">instalacions</div>
+                        <div class="obra-year">2023</div>
+                    </div>
+
+                    <!-- Obra 18 -->
+                    <div class="obra-item" data-id="obra18">
+                        <div class="obra-image" style="background-image: url('images/estudi_p.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">estudi p</div>
+                        <div class="obra-year">2024</div>
+                    </div>
+
+                    <!-- Obra 19 -->
+                    <div class="obra-item" data-id="obra19">
+                        <div class="obra-image" style="background-image: url('images/v.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">Pel de mimbre sobre pel</div>
+                        <div class="obra-year">2023</div>
+                    </div>
+
+                    <!-- Obra 20 -->
+                    <div class="obra-item" data-id="obra20">
+                        <div class="obra-image" style="background-image: url('images/enfrontar_o_corpo.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">enfrontar o corpo</div>
+                        <div class="obra-year">2023</div>
+                    </div>
+
+                    <!-- Obra 21 -->
+                    <div class="obra-item" data-id="obra21">
+                        <div class="obra-image" style="background-image: url('images/modos_de_non_ver.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">modos de non ver</div>
+                        <div class="obra-year">2022</div>
+                    </div>
+
+                    <!-- Obra 22 -->
+                    <div class="obra-item" data-id="obra22">
+                        <div class="obra-image" style="background-image: url('images/pes.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">a</div>
+                        <div class="obra-year">2022</div>
+                    </div>
+
+                    <!-- Obra 23 -->
+                    <div class="obra-item" data-id="obra23">
+                        <div class="obra-image" style="background-image: url('images/non_ver.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">non ver</div>
+                        <div class="obra-year">2023</div>
+                    </div>
+
+                    <!-- Obra 24 -->
+                    <div class="obra-item" data-id="obra24">
+                        <div class="obra-image" style="background-image: url('images/f.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">f</div>
+                        <div class="obra-year">2023</div>
+                    </div>
+
+                    <!-- Obra 25 -->
+                    <div class="obra-item" data-id="obra25">
+                        <div class="obra-image" style="background-image: url('images/lorem_ipsum.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">Lorem ipsum</div>
+                        <div class="obra-year">2023</div>
+                    </div>
+
+                    <!-- Obra 26 -->
+                    <div class="obra-item" data-id="obra26">
+                        <div class="obra-image" style="background-image: url('images/clo_de_accions_c_dialeg_oebert_e_paersche.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">ciclo de accions / Dialeg Obert e PAErsche</div>
+                        <div class="obra-year">2023</div>
+                    </div>
+
+                    <!-- Obra 27 -->
+                    <div class="obra-item" data-id="obra27">
+                        <div class="obra-image" style="background-image: url('images/ersei_de_4_brazos_e_2_cabezas_c_marta_fialho.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">xersei de catro brazos e duas cabezas c/Marta Fialho</div>
+                        <div class="obra-year">2021</div>
+                    </div>
+
+                    <!-- Obra 28 -->
+                    <div class="obra-item" data-id="obra28">
+                        <div class="obra-image" style="background-image: url('images/coimbra_line_up_action.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">Line Up Action, Coimbra</div>
+                        <div class="obra-year">2023</div>
+                    </div>
+
+                    <!-- Obra 29 -->
+                    <div class="obra-item" data-id="obra29">
+                        <div class="obra-image" style="background-image: url('images/m.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">m</div>
+                        <div class="obra-year">2022</div>
+                    </div>
+
+                    <!-- Obra 30 -->
+                    <div class="obra-item" data-id="obra30">
+                        <div class="obra-image" style="background-image: url('images/mascara_de_xeo.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">mascara de xeo</div>
+                        <div class="obra-year">2022</div>
+                    </div>
+
+                    <!-- Obra 31 -->
+                    <div class="obra-item" data-id="obra31">
+                        <div class="obra-image" style="background-image: url('images/___.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">___</div>
+                        <div class="obra-year">2022</div>
+                    </div>
+
+                    <!-- Obra 32 -->
+                    <div class="obra-item" data-id="obra32">
+                        <div class="obra-image" style="background-image: url('images/obra32_placeholder.webp');"></div> <!-- Placeholder image name -->
+                        <div class="obra-title"></div>
+                        <div class="obra-title"></div> <!-- Title missing in image -->
+                        <div class="obra-year">2022</div>
+                    </div>
+
+                    <!-- Obra 33 -->
+                    <div class="obra-item" data-id="obra33">
+                        <div class="obra-image" style="background-image: url('images/con_tacto.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">con,tacto c/ Taro</div>
+                        <div class="obra-year">2023</div>
+                    </div>
+
+                    <!-- Obra 34 -->
+                    <div class="obra-item" data-id="obra34">
+                        <div class="obra-image" style="background-image: url('images/unidade_de_medida.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">unidade de medida</div>
+                        <div class="obra-year">2023</div>
+                    </div>
+
+                    <!-- Obra 35 -->
+                    <div class="obra-item" data-id="obra35">
+                        <div class="obra-image" style="background-image: url('images/pel_de_mimbre_sobre_pel.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">Pel de mimbre sobre pel</div>
+                        <div class="obra-year">2022</div>
+                    </div>
+
+                    <!-- Obra 36 -->
+                    <div class="obra-item" data-id="obra36">
+                        <div class="obra-image" style="background-image: url('images/com_posturas.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">com,posturas</div>
+                        <div class="obra-year">2017</div>
+                    </div>
+
+                    <!-- Obra 37 -->
+                    <div class="obra-item" data-id="obra37">
+                        <div class="obra-image" style="background-image: url('images/obra37_placeholder.webp');"></div> <!-- Placeholder image name -->
+                        <div class="obra-title"></div>
+                        <div class="obra-title">.</div> <!-- Title missing in image -->
+                        <div class="obra-year">2015</div>
+                    </div>
+
+                    <!-- Obra 38 -->
+                    <div class="obra-item" data-id="obra38">
+                        <div class="obra-image" style="background-image: url('images/medio_baleiro.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">1/2 baleiro</div>
+                        <div class="obra-year">2020</div>
+                    </div>
+
+                    <!-- Obra 39 -->
+                    <div class="obra-item" data-id="obra39">
+                        <div class="obra-image" style="background-image: url('images/a.webp');"></div>
+                        <div class="obra-title"></div>
+                        <div class="obra-title">a</div>
+                        <div class="obra-year">2022</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- BLOQUES DE DETALLE GENERADOS AUTOMÁTICAMENTE -->
+<!-- Puedes personalizar la descripción de cada obra -->
+
+        <!-- Obra 1 Detail -->
+        <div class="mobile-detail-page" id="obra1-detail">
+            <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">b s b</h2>
+    <div class="mobile-detail-year">2024</div>
+    <img src="images/branco_sobre_branco.webp" alt="b s b" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 1 en galego...</div>
+        </div>
+
+        <!-- Obra 2 Detail -->
+        <div class="mobile-detail-page" id="obra2-detail">
+            <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">masa para empanada</h2>
+    <div class="mobile-detail-year">2024</div>
+    <img src="images/masa_para_empanada.webp" alt="masa para empanada" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 2 en galego...</div>
+        </div>
+
+        <!-- Obra 3 Detail -->
+        <div class="mobile-detail-page" id="obra3-detail">
+            <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">moas do xuizo</h2>
+    <div class="mobile-detail-year">2025</div>
+    <img src="images/moas_do_xuizo.webp" alt="moas do xuizo" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 3 en galego...</div>
+        </div>
+
+        <!-- Obra 4 Detail -->
+        <div class="mobile-detail-page" id="obra4-detail">
+            <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">´* ˙ ˚ ° ˚</h2>
+    <div class="mobile-detail-year">2024</div>
+    <img src="images/=.webp" alt="´* ˙ ˚ ° ˚" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 4 en galego...</div>
+        </div>
+
+        <!-- Obra 5 Detail -->
+        <div class="mobile-detail-page" id="obra5-detail">
+            <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">xesto materia</h2>
+    <div class="mobile-detail-year">2024</div>
+    <img src="images/xesto_materia.webp" alt="xesto materia" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 5 en galego...</div>
+        </div>
+
+        <!-- Obra 6 Detail -->
+        <div class="mobile-detail-page" id="obra6-detail">
+            <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">acci<span class="atb-o-accent"><span class="base">o</span><span class="accent">´</span></span>n de prensi<span class="atb-o-accent"><span class="base">o</span><span class="accent">´</span></span>n</h2>
+    <div class="mobile-detail-year">2024</div>
+    <img src="images/accion_de_prension.webp" alt="acción de prensión" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 6 en galego...</div>
+            </div>
+
+<!-- Obra 7 Detail -->
+<div class="mobile-detail-page" id="obra7-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">c/ Ana Gesto</h2>
+    <div class="mobile-detail-year">2022</div>
+    <img src="images/c_ana_gesto.webp" alt="c/ Ana Gesto" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 7 en galego...</div>
+        </div>
+
+<!-- Obra 8 Detail -->
+<div class="mobile-detail-page" id="obra8-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">desvelado de imaxe</h2>
+    <div class="mobile-detail-year">2022</div>
+    <img src="images/desvelar_a_imaxe.webp" alt="desvelado de imaxe" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 8 en galego...</div>
+</div>
+
+<!-- Obra 9 Detail -->
+<div class="mobile-detail-page" id="obra9-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">acci<span class="atb-o-accent"><span class="base">o</span><span class="accent">´</span></span>n - inacci<span class="atb-o-accent"><span class="base">o</span><span class="accent">´</span></span>n</h2>
+    <div class="mobile-detail-year">2022</div>
+    <img src="images/accion_inaccion.webp" alt="acción - inacción" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 9 en galego...</div>
+</div>
+
+<!-- Obra 10 Detail -->
+<div class="mobile-detail-page" id="obra10-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">velados</h2>
+    <div class="mobile-detail-year">2025</div>
+    <img src="images/velados.webp" alt="velados" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 10 en galego...</div>
+</div>
+
+<!-- Obra 11 Detail -->
+<div class="mobile-detail-page" id="obra11-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">tempo do obxecto</h2>
+    <div class="mobile-detail-year">2024</div>
+    <img src="images/percorrido_do_obxecto.webp" alt="tempo do obxecto" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 11 en galego...</div>
+</div>
+
+<!-- Obra 12 Detail -->
+<div class="mobile-detail-page" id="obra12-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">abrir o oco</h2>
+    <div class="mobile-detail-year">2024</div>
+    <img src="images/accion_inaccion_abrir_o_oco.webp" alt="abrir o oco" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 12 en galego...</div>
+</div>
+
+<!-- Obra 13 Detail -->
+<div class="mobile-detail-page" id="obra13-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">.</h2>
+    <div class="mobile-detail-year">2024</div>
+    <img src="images/I.webp" alt="." class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 13 en galego...</div>
+</div>
+
+<!-- Obra 14 Detail -->
+<div class="mobile-detail-page" id="obra14-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">montanha de cemento</h2>
+    <div class="mobile-detail-year">2024</div>
+    <img src="images/montanha_de_cemento.webp" alt="montanha de cemento" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 14 en galego...</div>
+</div>
+
+<!-- Obra 15 Detail -->
+<div class="mobile-detail-page" id="obra15-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">p</h2>
+    <div class="mobile-detail-year">2024</div>
+    <img src="images/p.webp" alt="p" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 15 en galego...</div>
+</div>
+
+<!-- Obra 16 Detail -->
+<div class="mobile-detail-page" id="obra16-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">vrlux</h2>
+    <div class="mobile-detail-year">2024</div>
+    <img src="images/vrlux.webp" alt="vrlux" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 16 en galego...</div>
+</div>
+
+<!-- Obra 17 Detail -->
+<div class="mobile-detail-page" id="obra17-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">instalacions</h2>
+    <div class="mobile-detail-year">2023</div>
+    <img src="images/instalacions.webp" alt="instalacions" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 17 en galego...</div>
+</div>
+
+<!-- Obra 18 Detail -->
+<div class="mobile-detail-page" id="obra18-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">estudi p</h2>
+    <div class="mobile-detail-year">2024</div>
+    <img src="images/estudi_p.webp" alt="estudi p" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 18 en galego...</div>
+</div>
+
+<!-- Obra 19 Detail -->
+<div class="mobile-detail-page" id="obra19-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">Pel de mimbre sobre pel</h2>
+    <div class="mobile-detail-year">2023</div>
+    <img src="images/v.webp" alt="Pel de mimbre sobre pel" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 19 en galego...</div>
+</div>
+
+<!-- Obra 20 Detail -->
+<div class="mobile-detail-page" id="obra20-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">enfrontar o corpo</h2>
+    <div class="mobile-detail-year">2023</div>
+    <img src="images/enfrontar_o_corpo.webp" alt="enfrontar o corpo" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 20 en galego...</div>
+</div>
+
+<!-- Obra 21 Detail -->
+<div class="mobile-detail-page" id="obra21-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">modos de non ver</h2>
+    <div class="mobile-detail-year">2022</div>
+    <img src="images/modos_de_non_ver.webp" alt="modos de non ver" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 21 en galego...</div>
+</div>
+
+<!-- Obra 22 Detail -->
+<div class="mobile-detail-page" id="obra22-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">a</h2>
+    <div class="mobile-detail-year">2022</div>
+    <img src="images/pes.webp" alt="a" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 22 en galego...</div>
+</div>
+
+<!-- Obra 23 Detail -->
+<div class="mobile-detail-page" id="obra23-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">non ver</h2>
+    <div class="mobile-detail-year">2023</div>
+    <img src="images/non_ver.webp" alt="non ver" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 23 en galego...</div>
+</div>
+
+<!-- Obra 24 Detail -->
+<div class="mobile-detail-page" id="obra24-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">f</h2>
+    <div class="mobile-detail-year">2023</div>
+    <img src="images/f.webp" alt="f" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 24 en galego...</div>
+</div>
+
+<!-- Obra 25 Detail -->
+<div class="mobile-detail-page" id="obra25-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">Lorem ipsum</h2>
+    <div class="mobile-detail-year">2023</div>
+    <img src="images/lorem_ipsum.webp" alt="Lorem ipsum" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 25 en galego...</div>
+</div>
+
+<!-- Obra 26 Detail -->
+<div class="mobile-detail-page" id="obra26-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">ciclo de accions / Dialeg Obert e PAErsche</h2>
+    <div class="mobile-detail-year">2023</div>
+    <img src="images/clo_de_accions_c_dialeg_oebert_e_paersche.webp" alt="ciclo de accions / Dialeg Obert e PAErsche" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 26 en galego...</div>
+</div>
+
+<!-- Obra 27 Detail -->
+<div class="mobile-detail-page" id="obra27-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">xersei de catro brazos e duas cabezas c/Marta Fialho</h2>
+    <div class="mobile-detail-year">2021</div>
+    <img src="images/ersei_de_4_brazos_e_2_cabezas_c_marta_fialho.webp" alt="xersei de catro brazos e duas cabezas c/Marta Fialho" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 27 en galego...</div>
+</div>
+
+<!-- Obra 28 Detail -->
+<div class="mobile-detail-page" id="obra28-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">Line Up Action, Coimbra</h2>
+    <div class="mobile-detail-year">2023</div>
+    <img src="images/coimbra_line_up_action.webp" alt="Line Up Action, Coimbra" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 28 en galego...</div>
+</div>
+
+<!-- Obra 29 Detail -->
+<div class="mobile-detail-page" id="obra29-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">m</h2>
+    <div class="mobile-detail-year">2022</div>
+    <img src="images/m.webp" alt="m" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 29 en galego...</div>
+</div>
+
+<!-- Obra 30 Detail -->
+<div class="mobile-detail-page" id="obra30-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">mascara de xeo</h2>
+    <div class="mobile-detail-year">2022</div>
+    <img src="images/mascara_de_xeo.webp" alt="mascara de xeo" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 30 en galego...</div>
+</div>
+
+<!-- Obra 31 Detail -->
+<div class="mobile-detail-page" id="obra31-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">___</h2>
+    <div class="mobile-detail-year">2022</div>
+    <img src="images/___.webp" alt="___" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 31 en galego...</div>
+</div>
+
+<!-- Obra 32 Detail -->
+<div class="mobile-detail-page" id="obra32-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title"></h2>
+    <div class="mobile-detail-year">2022</div>
+    <img src="images/obra32_placeholder.webp" alt="" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 32 en galego...</div>
+</div>
+
+<!-- Obra 33 Detail -->
+<div class="mobile-detail-page" id="obra33-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">con,tacto c/ Taro</h2>
+    <div class="mobile-detail-year">2023</div>
+    <img src="images/con_tacto.webp" alt="con,tacto c/ Taro" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 33 en galego...</div>
+</div>
+
+<!-- Obra 34 Detail -->
+<div class="mobile-detail-page" id="obra34-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">unidade de medida</h2>
+    <div class="mobile-detail-year">2023</div>
+    <img src="images/unidade_de_medida.webp" alt="unidade de medida" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 34 en galego...</div>
+</div>
+
+<!-- Obra 35 Detail -->
+<div class="mobile-detail-page" id="obra35-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">Pel de mimbre sobre pel</h2>
+    <div class="mobile-detail-year">2022</div>
+    <img src="images/pel_de_mimbre_sobre_pel.webp" alt="Pel de mimbre sobre pel" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 35 en galego...</div>
+</div>
+
+<!-- Obra 36 Detail -->
+<div class="mobile-detail-page" id="obra36-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">com,posturas</h2>
+    <div class="mobile-detail-year">2017</div>
+    <img src="images/com_posturas.webp" alt="com,posturas" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 36 en galego...</div>
+</div>
+
+<!-- Obra 37 Detail -->
+<div class="mobile-detail-page" id="obra37-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">.</h2>
+    <div class="mobile-detail-year">2015</div>
+    <img src="images/obra37_placeholder.webp" alt="." class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 37 en galego...</div>
+</div>
+
+<!-- Obra 38 Detail -->
+<div class="mobile-detail-page" id="obra38-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">1/2 baleiro</h2>
+    <div class="mobile-detail-year">2020</div>
+    <img src="images/medio_baleiro.webp" alt="1/2 baleiro" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 38 en galego...</div>
+</div>
+
+<!-- Obra 39 Detail -->
+<div class="mobile-detail-page" id="obra39-detail">
+    <a href="#" class="mobile-back-button">←</a>
+    <h2 class="mobile-detail-title">a</h2>
+    <div class="mobile-detail-year">2022</div>
+    <img src="images/a.webp" alt="a" class="mobile-detail-image" loading="lazy">
+    <div class="mobile-detail-text">Descrición da obra 39 en galego...</div>
+    </div>
+</body>
+
+</html>
