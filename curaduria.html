@@ -807,6 +807,11 @@
             if (aQueRefiroHoverText) aQueRefiroHoverText.innerHTML = selectedTranslations.a_que_me_refiro_text;
             if (aQueRefiroMobileText) aQueRefiroMobileText.innerHTML = selectedTranslations.a_que_me_refiro_text;
 
+            // Llamar al content manager para recargar contenido dinámico
+            if (window.contentManager) {
+                window.contentManager.changeLanguage(lang);
+            }
+
             return false;
         }
 
@@ -1273,6 +1278,10 @@
             </div>
         </div>
     </div>
+
+    <!-- Content Manager Script -->
+    <script src="content-manager.js"></script>
 </body>
+
 </html>
 

@@ -205,6 +205,11 @@
                     link.classList.remove('active-lang');
                 }
             });
+
+            // Llamar al content manager para recargar contenido dinámico
+            if (window.contentManager) {
+                window.contentManager.changeLanguage(lang);
+            }
             
             return false;
         }
@@ -244,6 +249,9 @@
             <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
         </div>
     </div>
+
+    <!-- Content Manager Script -->
+    <script src="content-manager.js"></script>
 </body>
 
 </html>

@@ -501,6 +501,11 @@
                     link.classList.remove('active-lang');
                 }
             });
+
+            // Llamar al content manager para recargar contenido dinámico
+            if (window.contentManager) {
+                window.contentManager.changeLanguage(lang);
+            }
             
             return false;
         }
@@ -1273,6 +1278,9 @@
     <img src="images/a.webp" alt="a" class="mobile-detail-image" loading="lazy">
     <div class="mobile-detail-text">Descrición da obra 39 en galego...</div>
     </div>
+
+    <!-- Content Manager Script -->
+    <script src="content-manager.js"></script>
 </body>
 
 </html>
