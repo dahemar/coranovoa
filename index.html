@@ -222,6 +222,21 @@
     </style>
 
     <script>
+        // Safari video autoplay fix - execute immediately
+        (function() {
+            // Detect Safari
+            const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+            
+            if (isSafari) {
+                // Preload video for Safari
+                const videoPreload = document.createElement('link');
+                videoPreload.rel = 'preload';
+                videoPreload.as = 'video';
+                videoPreload.href = 'video.mov';
+                document.head.appendChild(videoPreload);
+            }
+        })();
+        
         // Check if fonts are already loaded from cache
         if (document.fonts && document.fonts.ready) {
             document.fonts.ready.then(function() {
@@ -345,9 +360,52 @@
                 pageContainer.classList.remove('fade-enter');
                 pageContainer.classList.add('fade-enter-active');
             }, 0);
+            
+            // Force video autoplay for Safari
+            const video = document.querySelector('video');
+            if (video) {
+                // Try to play the video
+                const playPromise = video.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        // Video started playing successfully
+                        console.log('Video autoplay started successfully');
+                    }).catch(error => {
+                        // Auto-play was prevented
+                        console.log('Video autoplay prevented:', error);
+                        
+                        // Try to play on user interaction
+                        const playVideo = () => {
+                            video.play().catch(e => console.log('Still cannot play:', e));
+                            // Remove event listeners after first interaction
+                            document.removeEventListener('click', playVideo);
+                            document.removeEventListener('touchstart', playVideo);
+                        };
+                        
+                        // Add event listeners for user interaction
+                        document.addEventListener('click', playVideo, { once: true });
+                        document.addEventListener('touchstart', playVideo, { once: true });
+                    });
+                }
+            }
         };
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Force video autoplay for Safari (additional attempt)
+            const video = document.querySelector('video');
+            if (video) {
+                // Set video properties for better Safari compatibility
+                video.muted = true;
+                video.playsInline = true;
+                video.autoplay = true;
+                
+                // Try to play immediately
+                video.play().catch(error => {
+                    console.log('DOMContentLoaded: Video autoplay failed:', error);
+                });
+            }
+            
             // Lazy load images that are off screen
             if ('loading' in HTMLImageElement.prototype) {
                 const images = document.querySelectorAll('img[loading="lazy"]');
@@ -396,8 +454,9 @@
     <div class="page-container">
         <!-- Video Background -->
         <div class="video-container">
-            <video autoplay loop muted playsinline disablePictureInPicture controlsList="nodownload nofullscreen noremoteplayback">
+            <video autoplay loop muted playsinline webkit-playsinline disablePictureInPicture controlsList="nodownload nofullscreen noremoteplayback" preload="auto">
                 <source src="video.mov" type="video/mp4">
+                <source src="video.mov" type="video/quicktime">
                 Your browser does not support the video tag.
             </video>
         </div>
