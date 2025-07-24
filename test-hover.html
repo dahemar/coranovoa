@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Instagram Hover</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+            background-color: white;
+        }
+        
+        .aldan-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .aldan-text {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        /* Instagram link styles - exact same as aldan.html */
+        .aldan-text .instagram-link {
+            text-decoration: none !important;
+            color: black !important;
+            transition: color 0.2s ease-in-out !important;
+            cursor: pointer !important;
+        }
+
+        .aldan-text .instagram-link:hover {
+            color: #a0a0a0 !important;
+            text-decoration: none !important;
+            opacity: 0.7 !important;
+        }
+
+        .aldan-text .instagram-link:visited {
+            color: black !important;
+        }
+
+        .aldan-text .instagram-link:active {
+            color: #a0a0a0 !important;
+        }
+
+        .aldan-text .instagram-link::after {
+            content: none !important;
+        }
+        
+        /* Additional specificity for hover */
+        .aldan-container .aldan-text .instagram-link:hover {
+            color: #a0a0a0 !important;
+        }
+        
+        .test-info {
+            background-color: #f0f0f0;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Instagram Link Hover</h1>
+    
+    <div class="test-info">
+        <h3>Instrucciones:</h3>
+        <ul>
+            <li>Haz hover sobre el link de Instagram de abajo</li>
+            <li>Debería cambiar de color negro a gris (#a0a0a0)</li>
+            <li>Debería tener una transición suave</li>
+            <li>Al hacer clic debería abrir Instagram en una nueva pestaña</li>
+        </ul>
+    </div>
+    
+    <div class="aldan-container">
+        <div class="aldan-text">
+            <p>Este es un texto de prueba que simula el contenido de Aldán. Al final del texto hay un link de Instagram que debería cambiar de color al hacer hover:</p>
+            
+            <p>Algo de verán es un encuentro anual autogestionado, donde las únicas certezas son dónde y cuándo: Aldán, Cangas do Morrazo, Galicia, en verano. El qué es indefinido, está por construir mediante el hacer —como la propia práctica—, cambia cada vez.</p>
+            
+            <br><br>
+            <a href="https://www.instagram.com/algo_de_veran_" target="_blank" class="instagram-link">@algo_de_veran_</a>
+        </div>
+    </div>
+    
+    <div class="test-info">
+        <h3>Estado del test:</h3>
+        <p id="test-status">Haz hover sobre el link para ver si funciona...</p>
+    </div>
+    
+    <script>
+        const link = document.querySelector('.instagram-link');
+        const status = document.getElementById('test-status');
+        
+        link.addEventListener('mouseenter', function() {
+            status.textContent = '✅ Hover detectado - el link debería estar gris ahora';
+            status.style.color = 'green';
+        });
+        
+        link.addEventListener('mouseleave', function() {
+            status.textContent = '⏳ Esperando hover...';
+            status.style.color = 'black';
+        });
+        
+        link.addEventListener('click', function(e) {
+            status.textContent = '✅ Click detectado - abriendo Instagram...';
+            status.style.color = 'blue';
+        });
+    </script>
+</body>
+</html> 

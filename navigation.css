@@ -342,3 +342,32 @@
         font-size: 13px;
     }
 }
+
+/* ===== SMOOTH RESPONSIVE MARGIN ADJUSTMENT SYSTEM ===== */
+/* This system uses CSS custom properties for smooth margin adjustment */
+
+/* Desktop smooth margin adjustment (769px and above) */
+@media (min-width: 769px) {
+    .overlay-content {
+        padding-left: var(--dynamic-margin, 160px) !important;
+    }
+    
+    .overlay-header {
+        padding-left: var(--dynamic-margin, 160px) !important;
+    }
+    
+    /* Only apply transitions during resize, not on initial load */
+    .overlay-content.transitioning,
+    .overlay-header.transitioning {
+        transition: padding-left 0.3s ease-out;
+    }
+    
+    .curaduria-container,
+    .detail-container,
+    .bio-container,
+    .contacto-container {
+        margin-left: 0 !important;
+    }
+}
+
+ 

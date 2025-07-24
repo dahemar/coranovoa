@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Detail Navigation</title>
+</head>
+<body>
+    <h1>Test Detail Navigation</h1>
+    <p>Click on a obra to test navigation:</p>
+    
+    <div id="obras-list">
+        <div class="obra-item" data-order="1" style="cursor: pointer; padding: 10px; border: 1px solid #ccc; margin: 5px;">
+            <strong>Obra 1</strong> - Test obra
+        </div>
+        <div class="obra-item" data-order="2" style="cursor: pointer; padding: 10px; border: 1px solid #ccc; margin: 5px;">
+            <strong>Obra 2</strong> - Test obra
+        </div>
+    </div>
+
+    <script>
+        // Simular datos de obras
+        const testObras = [
+            { order: 1, title: "Test Obra 1", year: "2024", image_url: "images/lorem_ipsum.webp", description_esp: "Descripción de prueba 1" },
+            { order: 2, title: "Test Obra 2", year: "2024", image_url: "images/lorem_ipsum.webp", description_esp: "Descripción de prueba 2" }
+        ];
+        
+        // Guardar en localStorage
+        localStorage.setItem('obrasData', JSON.stringify(testObras));
+        
+        // Añadir event listeners
+        document.querySelectorAll('.obra-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const order = this.getAttribute('data-order');
+                console.log('Clicked obra with order:', order);
+                
+                // Navegar a la página de detalle
+                window.location.href = `obra-detail.html?order=${order}`;
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Obras Loading</title>
+</head>
+<body>
+    <h1>Test Obras Loading</h1>
+    <div id="status">Loading...</div>
+    <div id="data"></div>
+
+    <script>
+        async function testObrasLoading() {
+            const statusDiv = document.getElementById('status');
+            const dataDiv = document.getElementById('data');
+            
+            try {
+                statusDiv.textContent = 'Testing Google Sheets connection...';
+                
+                const spreadsheetId = '1GC8bqmQeQHD0H1QnIGAQbOPtBg19_4dkspwZEUjgi1k';
+                const apiKey = 'AIzaSyBHQgbSv588A3qr-Kzeo6YrZ9TbVNlrSkc';
+                const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Obras?key=${apiKey}`;
+                
+                console.log('Testing URL:', url);
+                
+                const response = await fetch(url);
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('Response data:', data);
+                
+                statusDiv.textContent = 'Data loaded successfully!';
+                
+                if (data.values && data.values.length > 1) {
+                    const headers = data.values[0];
+                    const obras = data.values.slice(1);
+                    
+                    dataDiv.innerHTML = `
+                        <h2>Headers:</h2>
+                        <pre>${JSON.stringify(headers, null, 2)}</pre>
+                        
+                        <h2>First 3 rows:</h2>
+                        <pre>${JSON.stringify(obras.slice(0, 3), null, 2)}</pre>
+                        
+                        <h2>Total rows: ${obras.length}</h2>
+                    `;
+                } else {
+                    dataDiv.innerHTML = '<p>No data found in sheet</p>';
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                statusDiv.textContent = `Error: ${error.message}`;
+                dataDiv.innerHTML = `<pre>${error.stack}</pre>`;
+            }
+        }
+        
+        // Run test when page loads
+        testObrasLoading();
+    </script>
+</body>
+</html> 

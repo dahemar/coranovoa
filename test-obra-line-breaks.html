@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Obra Line Breaks</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: white;
+        }
+        
+        .test-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        .test-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .description {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #666;
+            margin: 10px 0;
+        }
+        
+        .raw-text {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            margin: 10px 0;
+        }
+        
+        .processed-text {
+            background-color: #e8f4f8;
+            padding: 10px;
+            border-radius: 3px;
+            margin: 10px 0;
+        }
+        
+        .obra-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .obra-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .obra-item:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .obra-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .obra-year {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .obra-description {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+        }
+        
+        .detail-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .detail-page.active {
+            display: block;
+        }
+        
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 3px;
+        }
+        
+        .detail-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .detail-year {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .detail-description {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Test de Saltos de Línea en Descripciones de Obras</h1>
+        
+        <div class="test-section">
+            <div class="test-title">Obras de Ejemplo con Saltos de Línea</div>
+            <div class="obra-grid" id="obra-grid">
+                <!-- Las obras se generarán dinámicamente -->
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Página de Detalle</div>
+            <div class="detail-page" id="detail-page">
+                <a href="#" class="back-button" onclick="closeDetail()">← Volver</a>
+                <div class="detail-title" id="detail-title"></div>
+                <div class="detail-year" id="detail-year"></div>
+                <div class="detail-description" id="detail-description"></div>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Ejemplos de Texto Original</div>
+            <div class="raw-text">Obra 1:
+Esta es una descripción de ejemplo para la primera obra.
+
+Incluye múltiples párrafos separados por líneas en blanco.
+
+Y también puede tener listas:
+- Punto importante 1
+- Punto importante 2
+- Punto importante 3</div>
+            
+            <div class="raw-text">Obra 2:
+Descripción más simple con solo algunos saltos de línea.
+
+Para mostrar diferentes formatos de texto.</div>
+            
+            <div class="raw-text">Obra 3:
+Texto con formato mixto.
+
+Incluye <strong>negrita</strong> y <em>cursiva</em>.
+
+Y también saltos de línea normales.</div>
+        </div>
+    </div>
+    
+    <script>
+        function processTextWithLineBreaks(text) {
+            if (!text) return '';
+            // Convert \n to <br> tags and preserve existing HTML
+            return text.replace(/\n/g, '<br>');
+        }
+        
+        // Datos de ejemplo de obras
+        const obrasData = [
+            {
+                id: '1',
+                title: 'Obra 1',
+                year: '2024',
+                description: `Esta es una descripción de ejemplo para la primera obra.
+
+Incluye múltiples párrafos separados por líneas en blanco.
+
+Y también puede tener listas:
+- Punto importante 1
+- Punto importante 2
+- Punto importante 3`
+            },
+            {
+                id: '2',
+                title: 'Obra 2',
+                year: '2023',
+                description: `Descripción más simple con solo algunos saltos de línea.
+
+Para mostrar diferentes formatos de texto.`
+            },
+            {
+                id: '3',
+                title: 'Obra 3',
+                year: '2022',
+                description: `Texto con formato mixto.
+
+Incluye <strong>negrita</strong> y <em>cursiva</em>.
+
+Y también saltos de línea normales.`
+            }
+        ];
+        
+        // Generar la grilla de obras
+        function renderObras() {
+            const grid = document.getElementById('obra-grid');
+            grid.innerHTML = '';
+            
+            obrasData.forEach(obra => {
+                const obraElement = document.createElement('div');
+                obraElement.className = 'obra-item';
+                obraElement.setAttribute('data-id', obra.id);
+                
+                const processedDescription = processTextWithLineBreaks(obra.description);
+                
+                obraElement.innerHTML = `
+                    <div class="obra-title">${obra.title}</div>
+                    <div class="obra-year">${obra.year}</div>
+                    <div class="obra-description">${processedDescription}</div>
+                `;
+                
+                obraElement.addEventListener('click', () => {
+                    openDetail(obra);
+                });
+                
+                grid.appendChild(obraElement);
+            });
+        }
+        
+        // Abrir página de detalle
+        function openDetail(obra) {
+            const detailPage = document.getElementById('detail-page');
+            const title = document.getElementById('detail-title');
+            const year = document.getElementById('detail-year');
+            const description = document.getElementById('detail-description');
+            
+            title.textContent = obra.title;
+            year.textContent = obra.year;
+            description.innerHTML = processTextWithLineBreaks(obra.description);
+            
+            detailPage.classList.add('active');
+        }
+        
+        // Cerrar página de detalle
+        function closeDetail() {
+            const detailPage = document.getElementById('detail-page');
+            detailPage.classList.remove('active');
+        }
+        
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            renderObras();
+            console.log('Test de obras con saltos de línea completado');
+        });
+    </script>
+</body>
+</html> 

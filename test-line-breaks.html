@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Line Breaks</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: white;
+        }
+        
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        .test-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .description {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #666;
+            margin: 10px 0;
+        }
+        
+        .raw-text {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            margin: 10px 0;
+        }
+        
+        .processed-text {
+            background-color: #e8f4f8;
+            padding: 10px;
+            border-radius: 3px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Test de Saltos de Línea en Descripciones</h1>
+        
+        <div class="test-section">
+            <div class="test-title">Ejemplo 1: Descripción con saltos de línea simples</div>
+            <div class="raw-text">Texto original:
+Primera línea
+Segunda línea
+Tercera línea</div>
+            <div class="processed-text">
+                <div class="description" id="example1"></div>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Ejemplo 2: Descripción con párrafos</div>
+            <div class="raw-text">Texto original:
+Primer párrafo con información importante sobre el proyecto.
+
+Segundo párrafo con más detalles y contexto adicional.
+
+Tercer párrafo con conclusiones finales.</div>
+            <div class="processed-text">
+                <div class="description" id="example2"></div>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Ejemplo 3: Descripción con formato mixto</div>
+            <div class="raw-text">Texto original:
+Título del Proyecto
+
+Descripción principal del proyecto que incluye:
+- Punto importante 1
+- Punto importante 2
+- Punto importante 3
+
+Información adicional sobre el contexto y desarrollo.</div>
+            <div class="processed-text">
+                <div class="description" id="example3"></div>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Ejemplo 4: Descripción vacía</div>
+            <div class="raw-text">Texto original: (vacío)</div>
+            <div class="processed-text">
+                <div class="description" id="example4"></div>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Ejemplo 5: Descripción con HTML existente</div>
+            <div class="raw-text">Texto original:
+Texto normal
+Texto con <strong>negrita</strong>
+Texto con <em>cursiva</em>
+Más texto normal</div>
+            <div class="processed-text">
+                <div class="description" id="example5"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function processTextWithLineBreaks(text) {
+            if (!text) return '';
+            // Convert \n to <br> tags and preserve existing HTML
+            return text.replace(/\n/g, '<br>');
+        }
+        
+        // Ejemplos de texto con saltos de línea
+        const examples = [
+            "Primera línea\nSegunda línea\nTercera línea",
+            "Primer párrafo con información importante sobre el proyecto.\n\nSegundo párrafo con más detalles y contexto adicional.\n\nTercer párrafo con conclusiones finales.",
+            "Título del Proyecto\n\nDescripción principal del proyecto que incluye:\n- Punto importante 1\n- Punto importante 2\n- Punto importante 3\n\nInformación adicional sobre el contexto y desarrollo.",
+            "",
+            "Texto normal\nTexto con <strong>negrita</strong>\nTexto con <em>cursiva</em>\nMás texto normal"
+        ];
+        
+        // Procesar y mostrar cada ejemplo
+        examples.forEach((example, index) => {
+            const element = document.getElementById(`example${index + 1}`);
+            const processed = processTextWithLineBreaks(example);
+            element.innerHTML = processed;
+        });
+        
+        console.log('Test de saltos de línea completado');
+        console.log('Ejemplos procesados:', examples.length);
+    </script>
+</body>
+</html> 

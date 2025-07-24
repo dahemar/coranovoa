@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Curaduria Animation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: white;
+        }
+        
+        .curaduria-container {
+            position: relative;
+            margin-top: 135px;
+            min-height: 500px;
+            max-width: 1200px;
+        }
+
+        .curaduria-list {
+            margin-top: 120px;
+            padding-left: 0;
+            position: relative;
+        }
+
+        .curaduria-list.shifted {
+            transform: translateY(-10px);
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .curaduria-list.unshifting {
+            transform: translateY(0);
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .curaduria-list li {
+            margin-bottom: 10px;
+            transition: margin-bottom 0.8s ease-in-out;
+            position: relative;
+            z-index: 1;
+            font-size: 15px;
+            text-decoration: none;
+            color: black;
+            cursor: default;
+        }
+
+        .curaduria-list li.active,
+        .curaduria-list li.closing,
+        .curaduria-list li.active ~ li,
+        .curaduria-list li.closing ~ li {
+            transition: margin-bottom 0.8s ease-in-out, transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .expanded-content {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease-in-out;
+            z-index: 0;
+        }
+
+        .hover-image {
+            position: absolute;
+            left: 0;
+            width: 700px;
+            height: 400px;
+            opacity: 0;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: left top;
+            top: 15px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+        }
+
+        .hover-text {
+            position: absolute;
+            left: 710px;
+            width: 480px;
+            color: #a0a0a0;
+            font-size: 15px;
+            line-height: 1.4;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            top: 15px;
+        }
+
+        .curaduria-list li span {
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+        }
+
+        .curaduria-list li span:hover {
+            color: #a0a0a0;
+        }
+
+        /* Desktop expansion styles */
+        .curaduria-list li.active .expanded-content {
+            height: 350px;
+            opacity: 1;
+            position: relative;
+            z-index: 2;
+        }
+
+        .curaduria-list li.active ~ li {
+            transform: translateY(0);
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .curaduria-list li.active .hover-image,
+        .curaduria-list li.active .hover-text {
+            opacity: 1;
+        }
+
+        .curaduria-list li.closing ~ li {
+            transform: translateY(0);
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .curaduria-list li.closing .expanded-content {
+            height: 0;
+            opacity: 0;
+            transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease-in-out;
+        }
+
+        .curaduria-list li.closing .hover-image,
+        .curaduria-list li.closing .hover-text {
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+        
+        .test-info {
+            background-color: #f0f0f0;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Curaduria Animation</h1>
+    
+    <div class="test-info">
+        <h3>Instrucciones:</h3>
+        <ul>
+            <li>Haz clic en cualquier elemento de la lista para expandirlo</li>
+            <li>Observa cómo la lista se mueve hacia arriba suavemente</li>
+            <li>Haz clic de nuevo para contraerlo</li>
+            <li>Observa cómo la lista vuelve a su posición original con animación suave</li>
+        </ul>
+    </div>
+    
+    <div class="curaduria-container">
+        <ul class="curaduria-list" id="curaduria-list">
+            <li id="item1-li">
+                <span><span class="atb-title">Proyecto 1</span> | 2024</span>
+                <div class="expanded-content">
+                    <div class="hover-image"></div>
+                    <div class="hover-text">
+                        <span class="atb-title project-title">Proyecto 1</span> Descripción del proyecto 1. Este es un texto de ejemplo para mostrar cómo funciona la animación.
+                    </div>
+                </div>
+            </li>
+            <li id="item2-li">
+                <span><span class="atb-title">Proyecto 2</span> | 2023</span>
+                <div class="expanded-content">
+                    <div class="hover-image"></div>
+                    <div class="hover-text">
+                        <span class="atb-title project-title">Proyecto 2</span> Descripción del proyecto 2. Este es otro texto de ejemplo para mostrar la funcionalidad.
+                    </div>
+                </div>
+            </li>
+            <li id="item3-li">
+                <span><span class="atb-title">Proyecto 3</span> | 2022</span>
+                <div class="expanded-content">
+                    <div class="hover-image"></div>
+                    <div class="hover-text">
+                        <span class="atb-title project-title">Proyecto 3</span> Descripción del proyecto 3. Tercer ejemplo para probar las animaciones.
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="test-info">
+        <h3>Estado de la animación:</h3>
+        <p id="animation-status">Listo para probar...</p>
+    </div>
+    
+    <script>
+        const list = document.getElementById('curaduria-list');
+        const status = document.getElementById('animation-status');
+        
+        // Add click handlers to all spans
+        document.querySelectorAll('.curaduria-list li span').forEach(span => {
+            span.addEventListener('click', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                
+                const li = this.closest('li');
+                
+                if (li.classList.contains('active')) {
+                    // Minimizing - add closing class for smooth animation
+                    status.textContent = '🔄 Minimizando elemento...';
+                    status.style.color = 'orange';
+                    
+                    li.classList.add('closing');
+                    list.classList.add('unshifting');
+                    
+                    // Remove active class after animation
+                    setTimeout(() => {
+                        li.classList.remove('active', 'closing');
+                        list.classList.remove('shifted', 'unshifting');
+                        status.textContent = '✅ Elemento minimizado - lista vuelta a posición original';
+                        status.style.color = 'green';
+                    }, 800);
+                    
+                } else {
+                    // Expanding - remove any existing closing states
+                    status.textContent = '🔄 Expandiendo elemento...';
+                    status.style.color = 'blue';
+                    
+                    document.querySelectorAll('.curaduria-list li').forEach(el => {
+                        el.classList.remove('active', 'closing');
+                    });
+                    list.classList.remove('shifted', 'unshifting');
+                    
+                    // Add active class
+                    li.classList.add('active');
+                    list.classList.add('shifted');
+                    
+                    setTimeout(() => {
+                        status.textContent = '✅ Elemento expandido - lista movida hacia arriba';
+                        status.style.color = 'green';
+                    }, 800);
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

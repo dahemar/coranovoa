@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cora Novoa - Obra Detail</title>
+    <!-- Preload fonts -->
+    <link rel="preload" href="junicode.webfont/junicode_regular.woff" as="font" type="font/woff" crossorigin="anonymous">
+    <link rel="preload" href="junicode.webfont/junicode_bold.woff" as="font" type="font/woff" crossorigin="anonymous">
+    <link rel="preload" href="fonts/demo-atbserif-it.otf" as="font" type="font/opentype" crossorigin="anonymous">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load navigation styles -->
+    <link rel="stylesheet" href="navigation.css">
+    <link rel="stylesheet" href="accent.css">
+    <style>
+        /* Font Definitions */
+        @font-face {
+            font-family: 'Junicode';
+            src: url('junicode.webfont/junicode_regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Junicode';
+            src: url('junicode.webfont/junicode_bold.woff') format('woff');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'ATB Serif';
+            src: url('fonts/demo-atbserif-it.otf') format('opentype');
+            font-weight: normal;
+            font-style: italic;
+            font-display: swap;
+        }
+        
+        body {
+            font-family: 'Junicode', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            color: black;
+            overflow-x: hidden;
+        }
+        
+        .overlay-content {
+            position: relative;
+            z-index: 10;
+            padding: 40px 0 40px 160px;
+            max-width: 1600px;
+            margin: 0;
+        }
+        
+        /* Mobile detail page styles - actualizar para que funcione tanto en móvil como en escritorio */
+        .mobile-detail-page {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+            transform: translateX(0);
+            visibility: visible;
+        }
+
+        /* Ajustar los estilos para pantallas más grandes */
+        @media (min-width: 769px) {
+            .mobile-detail-page {
+                padding: 40px 0 40px 160px;
+            }
+            
+            .mobile-back-button {
+                margin-top: 30px;
+                margin-bottom: 20px;
+                font-size: 24px;
+                font-weight: normal;
+                display: inline-block;
+            }
+            
+            .mobile-detail-image {
+                max-width: 800px;
+            }
+            
+            .mobile-detail-text {
+                max-width: 800px;
+            }
+        }
+
+
+
+        .mobile-back-button {
+            display: inline-block;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            color: black;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .mobile-detail-title {
+            font-family: 'ATB Serif', serif;
+            font-weight: normal;
+            font-style: italic;
+            font-size: 16px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .mobile-detail-year {
+            font-size: 15px;
+            color: #a0a0a0;
+            margin-bottom: 20px;
+        }
+
+        .mobile-detail-image {
+            width: 100%;
+            height: auto;
+            margin-bottom: 25px;
+            will-change: transform;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .mobile-detail-text {
+            color: #a0a0a0;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 480px) {
+            .mobile-back-button {
+                font-size: 15px;
+            }
+            
+            .mobile-detail-title {
+                font-size: 15px;
+            }
+            
+            .mobile-detail-year {
+                font-size: 14px;
+            }
+            
+            .mobile-detail-text {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .mobile-back-button {
+                font-size: 14px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            /* Ajustar el estilo del botón de volver para que sea solo una flecha */
+            .mobile-back-button {
+                margin-top: 30px;
+                margin-bottom: 20px;
+                font-size: 24px; /* Aumentar tamaño para la flecha */
+                font-weight: normal;
+                display: inline-block;
+            }
+        }
+
+        /* Ajustar el estilo del botón de volver en móvil para mantener la animación */
+        @media (max-width: 768px) {
+            .mobile-back-button {
+                margin-top: 25px;
+                margin-bottom: 15px;
+                font-size: 16px;
+            }
+            
+
+        }
+
+
+        
+        /* Language switcher styles */
+        .language-switcher {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 2000;
+            color: black;
+            font-size: 15px;
+        }
+        
+        .language-switcher a {
+            text-decoration: none;
+            margin-right: 5px;
+            color: black;
+        }
+        
+        .language-switcher a:hover {
+            color: #a0a0a0;
+        }
+        
+        .language-switcher a.active-lang {
+            color: #a0a0a0 !important;
+        }
+        
+        @media (max-width: 768px) {
+            .language-switcher {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                font-size: 15px;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                z-index: 2000 !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .language-switcher {
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .language-switcher {
+                font-size: 13px;
+            }
+        }
+        
+        /* Junicode slash styling */
+        .junicode-slash {
+            font-family: 'Junicode', serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Single language switcher that stays fixed -->
+    <div class="language-switcher">
+        <a href="#" onclick="changeLanguage('gal'); return false;" data-lang="gal">gal</a> /
+        <a href="#" onclick="changeLanguage('esp'); return false;" data-lang="esp">esp</a> /
+        <a href="#" onclick="changeLanguage('en'); return false;" data-lang="en">en</a>
+    </div>
+
+    <!-- Template for obra detail page -->
+    <div class="mobile-detail-page" id="obra-detail-template">
+        <a href="#" class="mobile-back-button">←</a>
+        <h2 class="mobile-detail-title" id="detail-title">Título de la Obra</h2>
+        <div class="mobile-detail-year" id="detail-year">2024</div>
+        <img src="" alt="" class="mobile-detail-image" id="detail-image" loading="lazy">
+        <div class="mobile-detail-text" id="detail-description">Descripción de la obra...</div>
+    </div>
+
+    <script>
+        let currentLanguage = localStorage.getItem('language') || 'esp';
+
+        // Function to process text with line breaks
+        function processTextWithLineBreaks(text) {
+            if (!text) return '';
+            // Convert \n to <br> tags and preserve existing HTML
+            return text.replace(/\n/g, '<br>');
+        }
+        
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('language', lang);
+
+            // Actualizar el selector de idioma
+            document.querySelectorAll('.language-switcher a').forEach(link => {
+                if (link.getAttribute('data-lang') === lang) {
+                    link.classList.add('active-lang');
+                } else {
+                    link.classList.remove('active-lang');
+                }
+            });
+
+            // Cargar la descripción en el idioma seleccionado
+            const urlParams = new URLSearchParams(window.location.search);
+            const obraId = urlParams.get('id');
+            
+            if (obraId) {
+                const obrasData = JSON.parse(localStorage.getItem('obrasData') || '[]');
+                const obra = obrasData.find(o => o.id === obraId);
+                
+                if (obra) {
+                    // Actualizar la descripción según el idioma
+                    const description = document.getElementById('detail-description');
+                    if (description) {
+                        const descKey = `description_${lang}`;
+                        const newDescription = processTextWithLineBreaks(obra[descKey] || obra.description_esp || obra.description_gal || obra.description_en || '');
+                        description.innerHTML = newDescription;
+                    }
+                }
+            }
+            
+            return false;
+        }
+
+        // Function to populate detail page with data
+        function populateDetailPage(obraData) {
+            const title = document.getElementById('detail-title');
+            const year = document.getElementById('detail-year');
+            const image = document.getElementById('detail-image');
+            const description = document.getElementById('detail-description');
+            
+            if (title) title.textContent = obraData.title || '';
+            if (year) year.textContent = obraData.year || '';
+            if (image) {
+                image.src = obraData.image_url || '';
+                image.alt = obraData.title || '';
+            }
+            if (description) {
+                // Usar el idioma actual para la descripción
+                const descKey = `description_${currentLanguage}`;
+                const descText = processTextWithLineBreaks(obraData[descKey] || obraData.description_esp || obraData.description_gal || obraData.description_en || '');
+                description.innerHTML = descText;
+            }
+        }
+        
+        // Function to show detail page
+        function showDetailPage() {
+            const detailPage = document.getElementById('obra-detail-template');
+            if (detailPage) {
+                detailPage.classList.add('active');
+                detailPage.style.visibility = 'visible';
+            }
+        }
+        
+        // Function to hide detail page
+        function hideDetailPage() {
+            const detailPage = document.getElementById('obra-detail-template');
+            if (detailPage) {
+                detailPage.classList.remove('active');
+                detailPage.style.visibility = 'hidden';
+            }
+        }
+        
+        // Handle back button
+        document.querySelector('.mobile-back-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            hideDetailPage();
+            // Go back to obra.html
+            window.location.href = 'obra.html';
+        });
+        
+        // Handle URL parameters to load specific obra
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded in obra-detail.html');
+            
+            // Inicializar el selector de idioma
+            changeLanguage(currentLanguage);
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const obraOrder = urlParams.get('order');
+            console.log('URL parameter order:', obraOrder);
+            
+            if (obraOrder) {
+                // Load obra data from localStorage or API
+                const obrasData = JSON.parse(localStorage.getItem('obrasData') || '[]');
+                console.log('Loaded obrasData from localStorage:', obrasData.length, 'obras');
+                console.log('First obra:', obrasData[0]);
+                
+                const obra = obrasData.find(o => o.order == obraOrder);
+                console.log('Found obra:', obra);
+                
+                if (obra) {
+                    populateDetailPage(obra);
+                    showDetailPage();
+                } else {
+                    console.error('Obra not found:', obraOrder);
+                    console.log('Available orders:', obrasData.map(o => o.order));
+                    // Fallback: show a message or redirect
+                    document.getElementById('detail-title').textContent = 'Obra no encontrada';
+                    document.getElementById('detail-description').textContent = 'La obra solicitada no está disponible.';
+                    showDetailPage();
+                }
+            } else {
+                // No obra order provided, show default or redirect
+                console.error('No obra order provided');
+                window.location.href = 'obra.html';
+            }
+        });
+        
+        // Handle browser back button
+        window.addEventListener('popstate', function(event) {
+            if (event.state && event.state.page === 'main') {
+                hideDetailPage();
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Instagram Link</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+        }
+        
+        /* Test Instagram link styles */
+        .instagram-link {
+            text-decoration: none;
+            color: black;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .instagram-link:hover {
+            color: #a0a0a0;
+            text-decoration: none;
+        }
+
+        .instagram-link::after {
+            content: none;
+        }
+        
+        /* More specific styles */
+        .aldan-text .instagram-link {
+            text-decoration: none !important;
+            color: black !important;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .aldan-text .instagram-link:hover {
+            color: #a0a0a0 !important;
+            text-decoration: none !important;
+        }
+
+        .aldan-text .instagram-link::after {
+            content: none !important;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Instagram Link</h1>
+    
+    <div class="aldan-text">
+        <p>Este es un texto de prueba con un link de Instagram:</p>
+        <a href="https://www.instagram.com/algo_de_veran_" target="_blank" class="instagram-link">@algo_de_veran_</a>
+    </div>
+    
+    <p>Haz hover sobre el link para ver si cambia de color.</p>
+    
+    <script>
+        // Test if link is clickable
+        document.querySelector('.instagram-link').addEventListener('click', function(e) {
+            console.log('Instagram link clicked!');
+            // Don't prevent default - let it open in new tab
+        });
+    </script>
+</body>
+</html> 

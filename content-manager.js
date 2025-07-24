@@ -2,42 +2,63 @@ class ContentManager {
     constructor() {
         this.currentLanguage = localStorage.getItem('language') || 'esp';
         
-        // Usar configuración de Google Sheets si está disponible
-        if (window.GOOGLE_SHEETS_CONFIG) {
-            this.baseUrl = window.GOOGLE_SHEETS_CONFIG.baseUrl;
-            this.spreadsheetId = window.GOOGLE_SHEETS_CONFIG.spreadsheetId;
-            this.apiKey = window.GOOGLE_SHEETS_CONFIG.apiKey;
-            console.log('Google Sheets integration enabled');
-        } else {
-            this.baseUrl = null;
-            this.spreadsheetId = null;
-            this.apiKey = null;
-            console.log('Google Sheets integration disabled - using static content only');
-        }
+        // Configuración específica de Cora Novoa Google Sheets
+        this.spreadsheetId = '1GC8bqmQeQHD0H1QnIGAQbOPtBg19_4dkspwZEUjgi1k';
+        this.apiKey = 'AIzaSyBHQgbSv588A3qr-Kzeo6YrZ9TbVNlrSkc';
+        this.baseUrl = 'https://sheets.googleapis.com/v4/spreadsheets';
+        
+        // Almacenar datos de obras para acceso rápido
+        this.obrasData = [];
+        
+        console.log('Google Sheets integration enabled for Cora Novoa');
     }
 
     // Extraer URL de imagen limpia
     extractImageUrl(url) {
         if (!url) return null;
-        return url.trim();
+        
+        let cleanUrl = url.trim();
+        
+        // Corregir nombres de archivo problemáticos
+        if (cleanUrl === 'images/com') {
+            cleanUrl = 'images/com_posturas.webp';
+        } else if (cleanUrl === 'images/con') {
+            cleanUrl = 'images/con_tacto.webp';
+        } else if (cleanUrl === 'images/pegada_p.webp') {
+            cleanUrl = 'images/pegada p.webp';
+        } else if (cleanUrl === 'images/branco_sobre_branco.webp') {
+            cleanUrl = 'images/blanco_sobre_blanco.webp';
+        } else if (cleanUrl === 'images/obra37_placeholder.webp' || cleanUrl === 'placeholder.webp' || cleanUrl === 'images/placeholder.webp') {
+            cleanUrl = 'images/lorem_ipsum.webp'; // Usar una imagen placeholder
+        }
+        
+        return cleanUrl;
     }
 
     // Crear elemento de obra
     createObraElement(obra, index = 0) {
         const element = document.createElement('div');
         element.className = 'obra-item';
-        element.setAttribute('data-id', obra.id);
+        element.setAttribute('data-order', obra.order);
         
-        // Imagen
-        const cleanUrl = this.extractImageUrl(obra.image_url);
+        // Imagen - usar thumbnail si existe, sino usar image_url
+        const imageUrl = obra.thumbnail && obra.thumbnail.trim() ? obra.thumbnail : obra.image_url;
+        const cleanUrl = this.extractImageUrl(imageUrl);
         const imageDiv = document.createElement('div');
         imageDiv.className = 'obra-image';
         if (cleanUrl) {
             imageDiv.style.backgroundImage = `url('${cleanUrl}')`;
+            // Añadir manejo de errores para imágenes
+            imageDiv.onerror = () => {
+                console.warn(`Failed to load image: ${cleanUrl}`);
+                imageDiv.style.backgroundImage = 'none';
+                imageDiv.style.backgroundColor = '#f0f0f0';
+                imageDiv.innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #999;">Image not available</div>';
+            };
         }
         element.appendChild(imageDiv);
         
-        // Título
+        // Título - usar el título único (no cambia con idioma)
         if (obra.title) {
             const titleDiv = document.createElement('div');
             titleDiv.className = 'obra-title';
@@ -53,11 +74,17 @@ class ContentManager {
             element.appendChild(yearDiv);
         }
         
-        // Descripción
-        const description = obra[`description_${this.currentLanguage}`] || obra.description_esp;
+        // Descripción - usar el idioma actual
+        const description = obra[`description_${this.currentLanguage}`] || obra.description_esp || obra.description_gal || obra.description_en;
         if (description) {
-            element.setAttribute('data-description', description);
+            element.setAttribute('data-description', this.processTextWithLineBreaks(description));
         }
+        
+        // Añadir evento de clic para abrir la página de detalle
+        element.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.openObraDetail(obra);
+        });
         
         return element;
     }
@@ -93,13 +120,20 @@ class ContentManager {
         return element;
     }
 
+    // Procesar texto con saltos de línea
+    processTextWithLineBreaks(text) {
+        if (!text) return '';
+        // Convert \n to <br> tags and preserve existing HTML
+        return text.replace(/\n/g, '<br>');
+    }
+
     // Crear elemento de curaduría
     createCuraduriaElement(curaduria, index = 0) {
         const element = document.createElement('li');
         element.id = `${curaduria.id}-li`;
         
         const title = curaduria[`title_${this.currentLanguage}`] || curaduria.title_esp;
-        const description = curaduria[`description_${this.currentLanguage}`] || curaduria.description_esp;
+        const description = this.processTextWithLineBreaks(curaduria[`description_${this.currentLanguage}`] || curaduria.description_esp);
         
         element.innerHTML = `
             <span><span class="atb-title">${title}</span> | ${curaduria.year || ''}</span>
@@ -118,18 +152,41 @@ class ContentManager {
     // Cargar obras
     async loadObras() {
         try {
+            console.log('Loading obras from Google Sheets...');
+            console.log('URL:', `${this.baseUrl}/${this.spreadsheetId}/values/Obras?key=${this.apiKey}`);
+            
             const response = await fetch(`${this.baseUrl}/${this.spreadsheetId}/values/Obras?key=${this.apiKey}`);
+            console.log('Response status:', response.status);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
             const data = await response.json();
+            console.log('Response data:', data);
             
             if (data.values && data.values.length > 1) {
                 const headers = data.values[0];
-                const obras = data.values.slice(1).map(row => {
-                    const obra = {};
-                    headers.forEach((header, index) => {
-                        obra[header] = row[index] || '';
-                    });
-                    return obra;
-                });
+                console.log('Headers found:', headers);
+                
+                const obras = data.values.slice(1)
+                    .map(row => {
+                        const obra = {};
+                        headers.forEach((header, index) => {
+                            obra[header] = row[index] || '';
+                        });
+                        return obra;
+                    })
+                    .filter(obra => obra.order && obra.title); // Filtrar obras válidas por order y title
+                
+                // Ordenar por el campo order
+                obras.sort((a, b) => parseInt(a.order) - parseInt(b.order));
+                
+                // Almacenar datos para acceso rápido
+                this.obrasData = obras;
+                
+                console.log('Obras loaded:', obras.length);
+                console.log('First obra:', obras[0]);
                 
                 const grid = document.querySelector('.obra-grid');
                 if (grid) {
@@ -141,13 +198,71 @@ class ContentManager {
                         grid.appendChild(element);
                     });
                     
-                    // Re-inicializar los eventos de clic después de cargar el contenido dinámico
-                    this.initializeObraEvents();
+                    console.log('Obras loaded successfully');
+                    return obras; // Retornar las obras cargadas
+                } else {
+                    console.error('Obra grid not found');
+                    throw new Error('Obra grid not found');
                 }
+            } else {
+                console.error('No data found in Google Sheets');
+                console.error('Data structure:', data);
+                throw new Error('No data found in Google Sheets');
             }
         } catch (error) {
             console.error('Error loading obras:', error);
+            console.error('Error details:', error.message);
+            throw error; // Re-lanzar el error para que se pueda manejar
         }
+    }
+
+    // Abrir página de detalle de obra
+    openObraDetail(obra) {
+        console.log('Opening obra detail for:', obra);
+        
+        // Guardar datos de la obra en localStorage para que la página de detalle los pueda acceder
+        const obrasData = this.obrasData || [];
+        localStorage.setItem('obrasData', JSON.stringify(obrasData));
+        
+        console.log('Saved obrasData to localStorage:', obrasData.length, 'obras');
+        console.log('Looking for obra with order:', obra.order);
+        
+        // Navegar a la página de detalle
+        const detailUrl = `obra-detail.html?order=${obra.order}`;
+        console.log('Navigating to:', detailUrl);
+        window.location.href = detailUrl;
+    }
+
+    // Generar páginas de detalle dinámicamente (ya no se usa)
+    generateDetailPages(obras) {
+        // Esta función ya no se usa, las páginas de detalle ahora usan obra-detail.html
+        console.log('Detail pages are now handled by obra-detail.html template');
+    }
+
+    // Crear página de detalle para una obra
+    createDetailPage(obra) {
+        const detailPage = document.createElement('div');
+        detailPage.className = 'mobile-detail-page';
+        detailPage.id = `${obra.order}-detail`;
+        
+        // Obtener descripción en el idioma actual
+        const description = this.processTextWithLineBreaks(obra[`description_${this.currentLanguage}`] || obra.description_esp || obra.description_gal || obra.description_en || '');
+        
+        // Obtener título limpio (sin HTML)
+        const cleanTitle = obra.title || '';
+        
+        // Obtener imagen - usar image_url para la página de detalle
+        const cleanImageUrl = this.extractImageUrl(obra.image_url);
+        
+        detailPage.innerHTML = `
+            <a href="#" class="mobile-back-button">←</a>
+            <h2 class="mobile-detail-title">${cleanTitle}</h2>
+            <div class="mobile-detail-year">${obra.year || ''}</div>
+            <img src="${cleanImageUrl}" alt="${cleanTitle}" class="mobile-detail-image" loading="lazy">
+            <div class="mobile-detail-text">${description}</div>
+        `;
+        
+        return detailPage;
     }
 
     // Inicializar eventos de clic para las obras
@@ -156,10 +271,10 @@ class ContentManager {
         obraItems.forEach((item) => {
             item.addEventListener('click', function(e) {
                 e.preventDefault();
-                const obraId = this.getAttribute('data-id');
-                if (obraId) {
-                    openDetailPageById(obraId);
-                    history.pushState({page: obraId}, '', `obra.html?id=${obraId}`);
+                const obraOrder = this.getAttribute('data-order');
+                if (obraOrder) {
+                    openDetailPageById(obraOrder);
+                    history.pushState({page: obraOrder}, '', `obra.html?order=${obraOrder}`);
                 }
             });
         });
@@ -350,8 +465,14 @@ class ContentManager {
         
         switch (currentPage) {
             case 'obra.html':
-                // Para obras, solo actualizar títulos si es necesario
-                this.updateObraTitles();
+                // Si ya tenemos los datos cargados, solo actualizar descripciones
+                if (this.obrasData.length > 0) {
+                    this.updateDetailPageDescriptions();
+                    console.log('Updated detail page descriptions for language:', lang);
+                } else {
+                    // Si no tenemos datos, recargar todo
+                    this.loadObras();
+                }
                 break;
             case 'bio.html':
                 this.loadBio();
@@ -374,18 +495,37 @@ class ContentManager {
         console.log('Obra titles are now fixed and do not need updating');
     }
 
+    // Actualizar descripciones de páginas de detalle
+    updateDetailPageDescriptions() {
+        const detailPages = document.querySelectorAll('.mobile-detail-page');
+        detailPages.forEach(detailPage => {
+            const obraOrder = detailPage.id.replace('-detail', '');
+            const descriptionElement = detailPage.querySelector('.mobile-detail-text');
+            
+            if (descriptionElement) {
+                // Buscar la obra correspondiente en los datos cargados
+                const obra = this.findObraByOrder(obraOrder);
+                if (obra) {
+                    const description = this.processTextWithLineBreaks(obra[`description_${this.currentLanguage}`] || obra.description_esp || obra.description_gal || obra.description_en || '');
+                    descriptionElement.innerHTML = description;
+                }
+            }
+        });
+    }
+
+    // Buscar obra por order
+    findObraByOrder(order) {
+        return this.obrasData.find(obra => obra.order == order) || null;
+    }
+
     // Inicializar según la página
     init() {
         const currentPage = window.location.pathname.split('/').pop() || 'index.html';
         
         switch (currentPage) {
             case 'obra.html':
-                // Para obras, mantener el contenido estático original
-                // Solo inicializar eventos si no están ya inicializados
-                if (!window.obraEventsInitialized) {
-                    this.initializeObraEvents();
-                    window.obraEventsInitialized = true;
-                }
+                // Cargar obras desde Google Sheets
+                this.loadObras();
                 break;
             case 'bio.html':
                 // Para bio, solo cargar contenido dinámico si Google Sheets está configurado
