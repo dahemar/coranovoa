@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Imgur Integration</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: white;
+        }
+        
+        .test-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        .test-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .image-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        
+        .image-card h4 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .image-display {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+        
+        .url-info {
+            font-family: monospace;
+            font-size: 12px;
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 3px;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+        
+        .status {
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        
+        .status.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .status.warning {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .info-box {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .info-box h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .info-box ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .info-box li {
+            margin: 5px 0;
+        }
+        
+        .raw-data {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Test de Integración Imgur</h1>
+        
+        <div class="info-box">
+            <h3>Sistema de URLs de Imgur:</h3>
+            <ul>
+                <li>✅ <strong>URLs de Imgur:</strong> Se convierten automáticamente a formato directo</li>
+                <li>✅ <strong>Imágenes individuales:</strong> https://imgur.com/abc123 → https://i.imgur.com/abc123.jpg</li>
+                <li>✅ <strong>Álbumes:</strong> https://imgur.com/a/abc123 → https://i.imgur.com/abc123.jpg</li>
+                <li>✅ <strong>URLs locales:</strong> Se mantienen sin cambios</li>
+                <li>✅ <strong>Manejo de errores:</strong> Fallback a imagen placeholder</li>
+            </ul>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Pruebas de URLs de Imgur</div>
+            <div class="image-grid" id="imgur-test-grid">
+                <!-- Los elementos se generarán dinámicamente -->
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Pruebas de URLs Locales</div>
+            <div class="image-grid" id="local-test-grid">
+                <!-- Los elementos se generarán dinámicamente -->
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Función extractImageUrl</div>
+            <div class="raw-data">// Función implementada en content-manager.js
+extractImageUrl(url) {
+    if (!url) return null;
+    
+    let cleanUrl = url.trim();
+    
+    // Procesar URLs de Imgur
+    if (cleanUrl.includes('imgur.com')) {
+        // Convertir URLs de Imgur a formato directo
+        if (cleanUrl.includes('/a/')) {
+            // Album de Imgur - usar la primera imagen
+            cleanUrl = cleanUrl.replace('/a/', '/').replace('imgur.com', 'i.imgur.com') + '.jpg';
+        } else if (cleanUrl.includes('imgur.com/')) {
+            // Imagen individual de Imgur
+            const imgurId = cleanUrl.split('/').pop().split('.')[0];
+            cleanUrl = `https://i.imgur.com/${imgurId}.jpg`;
+        }
+    }
+    
+    // Corregir nombres de archivo problemáticos
+    if (cleanUrl === 'images/com') {
+        cleanUrl = 'images/com_posturas.webp';
+    } else if (cleanUrl === 'images/con') {
+        cleanUrl = 'images/con_tacto.webp';
+    } else if (cleanUrl === 'images/pegada_p.webp') {
+        cleanUrl = 'images/pegada p.webp';
+    } else if (cleanUrl === 'images/branco_sobre_branco.webp') {
+        cleanUrl = 'images/blanco_sobre_blanco.webp';
+    } else if (cleanUrl === 'images/obra37_placeholder.webp' || cleanUrl === 'placeholder.webp' || cleanUrl === 'images/placeholder.webp') {
+        cleanUrl = 'images/lorem_ipsum.webp';
+    }
+    
+    return cleanUrl;
+}</div>
+        </div>
+    </div>
+    
+    <script>
+        // Simular la función extractImageUrl del content-manager.js
+        function extractImageUrl(url) {
+            if (!url) return null;
+            
+            let cleanUrl = url.trim();
+            
+            // Procesar URLs de Imgur
+            if (cleanUrl.includes('imgur.com')) {
+                // Convertir URLs de Imgur a formato directo
+                if (cleanUrl.includes('/a/')) {
+                    // Album de Imgur - usar la primera imagen
+                    cleanUrl = cleanUrl.replace('/a/', '/').replace('imgur.com', 'i.imgur.com') + '.jpg';
+                } else if (cleanUrl.includes('imgur.com/')) {
+                    // Imagen individual de Imgur
+                    const imgurId = cleanUrl.split('/').pop().split('.')[0];
+                    cleanUrl = `https://i.imgur.com/${imgurId}.jpg`;
+                }
+            }
+            
+            // Corregir nombres de archivo problemáticos
+            if (cleanUrl === 'images/com') {
+                cleanUrl = 'images/com_posturas.webp';
+            } else if (cleanUrl === 'images/con') {
+                cleanUrl = 'images/con_tacto.webp';
+            } else if (cleanUrl === 'images/pegada_p.webp') {
+                cleanUrl = 'images/pegada p.webp';
+            } else if (cleanUrl === 'images/branco_sobre_branco.webp') {
+                cleanUrl = 'images/blanco_sobre_blanco.webp';
+            } else if (cleanUrl === 'images/obra37_placeholder.webp' || cleanUrl === 'placeholder.webp' || cleanUrl === 'images/placeholder.webp') {
+                cleanUrl = 'images/lorem_ipsum.webp';
+            }
+            
+            return cleanUrl;
+        }
+        
+        // Datos de prueba para Imgur
+        const imgurTestData = [
+            {
+                title: 'Imagen individual de Imgur',
+                originalUrl: 'https://imgur.com/abc123',
+                expectedUrl: 'https://i.imgur.com/abc123.jpg',
+                description: 'URL de imagen individual convertida a formato directo'
+            },
+            {
+                title: 'Álbum de Imgur',
+                originalUrl: 'https://imgur.com/a/def456',
+                expectedUrl: 'https://i.imgur.com/def456.jpg',
+                description: 'URL de álbum convertida a primera imagen'
+            },
+            {
+                title: 'URL con extensión',
+                originalUrl: 'https://imgur.com/ghi789.png',
+                expectedUrl: 'https://i.imgur.com/ghi789.jpg',
+                description: 'URL con extensión convertida a .jpg'
+            },
+            {
+                title: 'URL de Imgur con parámetros',
+                originalUrl: 'https://imgur.com/jkl012?size=large',
+                expectedUrl: 'https://i.imgur.com/jkl012.jpg',
+                description: 'URL con parámetros limpiada'
+            }
+        ];
+        
+        // Datos de prueba para URLs locales
+        const localTestData = [
+            {
+                title: 'Imagen local normal',
+                originalUrl: 'images/1.webp',
+                expectedUrl: 'images/1.webp',
+                description: 'URL local sin cambios'
+            },
+            {
+                title: 'Corrección de nombre problemático',
+                originalUrl: 'images/com',
+                expectedUrl: 'images/com_posturas.webp',
+                description: 'Nombre problemático corregido'
+            },
+            {
+                title: 'Placeholder',
+                originalUrl: 'placeholder.webp',
+                expectedUrl: 'images/lorem_ipsum.webp',
+                description: 'Placeholder convertido a imagen real'
+            }
+        ];
+        
+        function createImageCard(data, isImgur = true) {
+            const card = document.createElement('div');
+            card.className = 'image-card';
+            
+            const processedUrl = extractImageUrl(data.originalUrl);
+            const status = processedUrl === data.expectedUrl ? 'success' : 'error';
+            const statusText = processedUrl === data.expectedUrl ? '✅ Correcto' : '❌ Incorrecto';
+            
+            card.innerHTML = `
+                <h4>${data.title}</h4>
+                <div class="image-display" style="background-image: url('${processedUrl}');">
+                    ${processedUrl ? '' : 'Imagen no disponible'}
+                </div>
+                <div class="status ${status}">${statusText}</div>
+                <div class="url-info">
+                    <strong>Original:</strong> ${data.originalUrl}
+                </div>
+                <div class="url-info">
+                    <strong>Procesada:</strong> ${processedUrl}
+                </div>
+                <div class="url-info">
+                    <strong>Esperada:</strong> ${data.expectedUrl}
+                </div>
+                <p>${data.description}</p>
+            `;
+            
+            return card;
+        }
+        
+        function renderTestGrids() {
+            // Renderizar pruebas de Imgur
+            const imgurGrid = document.getElementById('imgur-test-grid');
+            imgurGrid.innerHTML = '';
+            imgurTestData.forEach(data => {
+                imgurGrid.appendChild(createImageCard(data, true));
+            });
+            
+            // Renderizar pruebas locales
+            const localGrid = document.getElementById('local-test-grid');
+            localGrid.innerHTML = '';
+            localTestData.forEach(data => {
+                localGrid.appendChild(createImageCard(data, false));
+            });
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderTestGrids();
+            console.log('Test de integración Imgur completado');
+            console.log('Pruebas de Imgur:', imgurTestData.length);
+            console.log('Pruebas locales:', localTestData.length);
+        });
+    </script>
+</body>
+</html> 

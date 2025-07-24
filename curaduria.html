@@ -257,7 +257,7 @@
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
         }
-        
+
         /* Smooth return animation for the list */
         .curaduria-list.unshifting {
             transform: translateY(0);
@@ -386,7 +386,7 @@
         let currentLanguage = localStorage.getItem('language') || 'esp';
         let contentManager;
         let curaduriaData = [];
-        
+
         function changeLanguage(lang) {
             currentLanguage = lang;
             localStorage.setItem('language', lang);
@@ -449,14 +449,15 @@
                 if (data.values && data.values.length > 1) {
                     const headers = data.values[0];
                     curaduriaData = data.values.slice(1)
-                        .map(row => {
+                        .map((row, index) => {
                             const project = {};
-                            headers.forEach((header, index) => {
-                                project[header] = row[index] || '';
+                            headers.forEach((header, headerIndex) => {
+                                project[header] = row[headerIndex] || '';
                             });
+                            // Usar el índice de la fila como orden automático
+                            project.orden = index + 1;
                             return project;
-                        })
-                        .sort((a, b) => parseInt(a.order) - parseInt(b.order));
+                        });
                     
                     console.log('Loaded curaduria data:', curaduriaData);
                     renderList();
@@ -485,11 +486,11 @@
             
             curaduriaData.forEach(item => {
                 const li = document.createElement('li');
-                li.id = item.id + '-li';
+                li.id = 'curaduria-' + item.orden + '-li';
                 
-                const title = item[`title_${currentLanguage}`] || item.title_esp;
-                const description = processTextWithLineBreaks(item[`description_${currentLanguage}`] || item.description_esp);
-                const year = item.year || '';
+                const title = item[`titulo_${currentLanguage}`] || item.titulo_esp;
+                const description = processTextWithLineBreaks(item[`descripcion_${currentLanguage}`] || item.descripcion_esp);
+                const info = item[`info_${currentLanguage}`] || item.info_esp || '';
                 
                 // Check if mobile or desktop
                 const isMobile = window.innerWidth <= 768;
@@ -497,14 +498,14 @@
                 if (isMobile) {
                     // Mobile: simple list item
                     li.innerHTML = `
-                        <span><span class="atb-title">${title}</span> | ${year}</span>
+                        <span><span class="atb-title">${title}</span>${info ? ` | ${info}` : ''}</span>
                     `;
                 } else {
                     // Desktop: list item with expansion content
                     li.innerHTML = `
-                        <span><span class="atb-title">${title}</span> | ${year}</span>
+                        <span><span class="atb-title">${title}</span>${info ? ` | ${info}` : ''}</span>
                         <div class="expanded-content">
-                            <div class="hover-image" style="background-image: url('${item.image_url || item.image}');"></div>
+                            <div class="hover-image" style="background-image: url('${item.imagen_url || item.image}');"></div>
                             <div class="hover-text">
                                 <span class="atb-title project-title">${title}</span> ${description}
                             </div>
@@ -519,7 +520,7 @@
                         event.preventDefault();
                         event.stopPropagation();
 
-                        console.log('Clicked:', item.id);
+                        console.log('Clicked:', item.orden);
                         
                         // Check if mobile or desktop
                         if (window.innerWidth <= 768) {
@@ -533,12 +534,12 @@
                                 list.classList.add('unshifting');
                                 
                                 // Remove active class after animation
-                                setTimeout(() => {
+                                    setTimeout(() => {
                                     li.classList.remove('active', 'closing');
                                     list.classList.remove('shifted', 'unshifting');
                                 }, 800); // Match the CSS transition duration
                                 
-                                console.log('Deactivated:', item.id);
+                                console.log('Deactivated:', item.orden);
                             } else {
                                 // Expanding - remove any existing closing states
                                 document.querySelectorAll('.curaduria-list li').forEach(el => {
@@ -549,7 +550,7 @@
                                 // Add active class
                                 li.classList.add('active');
                                 list.classList.add('shifted');
-                                console.log('Activated:', item.id);
+                                console.log('Activated:', item.orden);
                             }
                         }
                     });
@@ -562,7 +563,7 @@
         function openMobileDetail(item) {
             // Navigate to detail page
             const currentLang = localStorage.getItem('language') || 'esp';
-            const detailUrl = `curaduria-detail.html?id=${item.id}&lang=${currentLang}`;
+            const detailUrl = `curaduria-detail.html?orden=${item.orden}&lang=${currentLang}`;
             window.location.href = detailUrl;
         }
         

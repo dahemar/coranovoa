@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Orden Automático - Curaduría</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: white;
+        }
+        
+        .test-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        .test-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .curaduria-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .curaduria-list li {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .curaduria-list li:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .curaduria-list li span {
+            cursor: pointer;
+        }
+        
+        .curaduria-list li span:hover {
+            color: #a0a0a0;
+        }
+        
+        .expanded-content {
+            position: relative;
+            height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease-in-out;
+        }
+        
+        .curaduria-list li.active .expanded-content {
+            height: 350px;
+            opacity: 1;
+            margin-top: 15px;
+        }
+        
+        .hover-image {
+            width: 300px;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+        }
+        
+        .hover-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #666;
+        }
+        
+        .info-box {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .info-box h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .info-box ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .info-box li {
+            margin: 5px 0;
+        }
+        
+        .raw-data {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Test de Orden Automático - Curaduría</h1>
+        
+        <div class="info-box">
+            <h3>Cambios Implementados:</h3>
+            <ul>
+                <li>✅ <strong>Orden automático:</strong> El sistema usa la posición de la fila en Google Sheets como orden</li>
+                <li>✅ <strong>Headers en castellano:</strong> Todas las columnas ahora tienen nombres en español</li>
+                <li>✅ <strong>Sin columna de orden:</strong> Ya no es necesario mantener una columna manual</li>
+                <li>✅ <strong>Compatibilidad:</strong> Funciona con el sistema existente</li>
+            </ul>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Lista de Curaduría con Orden Automático</div>
+            <ul class="curaduria-list" id="curaduria-list">
+                <!-- Los elementos se generarán dinámicamente -->
+            </ul>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Datos de Prueba (Simulación de Google Sheets)</div>
+            <div class="raw-data">Headers: titulo_gal,titulo_esp,titulo_en,descripcion_gal,descripcion_esp,descripcion_en,imagen_url,info_gal,info_esp,info_en
+
+Fila 1: Cando falo de corpo,Cando falo de corpo,When I Talk About Body,"Descripción en gallego...","Descripción en español...","Description in English...",images/2.webp,"marzo - abril, 2026","marzo - abril, 2026","March - April, 2026"
+Fila 2: Papel engomado,Papel engomado,Gummed Paper,"Descripción en gallego...","Descripción en español...","Description in English...",images/1.webp,"2025","2025","2025"
+Fila 3: Ciclos de acciones,Ciclos de acciones,Action Cycles,"Descripción en gallego...","Descripción en español...","Description in English...",images/3.webp,"2024","2024","2024"
+
+Orden automático: Fila 1 = orden 1, Fila 2 = orden 2, Fila 3 = orden 3</div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Nuevos Headers en Castellano</div>
+            <div class="raw-data">Antes: id,title_gal,title_esp,title_en,description_gal,description_esp,description_en,image_url,year,order
+Ahora: titulo_gal,titulo_esp,titulo_en,descripcion_gal,descripcion_esp,descripcion_en,imagen_url,info_gal,info_esp,info_en
+
+Cambios:
+- id → (eliminado, reemplazado por orden automático)
+- title_* → titulo_*
+- description_* → descripcion_*
+- image_url → imagen_url
+- year → info_* (tres columnas por idioma)
+- order → (eliminado, orden automático)</div>
+        </div>
+    </div>
+    
+    <script>
+        // Datos de prueba simulando Google Sheets
+        const testData = [
+            {
+                titulo_gal: 'Cando falo de corpo',
+                titulo_esp: 'Cando falo de corpo',
+                titulo_en: 'When I Talk About Body',
+                descripcion_gal: 'Descripción en gallego del primer proyecto de curaduría.',
+                descripcion_esp: 'Descripción en español del primer proyecto de curaduría.',
+                descripcion_en: 'Description in English of the first curatorship project.',
+                imagen_url: 'images/2.webp',
+                info_gal: 'marzo - abril, 2026',
+                info_esp: 'marzo - abril, 2026',
+                info_en: 'March - April, 2026'
+            },
+            {
+                titulo_gal: 'Papel engomado',
+                titulo_esp: 'Papel engomado',
+                titulo_en: 'Gummed Paper',
+                descripcion_gal: 'Descripción en gallego del segundo proyecto de curaduría.',
+                descripcion_esp: 'Descripción en español del segundo proyecto de curaduría.',
+                descripcion_en: 'Description in English of the second curatorship project.',
+                imagen_url: 'images/1.webp',
+                info_gal: '2025',
+                info_esp: '2025',
+                info_en: '2025'
+            },
+            {
+                titulo_gal: 'Ciclos de acciones',
+                titulo_esp: 'Ciclos de acciones',
+                titulo_en: 'Action Cycles',
+                descripcion_gal: 'Descripción en gallego del tercer proyecto de curaduría.',
+                descripcion_esp: 'Descripción en español del tercer proyecto de curaduría.',
+                descripcion_en: 'Description in English of the third curatorship project.',
+                imagen_url: 'images/3.webp',
+                info_gal: '2024',
+                info_esp: '2024',
+                info_en: '2024'
+            }
+        ];
+        
+        function processTextWithLineBreaks(text) {
+            if (!text) return '';
+            return text.replace(/\n/g, '<br>');
+        }
+        
+        function renderCuraduriaList() {
+            const list = document.getElementById('curaduria-list');
+            list.innerHTML = '';
+            
+            // Simular el procesamiento automático de orden
+            testData.forEach((item, index) => {
+                const li = document.createElement('li');
+                const orden = index + 1; // Orden automático basado en la posición
+                li.id = `curaduria-${orden}-li`;
+                
+                const currentLanguage = 'esp'; // Para la prueba
+                const title = item[`titulo_${currentLanguage}`] || item.titulo_esp;
+                const description = processTextWithLineBreaks(item[`descripcion_${currentLanguage}`] || item.descripcion_esp);
+                const info = item[`info_${currentLanguage}`] || item.info_esp || '';
+                
+                li.innerHTML = `
+                    <span><span class="atb-title">${title}</span>${info ? ` | ${info}` : ''} (Orden: ${orden})</span>
+                    <div class="expanded-content">
+                        <div class="hover-image" style="background-image: url('${item.imagen_url}');"></div>
+                        <div class="hover-text">
+                            <span class="atb-title project-title">${title}</span> ${description}
+                        </div>
+                    </div>
+                `;
+                
+                // Add click handler
+                const span = li.querySelector('span');
+                span.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    
+                    console.log('Clicked:', orden);
+                    
+                    if (li.classList.contains('active')) {
+                        li.classList.remove('active');
+                        console.log('Deactivated:', orden);
+                    } else {
+                        document.querySelectorAll('.curaduria-list li').forEach(el => {
+                            el.classList.remove('active');
+                        });
+                        li.classList.add('active');
+                        console.log('Activated:', orden);
+                    }
+                });
+                
+                list.appendChild(li);
+            });
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCuraduriaList();
+            console.log('Test de orden automático completado');
+            console.log('Datos procesados:', testData.length, 'elementos');
+        });
+    </script>
+</body>
+</html> 

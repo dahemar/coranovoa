@@ -242,7 +242,7 @@
     <script>
         // Get URL parameters
         const urlParams = new URLSearchParams(window.location.search);
-        const projectId = urlParams.get('id');
+        const projectOrden = urlParams.get('orden');
         const currentLang = urlParams.get('lang') || 'gal';
 
         // Load project data from Google Sheets
@@ -254,15 +254,17 @@
                 if (data.values && data.values.length > 1) {
                     const headers = data.values[0];
                     const projects = data.values.slice(1)
-                        .map(row => {
+                        .map((row, index) => {
                             const project = {};
-                            headers.forEach((header, index) => {
-                                project[header] = row[index] || '';
+                            headers.forEach((header, headerIndex) => {
+                                project[header] = row[headerIndex] || '';
                             });
+                            // Usar el índice de la fila como orden automático
+                            project.orden = index + 1;
                             return project;
                         });
                     
-                    const project = projects.find(p => p.id === projectId);
+                    const project = projects.find(p => p.orden == projectOrden);
                     if (project) {
                         displayProject(project);
                     } else {
@@ -294,19 +296,19 @@
         }
         
         function displayProject(project) {
-            const title = project[`title_${currentLang}`] || project.title_esp;
-            const description = processTextWithLineBreaks(project[`description_${currentLang}`] || project.description_esp);
-            const image = project.image_url || 'images/1.webp';
-            const year = project.year || '';
+            const title = project[`titulo_${currentLang}`] || project.titulo_esp;
+            const description = processTextWithLineBreaks(project[`descripcion_${currentLang}`] || project.descripcion_esp);
+            const image = project.imagen_url || 'images/1.webp';
+            const info = project[`info_${currentLang}`] || project.info_esp || '';
             const subtitle = project.subtitle || '';
             
-            // Create title with year and subtitle
+            // Create title with info and subtitle
             let fullTitle = `<span class="atb-title">${title}</span>`;
-            if (subtitle || year) {
+            if (subtitle || info) {
                 let subtitlePart = subtitle || '';
-                let yearPart = year || '';
-                let separator = subtitlePart && yearPart ? ', ' : '';
-                fullTitle += ` | ${subtitlePart}${separator}${yearPart}`;
+                let infoPart = info || '';
+                let separator = subtitlePart && infoPart ? ', ' : '';
+                fullTitle += ` | ${subtitlePart}${separator}${infoPart}`;
             }
             
             document.getElementById('detail-title').innerHTML = fullTitle;
@@ -317,7 +319,7 @@
 
         // Initialize project data
         function initializeProject() {
-            if (!projectId) {
+            if (!projectOrden) {
                 window.location.href = 'curaduria.html';
                 return;
             }

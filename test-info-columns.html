@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Info Columns - Curaduría</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: white;
+        }
+        
+        .test-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        .test-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .language-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .language-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            background-color: #f5f5f5;
+            margin-right: 5px;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .language-tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom-color: white;
+            margin-bottom: -1px;
+        }
+        
+        .curaduria-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .curaduria-list li {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .curaduria-list li:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .curaduria-list li span {
+            cursor: pointer;
+        }
+        
+        .curaduria-list li span:hover {
+            color: #a0a0a0;
+        }
+        
+        .expanded-content {
+            position: relative;
+            height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease-in-out;
+        }
+        
+        .curaduria-list li.active .expanded-content {
+            height: 350px;
+            opacity: 1;
+            margin-top: 15px;
+        }
+        
+        .hover-image {
+            width: 300px;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+        }
+        
+        .hover-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #666;
+        }
+        
+        .info-box {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .info-box h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .info-box ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .info-box li {
+            margin: 5px 0;
+        }
+        
+        .raw-data {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            margin: 15px 0;
+        }
+        
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .example-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        
+        .example-card h4 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .example-info {
+            font-style: italic;
+            color: #666;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Test de Columnas de Información - Curaduría</h1>
+        
+        <div class="info-box">
+            <h3>Nuevas Columnas de Información:</h3>
+            <ul>
+                <li>✅ <strong>info_gal:</strong> Información en gallego (año + detalles)</li>
+                <li>✅ <strong>info_esp:</strong> Información en español (año + detalles)</li>
+                <li>✅ <strong>info_en:</strong> Información en inglés (año + detalles)</li>
+                <li>✅ <strong>Flexibilidad:</strong> Puede incluir solo año o año + información adicional</li>
+                <li>✅ <strong>Idiomas:</strong> Información específica por idioma</li>
+            </ul>
+        </div>
+        
+        <div class="language-tabs">
+            <div class="language-tab active" data-lang="esp">Español</div>
+            <div class="language-tab" data-lang="gal">Galego</div>
+            <div class="language-tab" data-lang="en">English</div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Lista de Curaduría con Información por Idioma</div>
+            <ul class="curaduria-list" id="curaduria-list">
+                <!-- Los elementos se generarán dinámicamente -->
+            </ul>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Ejemplos de Información</div>
+            <div class="example-grid">
+                <div class="example-card">
+                    <h4>Ejemplo 1: Año + Fechas + Lugar</h4>
+                    <div class="example-info">info_esp: "marzo - abril, 2026<br>Sala Manuel Moldes, Pontevedra"</div>
+                    <div class="example-info">info_en: "March - April, 2026<br>Sala Manuel Moldes, Pontevedra"</div>
+                </div>
+                <div class="example-card">
+                    <h4>Ejemplo 2: Solo Año</h4>
+                    <div class="example-info">info_esp: "2025"</div>
+                    <div class="example-info">info_en: "2025"</div>
+                </div>
+                <div class="example-card">
+                    <h4>Ejemplo 3: Año + Tipo de Proyecto</h4>
+                    <div class="example-info">info_esp: "2024<br>Espacios plurales de investigación"</div>
+                    <div class="example-info">info_en: "2024<br>Plural research spaces"</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Estructura de Headers</div>
+            <div class="raw-data">Headers: titulo_gal,titulo_esp,titulo_en,descripcion_gal,descripcion_esp,descripcion_en,imagen_url,info_gal,info_esp,info_en
+
+Ejemplo de fila:
+Cando falo de corpo,Cando falo de corpo,When I Talk About Body,"Descripción...","Descripción...","Description...",images/2.webp,"marzo - abril, 2026","marzo - abril, 2026","March - April, 2026"</div>
+        </div>
+    </div>
+    
+    <script>
+        // Datos de prueba con diferentes tipos de información
+        const testData = [
+            {
+                titulo_gal: 'Cando falo de corpo',
+                titulo_esp: 'Cando falo de corpo',
+                titulo_en: 'When I Talk About Body',
+                descripcion_gal: 'Descripción en gallego del primer proyecto de curaduría.',
+                descripcion_esp: 'Descripción en español del primer proyecto de curaduría.',
+                descripcion_en: 'Description in English of the first curatorship project.',
+                imagen_url: 'images/2.webp',
+                info_gal: 'marzo - abril, 2026\nSala Manuel Moldes, Pontevedra',
+                info_esp: 'marzo - abril, 2026\nSala Manuel Moldes, Pontevedra',
+                info_en: 'March - April, 2026\nSala Manuel Moldes, Pontevedra'
+            },
+            {
+                titulo_gal: 'Papel engomado',
+                titulo_esp: 'Papel engomado',
+                titulo_en: 'Gummed Paper',
+                descripcion_gal: 'Descripción en gallego del segundo proyecto de curaduría.',
+                descripcion_esp: 'Descripción en español del segundo proyecto de curaduría.',
+                descripcion_en: 'Description in English of the second curatorship project.',
+                imagen_url: 'images/1.webp',
+                info_gal: '2025',
+                info_esp: '2025',
+                info_en: '2025'
+            },
+            {
+                titulo_gal: 'Ciclos de acciones',
+                titulo_esp: 'Ciclos de acciones',
+                titulo_en: 'Action Cycles',
+                descripcion_gal: 'Descripción en gallego del tercer proyecto de curaduría.',
+                descripcion_esp: 'Descripción en español del tercer proyecto de curaduría.',
+                descripcion_en: 'Description in English of the third curatorship project.',
+                imagen_url: 'images/3.webp',
+                info_gal: '2024\nEspazos plurais de investigación',
+                info_esp: '2024\nEspacios plurales de investigación',
+                info_en: '2024\nPlural research spaces'
+            }
+        ];
+        
+        let currentLanguage = 'esp';
+        
+        function processTextWithLineBreaks(text) {
+            if (!text) return '';
+            return text.replace(/\n/g, '<br>');
+        }
+        
+        function renderCuraduriaList() {
+            const list = document.getElementById('curaduria-list');
+            list.innerHTML = '';
+            
+            testData.forEach((item, index) => {
+                const li = document.createElement('li');
+                const orden = index + 1;
+                li.id = `curaduria-${orden}-li`;
+                
+                const title = item[`titulo_${currentLanguage}`] || item.titulo_esp;
+                const description = processTextWithLineBreaks(item[`descripcion_${currentLanguage}`] || item.descripcion_esp);
+                const info = processTextWithLineBreaks(item[`info_${currentLanguage}`] || item.info_esp || '');
+                
+                li.innerHTML = `
+                    <span><span class="atb-title">${title}</span>${info ? ` | ${info}` : ''}</span>
+                    <div class="expanded-content">
+                        <div class="hover-image" style="background-image: url('${item.imagen_url}');"></div>
+                        <div class="hover-text">
+                            <span class="atb-title project-title">${title}</span> ${description}
+                        </div>
+                    </div>
+                `;
+                
+                // Add click handler
+                const span = li.querySelector('span');
+                span.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    
+                    console.log('Clicked:', orden, 'Language:', currentLanguage);
+                    
+                    if (li.classList.contains('active')) {
+                        li.classList.remove('active');
+                        console.log('Deactivated:', orden);
+                    } else {
+                        document.querySelectorAll('.curaduria-list li').forEach(el => {
+                            el.classList.remove('active');
+                        });
+                        li.classList.add('active');
+                        console.log('Activated:', orden);
+                    }
+                });
+                
+                list.appendChild(li);
+            });
+        }
+        
+        // Language tab functionality
+        document.querySelectorAll('.language-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Update active tab
+                document.querySelectorAll('.language-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Update language
+                currentLanguage = this.getAttribute('data-lang');
+                
+                // Re-render list
+                renderCuraduriaList();
+                
+                console.log('Language changed to:', currentLanguage);
+            });
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCuraduriaList();
+            console.log('Test de columnas de información completado');
+            console.log('Datos procesados:', testData.length, 'elementos');
+        });
+    </script>
+</body>
+</html> 

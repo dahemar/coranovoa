@@ -19,6 +19,19 @@ class ContentManager {
         
         let cleanUrl = url.trim();
         
+        // Procesar URLs de Imgur
+        if (cleanUrl.includes('imgur.com')) {
+            // Convertir URLs de Imgur a formato directo
+            if (cleanUrl.includes('/a/')) {
+                // Album de Imgur - usar la primera imagen
+                cleanUrl = cleanUrl.replace('/a/', '/').replace('imgur.com', 'i.imgur.com') + '.jpg';
+            } else if (cleanUrl.includes('imgur.com/')) {
+                // Imagen individual de Imgur
+                const imgurId = cleanUrl.split('/').pop().split('.')[0];
+                cleanUrl = `https://i.imgur.com/${imgurId}.jpg`;
+            }
+        }
+        
         // Corregir nombres de archivo problemáticos
         if (cleanUrl === 'images/com') {
             cleanUrl = 'images/com_posturas.webp';
@@ -130,15 +143,16 @@ class ContentManager {
     // Crear elemento de curaduría
     createCuraduriaElement(curaduria, index = 0) {
         const element = document.createElement('li');
-        element.id = `${curaduria.id}-li`;
+        element.id = `curaduria-${curaduria.orden || (index + 1)}-li`;
         
-        const title = curaduria[`title_${this.currentLanguage}`] || curaduria.title_esp;
-        const description = this.processTextWithLineBreaks(curaduria[`description_${this.currentLanguage}`] || curaduria.description_esp);
+        const title = curaduria[`titulo_${this.currentLanguage}`] || curaduria.titulo_esp;
+        const description = this.processTextWithLineBreaks(curaduria[`descripcion_${this.currentLanguage}`] || curaduria.descripcion_esp);
         
+        const info = curaduria[`info_${this.currentLanguage}`] || curaduria.info_esp || '';
         element.innerHTML = `
-            <span><span class="atb-title">${title}</span> | ${curaduria.year || ''}</span>
+            <span><span class="atb-title">${title}</span>${info ? ` | ${info}` : ''}</span>
             <div class="expanded-content">
-                <div class="hover-image" style="background-image: url('${curaduria.image_url}');"></div>
+                <div class="hover-image" style="background-image: url('${curaduria.imagen_url}');"></div>
                 <div class="hover-text">
                     <span class="atb-title project-title">${title}</span>
                     ${description}
@@ -391,14 +405,15 @@ class ContentManager {
             if (data.values && data.values.length > 1) {
                 const headers = data.values[0];
                 const curaduriaProjects = data.values.slice(1)
-                    .map(row => {
+                    .map((row, index) => {
                         const project = {};
-                        headers.forEach((header, index) => {
-                            project[header] = row[index] || '';
+                        headers.forEach((header, headerIndex) => {
+                            project[header] = row[headerIndex] || '';
                         });
+                        // Usar el índice de la fila como orden automático
+                        project.orden = index + 1;
                         return project;
-                    })
-                    .sort((a, b) => parseInt(a.order) - parseInt(b.order));
+                    });
                 
                 const container = document.querySelector('.curaduria-list');
                 if (container) {
