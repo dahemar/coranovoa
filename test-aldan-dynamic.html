@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Aldán Dynamic Loading</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: white;
+        }
+        
+        .test-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        .test-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .content-display {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+            min-height: 100px;
+        }
+        
+        .language-test {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .language-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f5f5f5;
+        }
+        
+        .language-card h4 {
+            margin-top: 0;
+            color: #333;
+            text-transform: uppercase;
+        }
+        
+        .status {
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        
+        .status.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .status.warning {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .info-box {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .info-box h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .info-box ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .info-box li {
+            margin: 5px 0;
+        }
+        
+        .raw-data {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            margin: 15px 0;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .language-buttons {
+            margin: 15px 0;
+        }
+        
+        .language-buttons button {
+            margin: 5px;
+            padding: 8px 16px;
+            border: 1px solid #ccc;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        
+        .language-buttons button.active {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+        
+        .debug-info {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Test de Carga Dinámica de Aldán</h1>
+        
+        <div class="info-box">
+            <h3>Sistema Simplificado de Aldán:</h3>
+            <ul>
+                <li>✅ <strong>Sin contenido hardcodeado:</strong> Todo se carga desde Google Sheets</li>
+                <li>✅ <strong>Cambio de idioma:</strong> Funciona dinámicamente</li>
+                <li>✅ <strong>Estructura CSV:</strong> order, content_gal, content_esp, content_en</li>
+                <li>✅ <strong>Título fijo:</strong> "Algo de verán" se mantiene intacto</li>
+                <li>✅ <strong>Enlace Instagram simplificado:</strong> Solo poner la URL en la segunda fila</li>
+                <li>✅ <strong>Procesamiento automático:</strong> El sistema genera el enlace completo</li>
+            </ul>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Contenido Actual de Aldán</div>
+            <div class="language-buttons">
+                <button onclick="changeLanguage('gal')" data-lang="gal">Gallego</button>
+                <button onclick="changeLanguage('esp')" data-lang="esp" class="active">Español</button>
+                <button onclick="changeLanguage('en')" data-lang="en">English</button>
+            </div>
+            <div class="content-display" id="aldan-content">
+                <!-- El contenido se cargará dinámicamente -->
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Pruebas por Idioma</div>
+            <div class="language-test" id="language-test-grid">
+                <!-- Los elementos se generarán dinámicamente -->
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Información de Debug</div>
+            <div class="debug-info" id="debug-info">
+                <!-- Información de debug se mostrará aquí -->
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Estructura CSV Simplificada de Aldán</div>
+            <div class="raw-data">order,content_gal,content_esp,content_en
+1,"é un encontro anual autoxestionado, onde as únicas certezas son onde e cando: Aldán, Cangas do Morrazo, Galiza, en verán. O qué é indefinido, está por construír mediante o facer —como a propia práctica—, cambia cada vez. Na procura de profesionalizar os proxectos, implicando a máis persoas e evitando a nosa precarización, puidendo soster a primeira residencia, paralela ao proxecto de encontro, dividindo este en dous, mellorando así a organización ao coincidir o taller e lugar de residencia, incrementando o número de participantes (de 17 a 24) e a duración (de 5 a 7 días), concluíndo cunha mostra aberta ao público. Descentralizando os eixes, favorecendo o diálogo co próximo e o periférico. Requírese rodear para comprender, desde a escoita, o respecto e os coidados co que nos rodea e nós mesmas. Un exercicio nominal, pero non só desde a palabra. Unha práctica por e para artistas, sobre e desde o presente e a súa autonomía. O encontro articulase como dispositivo relacional, entrelazando arte e vida, desafiando as limitacións do medio e favorecendo presenzas co que hai: autoposibilitándonos. Ten máis que ver cun modo de vida, unha forma de estar no mundo, de maneira situada. Suscítase a existencia dun punto de intersección entre a realidade interior e a exterior (H. Michaux), co material e inmaterial do espazo. situacións de realidades complexas que operan como xerme doutras realidades larvarias.","es un encuentro anual autogestionado, donde las únicas certezas son dónde y cuándo: Aldán, Cangas do Morrazo, Galicia, en verano. El qué es indefinido, está por construir mediante el hacer —como la propia práctica—, cambia cada vez. En la búsqueda de profesionalizar los proyectos, implicando a más personas y evitando nuestra precarización, pudiendo sostener la primera residencia, paralela al proyecto de encuentro, dividiendo este en dos, mejorando así la organización al coincidir el taller y lugar de residencia, incrementando el número de participantes (de 17 a 24) y la duración (de 5 a 7 días), concluyendo con una muestra abierta al público. Descentralizando los ejes, favoreciendo el diálogo con lo próximo y lo periférico. Se requiere rodear para comprender, desde la escucha, el respeto y los cuidados con lo que nos rodea y nosotras mismas. Un ejercicio nominal, pero no sólo desde la palabra. Una práctica por y para artistas, sobre y desde el presente y su autonomía. El encuentro se articula como dispositivo relacional, entrelazando arte y vida, desafiando las limitaciones del medio y favoreciendo presencias con lo que hay: autoposibilitándonos. Tiene más que ver con un modo de vida, una forma de estar en el mundo, de manera situada. Se plantea la existencia de un punto de intersección entre la realidad interior y la exterior (H. Michaux), con lo material e inmaterial del espacio. situaciones de realidades complejas que operan como germen de otras realidades larvarias.","is a self-managed annual gathering, where the only certainties are where and when: Aldán, Cangas do Morrazo, Galicia, in summer. What it is remains undefined, to be built through doing—like practice itself—changing each time. In seeking to professionalize projects, involving more people and avoiding precariousness, we were able to sustain the first residency, parallel to the meeting project, dividing it in two, thus improving organization by having the workshop and residence in the same place, increasing the number of participants (from 17 to 24) and duration (from 5 to 7 days), concluding with an exhibition open to the public. Decentralizing axes, favoring dialogue with the nearby and peripheral. It requires surrounding to understand, from listening, respect and care for what surrounds us and ourselves. A nominal exercise, but not only from words. A practice by and for artists, about and from the present and its autonomy. The meeting is articulated as a relational device, intertwining art and life, challenging the limitations of the medium and favoring presences with what is available: enabling ourselves. It has more to do with a way of life, a way of being in the world, in a situated manner. It raises the existence of a point of intersection between inner and outer reality (H. Michaux), with the material and immaterial of space. Situations of complex realities that operate as the germ of other larval realities."
+2,"https://www.instagram.com/algo_de_veran_","https://www.instagram.com/algo_de_veran_","https://www.instagram.com/algo_de_veran_"</div>
+        </div>
+    </div>
+    
+    <!-- Google Sheets Configuration -->
+    <script src="google-sheets-config.js"></script>
+    
+    <!-- Content Manager Script -->
+    <script src="content-manager.js"></script>
+    
+    <script>
+        let currentLanguage = 'esp';
+        let contentManager;
+        let aldanData = [];
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update button states
+            document.querySelectorAll('.language-buttons button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-lang="${lang}"]`).classList.add('active');
+            
+            // Update content
+            if (contentManager) {
+                contentManager.changeLanguage(lang);
+            }
+            
+            // Update debug info
+            updateDebugInfo();
+            
+            return false;
+        }
+
+        function updateDebugInfo() {
+            const debugInfo = document.getElementById('debug-info');
+            const contentElement = document.getElementById('aldan-content');
+            
+            debugInfo.innerHTML = `
+                <strong>Idioma actual:</strong> ${currentLanguage}<br>
+                <strong>Contenido cargado:</strong> ${contentElement.innerHTML ? 'SÍ' : 'NO'}<br>
+                <strong>Longitud del contenido:</strong> ${contentElement.innerHTML.length} caracteres<br>
+                <strong>Elementos de datos:</strong> ${aldanData.length}<br>
+                <strong>Timestamp:</strong> ${new Date().toLocaleTimeString()}<br>
+                <strong>URL actual:</strong> ${window.location.href}
+            `;
+        }
+
+        function createLanguageCard(lang, content) {
+            const card = document.createElement('div');
+            card.className = 'language-card';
+            
+            const hasContent = content && content.trim().length > 0;
+            const status = hasContent ? 'success' : 'error';
+            const statusText = hasContent ? '✅ Contenido cargado' : '❌ Sin contenido';
+            
+            card.innerHTML = `
+                <h4>${lang.toUpperCase()}</h4>
+                <div class="status ${status}">${statusText}</div>
+                <div style="max-height: 150px; overflow-y: auto; margin: 10px 0; padding: 10px; background-color: white; border: 1px solid #ddd; border-radius: 3px;">
+                    ${content ? content.substring(0, 200) + '...' : 'Sin contenido'}
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function renderLanguageTests() {
+            const grid = document.getElementById('language-test-grid');
+            grid.innerHTML = '';
+            
+            const languages = ['gal', 'esp', 'en'];
+            languages.forEach(lang => {
+                const content = aldanData.find(item => item[`content_${lang}`])?.[`content_${lang}`] || '';
+                grid.appendChild(createLanguageCard(lang, content));
+            });
+        }
+
+        // Simular la función loadAldan del content-manager.js
+        async function loadAldanTest() {
+            try {
+                const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/1GC8bqmQeQHD0H1QnIGAQbOPtBg19_4dkspwZEUjgi1k/values/Aldan?key=AIzaSyBHQgbSv588A3qr-Kzeo6YrZ9TbVNlrSkc`);
+                const data = await response.json();
+                
+                if (data.values && data.values.length > 1) {
+                    const headers = data.values[0];
+                    aldanData = data.values.slice(1)
+                        .map(row => {
+                            const content = {};
+                            headers.forEach((header, index) => {
+                                content[header] = row[index] || '';
+                            });
+                            return content;
+                        })
+                        .sort((a, b) => parseInt(a.order) - parseInt(b.order));
+                    
+                    // Actualizar contenido
+                    const container = document.getElementById('aldan-content');
+                    if (container && aldanData.length > 0) {
+                        const fixedTitle = '<span class="atb-title">Algo de ver<span class="atb-a-accent"><span class="base">a</span><span class="accent">´</span></span>n</span>';
+                        
+                        let fullContent = fixedTitle + ' ';
+                        aldanData.forEach(item => {
+                            const content = item[`content_${currentLanguage}`] || item.content_esp;
+                            if (content) {
+                                // Procesar URLs de Instagram automáticamente
+                                let processedContent = content;
+                                if (content.includes('https://www.instagram.com/')) {
+                                    const instagramUrl = content.trim();
+                                    const username = instagramUrl.split('/').pop(); // Obtener el username
+                                    processedContent = `<br><br><a href="${instagramUrl}" target="_blank" class="instagram-link">@${username}</a>`;
+                                }
+                                fullContent += processedContent;
+                            }
+                        });
+                        if (fullContent) {
+                            container.innerHTML = fullContent;
+                        }
+                    }
+                    
+                    // Renderizar pruebas de idiomas
+                    renderLanguageTests();
+                    
+                    // Actualizar debug info
+                    updateDebugInfo();
+                    
+                    console.log('Aldán data loaded successfully:', aldanData);
+                }
+            } catch (error) {
+                console.error('Error loading aldan:', error);
+                document.getElementById('debug-info').innerHTML = `<strong>Error:</strong> ${error.message}`;
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize content manager
+            contentManager = new ContentManager();
+            contentManager.init();
+            
+            // Load Aldán data
+            loadAldanTest();
+            
+            console.log('Test de carga dinámica de Aldán inicializado');
+        });
+    </script>
+</body>
+</html> 

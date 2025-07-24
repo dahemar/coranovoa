@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Aldán Language Switcher</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: white;
+        }
+        
+        .test-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        .test-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .language-switcher {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 15px;
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            z-index: 2000 !important;
+        }
+        
+        .language-switcher a {
+            color: black;
+            text-decoration: none;
+            margin: 0 5px;
+            transition: color 0.2s ease;
+        }
+        
+        .language-switcher a:hover {
+            color: #a0a0a0;
+        }
+        
+        .language-switcher a.active-lang {
+            color: #a0a0a0 !important;
+        }
+        
+        .content-display {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+            min-height: 100px;
+        }
+        
+        .status {
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        
+        .status.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .status.warning {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .info-box {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .info-box h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .info-box ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .info-box li {
+            margin: 5px 0;
+        }
+        
+        .debug-info {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        
+        .test-buttons {
+            margin: 15px 0;
+        }
+        
+        .test-buttons button {
+            margin: 5px;
+            padding: 8px 16px;
+            border: 1px solid #ccc;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        
+        .test-buttons button:hover {
+            background-color: #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Test del Selector de Idioma en Aldán</h1>
+        
+        <div class="info-box">
+            <h3>Verificación del Selector de Idioma:</h3>
+            <ul>
+                <li>✅ <strong>Cambio de color:</strong> El idioma activo debe cambiar a gris (#a0a0a0)</li>
+                <li>✅ <strong>Persistencia:</strong> El idioma seleccionado debe mantenerse</li>
+                <li>✅ <strong>Funcionalidad:</strong> Debe cambiar el contenido dinámicamente</li>
+                <li>✅ <strong>Clases CSS:</strong> La clase 'active-lang' debe aplicarse correctamente</li>
+            </ul>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Selector de Idioma (Simulado)</div>
+            <div class="test-buttons">
+                <button onclick="testLanguageChange('gal')">Gallego</button>
+                <button onclick="testLanguageChange('esp')">Español</button>
+                <button onclick="testLanguageChange('en')">English</button>
+            </div>
+            <div class="language-switcher" id="test-language-switcher">
+                <a href="#" onclick="testLanguageChange('gal'); return false;" data-lang="gal">gal</a> /
+                <a href="#" onclick="testLanguageChange('esp'); return false;" data-lang="esp">esp</a> /
+                <a href="#" onclick="testLanguageChange('en'); return false;" data-lang="en">en</a>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Contenido de Aldán</div>
+            <div class="content-display" id="aldan-content">
+                <!-- El contenido se cargará dinámicamente -->
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Información de Debug</div>
+            <div class="debug-info" id="debug-info">
+                <!-- Información de debug se mostrará aquí -->
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Estado del Selector</div>
+            <div id="selector-status">
+                <!-- Estado del selector se mostrará aquí -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Google Sheets Configuration -->
+    <script src="google-sheets-config.js"></script>
+    
+    <!-- Content Manager Script -->
+    <script src="content-manager.js"></script>
+    
+    <script>
+        let currentLanguage = 'esp';
+        let contentManager;
+
+        function testLanguageChange(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('language', lang);
+            
+            // Update language switcher classes
+            document.querySelectorAll('#test-language-switcher a').forEach(link => {
+                if (link.getAttribute('data-lang') === lang) {
+                    link.classList.add('active-lang');
+                } else {
+                    link.classList.remove('active-lang');
+                }
+            });
+            
+            // Update content
+            if (contentManager) {
+                contentManager.changeLanguage(lang);
+            }
+            
+            // Update debug info
+            updateDebugInfo();
+            updateSelectorStatus();
+            
+            return false;
+        }
+
+        function updateDebugInfo() {
+            const debugInfo = document.getElementById('debug-info');
+            const contentElement = document.getElementById('aldan-content');
+            
+            debugInfo.innerHTML = `
+                <strong>Idioma actual:</strong> ${currentLanguage}<br>
+                <strong>Contenido cargado:</strong> ${contentElement.innerHTML ? 'SÍ' : 'NO'}<br>
+                <strong>Longitud del contenido:</strong> ${contentElement.innerHTML.length} caracteres<br>
+                <strong>Timestamp:</strong> ${new Date().toLocaleTimeString()}<br>
+                <strong>localStorage:</strong> ${localStorage.getItem('language') || 'no definido'}
+            `;
+        }
+
+        function updateSelectorStatus() {
+            const statusDiv = document.getElementById('selector-status');
+            const links = document.querySelectorAll('#test-language-switcher a');
+            
+            let statusHTML = '<h4>Estado de las clases CSS:</h4>';
+            links.forEach(link => {
+                const lang = link.getAttribute('data-lang');
+                const hasActiveClass = link.classList.contains('active-lang');
+                const status = hasActiveClass ? 'success' : 'warning';
+                const statusText = hasActiveClass ? '✅ Activo' : '⏸️ Inactivo';
+                
+                statusHTML += `
+                    <div class="status ${status}">
+                        <strong>${lang.toUpperCase()}:</strong> ${statusText} 
+                        (Clase: ${hasActiveClass ? 'active-lang' : 'ninguna'})
+                    </div>
+                `;
+            });
+            
+            statusDiv.innerHTML = statusHTML;
+        }
+
+        // Simular la función loadAldan del content-manager.js
+        async function loadAldanTest() {
+            try {
+                const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/1GC8bqmQeQHD0H1QnIGAQbOPtBg19_4dkspwZEUjgi1k/values/Aldan?key=AIzaSyBHQgbSv588A3qr-Kzeo6YrZ9TbVNlrSkc`);
+                const data = await response.json();
+                
+                if (data.values && data.values.length > 1) {
+                    const headers = data.values[0];
+                    const aldanData = data.values.slice(1)
+                        .map(row => {
+                            const content = {};
+                            headers.forEach((header, index) => {
+                                content[header] = row[index] || '';
+                            });
+                            return content;
+                        })
+                        .sort((a, b) => parseInt(a.order) - parseInt(b.order));
+                    
+                    // Actualizar contenido
+                    const container = document.getElementById('aldan-content');
+                    if (container && aldanData.length > 0) {
+                        const fixedTitle = '<span class="atb-title">Algo de ver<span class="atb-a-accent"><span class="base">a</span><span class="accent">´</span></span>n</span>';
+                        
+                        let fullContent = fixedTitle + ' ';
+                        aldanData.forEach(item => {
+                            const content = item[`content_${currentLanguage}`] || item.content_esp;
+                            if (content) {
+                                // Procesar URLs de Instagram automáticamente
+                                let processedContent = content;
+                                if (content.includes('https://www.instagram.com/')) {
+                                    const instagramUrl = content.trim();
+                                    const username = instagramUrl.split('/').pop(); // Obtener el username
+                                    processedContent = `<br><br><a href="${instagramUrl}" target="_blank" class="instagram-link">@${username}</a>`;
+                                }
+                                fullContent += processedContent;
+                            }
+                        });
+                        if (fullContent) {
+                            container.innerHTML = fullContent;
+                        }
+                    }
+                    
+                    // Actualizar debug info
+                    updateDebugInfo();
+                    updateSelectorStatus();
+                    
+                    console.log('Aldán data loaded successfully');
+                }
+            } catch (error) {
+                console.error('Error loading aldan:', error);
+                document.getElementById('debug-info').innerHTML = `<strong>Error:</strong> ${error.message}`;
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize content manager
+            contentManager = new ContentManager();
+            contentManager.init();
+            
+            // Load Aldán data
+            loadAldanTest();
+            
+            // Set initial language
+            testLanguageChange(currentLanguage);
+            
+            console.log('Test del selector de idioma de Aldán inicializado');
+        });
+    </script>
+</body>
+</html> 

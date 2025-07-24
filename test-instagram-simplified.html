@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Instagram URL Simplificado</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: white;
+        }
+        
+        .test-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        .test-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .url-test {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .url-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        
+        .url-card h4 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .url-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 12px;
+            margin: 10px 0;
+        }
+        
+        .url-output {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 12px;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+        
+        .preview {
+            background-color: white;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            margin: 10px 0;
+            min-height: 60px;
+        }
+        
+        .status {
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        
+        .status.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .info-box {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .info-box h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .info-box ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .info-box li {
+            margin: 5px 0;
+        }
+        
+        .example-box {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .example-box h4 {
+            margin-top: 0;
+            color: #856404;
+        }
+        
+        .example-box code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Test de URLs de Instagram Simplificadas</h1>
+        
+        <div class="info-box">
+            <h3>Sistema Simplificado de Instagram:</h3>
+            <ul>
+                <li>✅ <strong>Entrada simple:</strong> Solo poner la URL de Instagram en Google Sheets</li>
+                <li>✅ <strong>Procesamiento automático:</strong> El sistema genera el enlace completo</li>
+                <li>✅ <strong>Extracción de username:</strong> Automática desde la URL</li>
+                <li>✅ <strong>Formato consistente:</strong> Siempre con @username y clase CSS</li>
+                <li>✅ <strong>Sin HTML manual:</strong> No necesitas escribir código HTML</li>
+            </ul>
+        </div>
+        
+        <div class="example-box">
+            <h4>Ejemplo de Uso:</h4>
+            <p><strong>En Google Sheets (segunda fila):</strong></p>
+            <code>https://www.instagram.com/algo_de_veran_</code>
+            <br><br>
+            <p><strong>Resultado automático:</strong></p>
+            <code>&lt;a href="https://www.instagram.com/algo_de_veran_" target="_blank" class="instagram-link"&gt;@algo_de_veran_&lt;/a&gt;</code>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Pruebas de URLs de Instagram</div>
+            <div class="url-test" id="url-test-grid">
+                <!-- Los elementos se generarán dinámicamente -->
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Prueba Manual</div>
+            <div class="url-card">
+                <h4>Introduce una URL de Instagram:</h4>
+                <input type="text" class="url-input" id="manual-url" placeholder="https://www.instagram.com/username" value="https://www.instagram.com/algo_de_veran_">
+                <button onclick="processManualUrl()" style="padding: 8px 16px; margin: 10px 0; background-color: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer;">Procesar URL</button>
+                <div class="url-output" id="manual-output">Resultado aparecerá aquí...</div>
+                <div class="preview" id="manual-preview">Vista previa aparecerá aquí...</div>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <div class="test-title">Función de Procesamiento</div>
+            <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; font-family: monospace; font-size: 12px; white-space: pre-wrap;">
+// Función implementada en content-manager.js
+if (content.includes('https://www.instagram.com/')) {
+    const instagramUrl = content.trim();
+    const username = instagramUrl.split('/').pop(); // Obtener el username
+    processedContent = `&lt;br&gt;&lt;br&gt;&lt;a href="${instagramUrl}" target="_blank" class="instagram-link"&gt;@${username}&lt;/a&gt;`;
+}</div>
+        </div>
+    </div>
+    
+    <script>
+        // URLs de prueba
+        const testUrls = [
+            {
+                title: 'URL básica',
+                input: 'https://www.instagram.com/algo_de_veran_',
+                description: 'URL estándar de Instagram'
+            },
+            {
+                title: 'URL con trailing slash',
+                input: 'https://www.instagram.com/algo_de_veran_/',
+                description: 'URL con barra al final'
+            },
+            {
+                title: 'URL con parámetros',
+                input: 'https://www.instagram.com/algo_de_veran_?hl=es',
+                description: 'URL con parámetros de consulta'
+            },
+            {
+                title: 'URL con subdirectorio',
+                input: 'https://www.instagram.com/algo_de_veran_/p/123456/',
+                description: 'URL de post específico'
+            }
+        ];
+
+        function processInstagramUrl(url) {
+            if (!url || !url.includes('https://www.instagram.com/')) {
+                return {
+                    success: false,
+                    error: 'No es una URL válida de Instagram'
+                };
+            }
+            
+            const instagramUrl = url.trim();
+            const username = instagramUrl.split('/').pop().split('?')[0]; // Obtener username sin parámetros
+            
+            if (!username) {
+                return {
+                    success: false,
+                    error: 'No se pudo extraer el username'
+                };
+            }
+            
+            const processedHtml = `<br><br><a href="${instagramUrl}" target="_blank" class="instagram-link">@${username}</a>`;
+            
+            return {
+                success: true,
+                originalUrl: instagramUrl,
+                username: username,
+                processedHtml: processedHtml,
+                displayText: `@${username}`
+            };
+        }
+
+        function createUrlCard(testData) {
+            const card = document.createElement('div');
+            card.className = 'url-card';
+            
+            const result = processInstagramUrl(testData.input);
+            const status = result.success ? 'success' : 'error';
+            const statusText = result.success ? '✅ Procesado correctamente' : '❌ Error';
+            
+            card.innerHTML = `
+                <h4>${testData.title}</h4>
+                <div class="status ${status}">${statusText}</div>
+                <div class="url-output">
+                    <strong>Entrada:</strong> ${testData.input}
+                </div>
+                ${result.success ? `
+                    <div class="url-output">
+                        <strong>Username extraído:</strong> ${result.username}
+                    </div>
+                    <div class="url-output">
+                        <strong>HTML generado:</strong> ${result.processedHtml}
+                    </div>
+                    <div class="preview">
+                        <strong>Vista previa:</strong><br>
+                        ${result.displayText}
+                    </div>
+                ` : `
+                    <div class="url-output">
+                        <strong>Error:</strong> ${result.error}
+                    </div>
+                `}
+                <p><em>${testData.description}</em></p>
+            `;
+            
+            return card;
+        }
+
+        function processManualUrl() {
+            const input = document.getElementById('manual-url').value;
+            const output = document.getElementById('manual-output');
+            const preview = document.getElementById('manual-preview');
+            
+            const result = processInstagramUrl(input);
+            
+            if (result.success) {
+                output.innerHTML = `
+                    <strong>URL original:</strong> ${result.originalUrl}<br>
+                    <strong>Username:</strong> ${result.username}<br>
+                    <strong>HTML generado:</strong> ${result.processedHtml}
+                `;
+                preview.innerHTML = `
+                    <strong>Vista previa:</strong><br>
+                    ${result.displayText}
+                `;
+            } else {
+                output.innerHTML = `<strong>Error:</strong> ${result.error}`;
+                preview.innerHTML = 'No se puede mostrar vista previa';
+            }
+        }
+
+        function renderUrlTests() {
+            const grid = document.getElementById('url-test-grid');
+            grid.innerHTML = '';
+            
+            testUrls.forEach(testData => {
+                grid.appendChild(createUrlCard(testData));
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderUrlTests();
+            processManualUrl(); // Procesar la URL inicial
+            
+            console.log('Test de URLs de Instagram simplificadas inicializado');
+            console.log('URLs de prueba:', testUrls.length);
+        });
+    </script>
+</body>
+</html> 

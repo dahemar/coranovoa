@@ -52,7 +52,7 @@ class ContentManager {
     createObraElement(obra, index = 0) {
         const element = document.createElement('div');
         element.className = 'obra-item';
-        element.setAttribute('data-order', obra.order);
+        element.setAttribute('data-order', index + 1); // Usar índice + 1 como orden
         
         // Imagen - usar thumbnail si existe, sino usar image_url
         const imageUrl = obra.thumbnail && obra.thumbnail.trim() ? obra.thumbnail : obra.image_url;
@@ -185,16 +185,15 @@ class ContentManager {
                 
                 const obras = data.values.slice(1)
                     .map(row => {
-                        const obra = {};
-                        headers.forEach((header, index) => {
-                            obra[header] = row[index] || '';
-                        });
-                        return obra;
+                    const obra = {};
+                    headers.forEach((header, index) => {
+                        obra[header] = row[index] || '';
+                    });
+                    return obra;
                     })
-                    .filter(obra => obra.order && obra.title); // Filtrar obras válidas por order y title
+                    .filter(obra => obra.title); // Filtrar obras válidas por title
                 
-                // Ordenar por el campo order
-                obras.sort((a, b) => parseInt(a.order) - parseInt(b.order));
+                        // El orden se mantiene por la posición natural de las filas (sin columna order)
                 
                 // Almacenar datos para acceso rápido
                 this.obrasData = obras;
@@ -239,10 +238,11 @@ class ContentManager {
         localStorage.setItem('obrasData', JSON.stringify(obrasData));
         
         console.log('Saved obrasData to localStorage:', obrasData.length, 'obras');
-        console.log('Looking for obra with order:', obra.order);
+        const order = this.obrasData.indexOf(obra) + 1; // Usar posición en array + 1
+        console.log('Looking for obra with order:', order);
         
         // Navegar a la página de detalle
-        const detailUrl = `obra-detail.html?order=${obra.order}`;
+        const detailUrl = `obra-detail.html?order=${order}`;
         console.log('Navigating to:', detailUrl);
         window.location.href = detailUrl;
     }
@@ -257,7 +257,8 @@ class ContentManager {
     createDetailPage(obra) {
         const detailPage = document.createElement('div');
         detailPage.className = 'mobile-detail-page';
-        detailPage.id = `${obra.order}-detail`;
+        const order = this.obrasData.indexOf(obra) + 1; // Usar posición en array + 1
+        detailPage.id = `${order}-detail`;
         
         // Obtener descripción en el idioma actual
         const description = this.processTextWithLineBreaks(obra[`description_${this.currentLanguage}`] || obra.description_esp || obra.description_gal || obra.description_en || '');
@@ -331,7 +332,7 @@ class ContentManager {
                         });
                         return entry;
                     })
-                    .sort((a, b) => parseInt(a.order) - parseInt(b.order));
+                    // El orden se mantiene por la posición natural de las filas (sin columna order)
                 
                 // Agrupar entradas por sección
                 const sections = {};
@@ -445,10 +446,10 @@ class ContentManager {
                         });
                         return content;
                     })
-                    .sort((a, b) => parseInt(a.order) - parseInt(b.order));
+                    // El orden se mantiene por la posición natural de las filas (sin columna order)
                 
                 // Actualizar el contenido de Aldán combinando todas las líneas
-                const container = document.querySelector('.aldan-text');
+                const container = document.getElementById('aldan-content');
                 if (container && aldanContent.length > 0) {
                     // Título fijo que no se puede editar en Google Sheets
                     const fixedTitle = '<span class="atb-title">Algo de ver<span class="atb-a-accent"><span class="base">a</span><span class="accent">´</span></span>n</span>';
@@ -457,7 +458,14 @@ class ContentManager {
                     aldanContent.forEach(item => {
                         const content = item[`content_${this.currentLanguage}`] || item.content_esp;
                         if (content) {
-                            fullContent += content;
+                            // Procesar URLs de Instagram automáticamente
+                            let processedContent = content;
+                            if (content.includes('https://www.instagram.com/')) {
+                                const instagramUrl = content.trim();
+                                const username = instagramUrl.split('/').pop(); // Obtener el username
+                                processedContent = `<br><br><a href="${instagramUrl}" target="_blank" class="instagram-link">@${username}</a>`;
+                            }
+                            fullContent += processedContent;
                         }
                     });
                     if (fullContent) {
@@ -528,9 +536,10 @@ class ContentManager {
         });
     }
 
-    // Buscar obra por order
+    // Buscar obra por order (ahora usa índice + 1)
     findObraByOrder(order) {
-        return this.obrasData.find(obra => obra.order == order) || null;
+        const index = parseInt(order) - 1; // Convertir order a índice
+        return this.obrasData[index] || null;
     }
 
     // Inicializar según la página
