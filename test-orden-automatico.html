@@ -212,6 +212,33 @@ Cambios:
             return text.replace(/\n/g, '<br>');
         }
         
+        function extractImageUrl(url) {
+            if (!url) return null;
+            
+            let cleanUrl = url.trim();
+            
+            // Procesar formato [img]URL[/img] (Imgur y otros)
+            const imgTagMatch = cleanUrl.match(/\[img\](.*?)\[\/img\]/i);
+            if (imgTagMatch) {
+                cleanUrl = imgTagMatch[1].trim();
+            }
+            
+            // Procesar URLs de Imgur
+            if (cleanUrl.includes('imgur.com')) {
+                // Convertir URLs de Imgur a formato directo
+                if (cleanUrl.includes('/a/')) {
+                    // Album de Imgur - usar la primera imagen
+                    cleanUrl = cleanUrl.replace('/a/', '/').replace('imgur.com', 'i.imgur.com') + '.jpg';
+                } else if (cleanUrl.includes('imgur.com/')) {
+                    // Imagen individual de Imgur
+                    const imgurId = cleanUrl.split('/').pop().split('.')[0];
+                    cleanUrl = `https://i.imgur.com/${imgurId}.jpg`;
+                }
+            }
+            
+            return cleanUrl;
+        }
+        
         function renderCuraduriaList() {
             const list = document.getElementById('curaduria-list');
             list.innerHTML = '';
@@ -230,7 +257,7 @@ Cambios:
                 li.innerHTML = `
                     <span><span class="atb-title">${title}</span>${info ? ` | ${info}` : ''} (Orden: ${orden})</span>
                     <div class="expanded-content">
-                        <div class="hover-image" style="background-image: url('${item.imagen_url}');"></div>
+                        <div class="hover-image" style="background-image: url('${extractImageUrl(item.imagen_url)}');"></div>
                         <div class="hover-text">
                             <span class="atb-title project-title">${title}</span> ${description}
                         </div>

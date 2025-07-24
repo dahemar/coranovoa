@@ -19,6 +19,12 @@ class ContentManager {
         
         let cleanUrl = url.trim();
         
+        // Procesar formato [img]URL[/img] (Imgur y otros)
+        const imgTagMatch = cleanUrl.match(/\[img\](.*?)\[\/img\]/i);
+        if (imgTagMatch) {
+            cleanUrl = imgTagMatch[1].trim();
+        }
+        
         // Procesar URLs de Imgur
         if (cleanUrl.includes('imgur.com')) {
             // Convertir URLs de Imgur a formato directo
@@ -52,10 +58,10 @@ class ContentManager {
     createObraElement(obra, index = 0) {
         const element = document.createElement('div');
         element.className = 'obra-item';
-        element.setAttribute('data-order', index + 1); // Usar índice + 1 como orden
+        element.setAttribute('data-order', obra.orden || (index + 1)); // Usar columna orden o índice como fallback
         
-        // Imagen - usar thumbnail si existe, sino usar image_url
-        const imageUrl = obra.thumbnail && obra.thumbnail.trim() ? obra.thumbnail : obra.image_url;
+        // Imagen - usar thumbnail si existe, sino usar url_imagen
+        const imageUrl = obra.thumbnail && obra.thumbnail.trim() ? obra.thumbnail : obra.url_imagen;
         const cleanUrl = this.extractImageUrl(imageUrl);
         const imageDiv = document.createElement('div');
         imageDiv.className = 'obra-image';
@@ -72,23 +78,23 @@ class ContentManager {
         element.appendChild(imageDiv);
         
         // Título - usar el título único (no cambia con idioma)
-        if (obra.title) {
+        if (obra.titulo) {
             const titleDiv = document.createElement('div');
             titleDiv.className = 'obra-title';
-            titleDiv.textContent = obra.title;
+            titleDiv.textContent = obra.titulo;
             element.appendChild(titleDiv);
         }
         
         // Año
-        if (obra.year) {
+        if (obra.año) {
             const yearDiv = document.createElement('div');
             yearDiv.className = 'obra-year';
-            yearDiv.textContent = obra.year;
+            yearDiv.textContent = obra.año;
             element.appendChild(yearDiv);
         }
         
         // Descripción - usar el idioma actual
-        const description = obra[`description_${this.currentLanguage}`] || obra.description_esp || obra.description_gal || obra.description_en;
+        const description = obra[`descripcion_${this.currentLanguage}`] || obra.descripcion_esp || obra.descripcion_gal || obra.descripcion_en;
         if (description) {
             element.setAttribute('data-description', this.processTextWithLineBreaks(description));
         }
@@ -125,8 +131,8 @@ class ContentManager {
             html += `<a href="mailto:${contactInfo.email}">${contactInfo.email}</a><br><br>`;
         }
         
-        if (contactInfo.social_media) {
-            html += `<a href="https://www.instagram.com/intel_cora/" target="_blank">${contactInfo.social_media}</a>`;
+        if (contactInfo.ig) {
+            html += `<a href="https://www.instagram.com/intel_cora/" target="_blank">${contactInfo.ig}</a>`;
         }
         
         element.innerHTML = html;
@@ -145,10 +151,10 @@ class ContentManager {
         const element = document.createElement('li');
         element.id = `curaduria-${curaduria.orden || (index + 1)}-li`;
         
-        const title = curaduria[`titulo_${this.currentLanguage}`] || curaduria.titulo_esp;
-        const description = this.processTextWithLineBreaks(curaduria[`descripcion_${this.currentLanguage}`] || curaduria.descripcion_esp);
+        const title = curaduria[`título_${this.currentLanguage}`] || curaduria.título_esp || curaduria.título_en;
+        const description = this.processTextWithLineBreaks(curaduria[`descripción_${this.currentLanguage}`] || curaduria.descripción_esp || curaduria.descripción_en);
         
-        const info = curaduria[`info_${this.currentLanguage}`] || curaduria.info_esp || '';
+        const info = curaduria[`info_${this.currentLanguage}`] || curaduria.info_esp || curaduria.info_en || '';
         element.innerHTML = `
             <span><span class="atb-title">${title}</span>${info ? ` | ${info}` : ''}</span>
             <div class="expanded-content">
@@ -191,9 +197,8 @@ class ContentManager {
                     });
                     return obra;
                     })
-                    .filter(obra => obra.title); // Filtrar obras válidas por title
-                
-                        // El orden se mantiene por la posición natural de las filas (sin columna order)
+                    .filter(obra => obra.titulo) // Filtrar obras válidas por título
+                    .sort((a, b) => parseInt(a.orden) - parseInt(b.orden)); // Ordenar por columna orden
                 
                 // Almacenar datos para acceso rápido
                 this.obrasData = obras;
@@ -238,7 +243,7 @@ class ContentManager {
         localStorage.setItem('obrasData', JSON.stringify(obrasData));
         
         console.log('Saved obrasData to localStorage:', obrasData.length, 'obras');
-        const order = this.obrasData.indexOf(obra) + 1; // Usar posición en array + 1
+        const order = obra.orden || (this.obrasData.indexOf(obra) + 1); // Usar columna orden o posición como fallback
         console.log('Looking for obra with order:', order);
         
         // Navegar a la página de detalle
@@ -257,22 +262,22 @@ class ContentManager {
     createDetailPage(obra) {
         const detailPage = document.createElement('div');
         detailPage.className = 'mobile-detail-page';
-        const order = this.obrasData.indexOf(obra) + 1; // Usar posición en array + 1
+        const order = obra.orden || (this.obrasData.indexOf(obra) + 1); // Usar columna orden o posición como fallback
         detailPage.id = `${order}-detail`;
         
         // Obtener descripción en el idioma actual
-        const description = this.processTextWithLineBreaks(obra[`description_${this.currentLanguage}`] || obra.description_esp || obra.description_gal || obra.description_en || '');
+        const description = this.processTextWithLineBreaks(obra[`descripcion_${this.currentLanguage}`] || obra.descripcion_esp || obra.descripcion_gal || obra.descripcion_en || '');
         
         // Obtener título limpio (sin HTML)
-        const cleanTitle = obra.title || '';
+        const cleanTitle = obra.titulo || '';
         
-        // Obtener imagen - usar image_url para la página de detalle
-        const cleanImageUrl = this.extractImageUrl(obra.image_url);
+        // Obtener imagen - usar url_imagen para la página de detalle
+        const cleanImageUrl = this.extractImageUrl(obra.url_imagen);
         
         detailPage.innerHTML = `
             <a href="#" class="mobile-back-button">←</a>
             <h2 class="mobile-detail-title">${cleanTitle}</h2>
-            <div class="mobile-detail-year">${obra.year || ''}</div>
+            <div class="mobile-detail-year">${obra.año || ''}</div>
             <img src="${cleanImageUrl}" alt="${cleanTitle}" class="mobile-detail-image" loading="lazy">
             <div class="mobile-detail-text">${description}</div>
         `;
@@ -337,10 +342,10 @@ class ContentManager {
                 // Agrupar entradas por sección
                 const sections = {};
                 bioEntries.forEach(entry => {
-                    if (!sections[entry.section]) {
-                        sections[entry.section] = [];
+                    if (!sections[entry.sección]) {
+                        sections[entry.sección] = [];
                     }
-                    sections[entry.section].push(entry);
+                    sections[entry.sección].push(entry);
                 });
                 
                 // Actualizar cada sección
@@ -349,7 +354,7 @@ class ContentManager {
                     if (textElement) {
                         // Obtener el contenido en el idioma actual
                         const content = sections[sectionName]
-                            .map(entry => entry[`content_${this.currentLanguage}`] || entry.content_esp)
+                            .map(entry => entry[`contenido_${this.currentLanguage}`] || entry.contenido_esp || entry.contenido_en)
                             .filter(content => content && content.trim() !== '')
                             .join('\n');
                         
@@ -384,7 +389,7 @@ class ContentManager {
                         });
                         return contact;
                     })
-                    .find(contact => contact.language === this.currentLanguage);
+                    .find(contact => contact.idioma === this.currentLanguage);
                 
                 const container = document.querySelector('.aldan-text');
                 if (container && contactInfo) {
@@ -456,7 +461,7 @@ class ContentManager {
                     
                     let fullContent = fixedTitle + ' '; // Espacio fijo después del título
                     aldanContent.forEach(item => {
-                        const content = item[`content_${this.currentLanguage}`] || item.content_esp;
+                        const content = item[`contenido_${this.currentLanguage}`] || item.contenido_esp || item.content_en;
                         if (content) {
                             // Procesar URLs de Instagram automáticamente
                             let processedContent = content;
@@ -529,17 +534,16 @@ class ContentManager {
                 // Buscar la obra correspondiente en los datos cargados
                 const obra = this.findObraByOrder(obraOrder);
                 if (obra) {
-                    const description = this.processTextWithLineBreaks(obra[`description_${this.currentLanguage}`] || obra.description_esp || obra.description_gal || obra.description_en || '');
+                    const description = this.processTextWithLineBreaks(obra[`descripcion_${this.currentLanguage}`] || obra.descripcion_esp || obra.descripcion_gal || obra.descripcion_en || '');
                     descriptionElement.innerHTML = description;
                 }
             }
         });
     }
 
-    // Buscar obra por order (ahora usa índice + 1)
+    // Buscar obra por order (ahora usa columna orden)
     findObraByOrder(order) {
-        const index = parseInt(order) - 1; // Convertir order a índice
-        return this.obrasData[index] || null;
+        return this.obrasData.find(obra => obra.orden == parseInt(order)) || null;
     }
 
     // Inicializar según la página

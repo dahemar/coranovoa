@@ -291,14 +291,40 @@
         
         function processTextWithLineBreaks(text) {
             if (!text) return '';
-            // Convert \n to <br> tags and preserve existing HTML
             return text.replace(/\n/g, '<br>');
+        }
+        
+        function extractImageUrl(url) {
+            if (!url) return null;
+            
+            let cleanUrl = url.trim();
+            
+            // Procesar formato [img]URL[/img] (Imgur y otros)
+            const imgTagMatch = cleanUrl.match(/\[img\](.*?)\[\/img\]/i);
+            if (imgTagMatch) {
+                cleanUrl = imgTagMatch[1].trim();
+            }
+            
+            // Procesar URLs de Imgur
+            if (cleanUrl.includes('imgur.com')) {
+                // Convertir URLs de Imgur a formato directo
+                if (cleanUrl.includes('/a/')) {
+                    // Album de Imgur - usar la primera imagen
+                    cleanUrl = cleanUrl.replace('/a/', '/').replace('imgur.com', 'i.imgur.com') + '.jpg';
+                } else if (cleanUrl.includes('imgur.com/')) {
+                    // Imagen individual de Imgur
+                    const imgurId = cleanUrl.split('/').pop().split('.')[0];
+                    cleanUrl = `https://i.imgur.com/${imgurId}.jpg`;
+                }
+            }
+            
+            return cleanUrl;
         }
         
         function displayProject(project) {
             const title = project[`titulo_${currentLang}`] || project.titulo_esp;
             const description = processTextWithLineBreaks(project[`descripcion_${currentLang}`] || project.descripcion_esp);
-            const image = project.imagen_url || 'images/1.webp';
+            const image = extractImageUrl(project.imagen_url || 'images/1.webp');
             const info = project[`info_${currentLang}`] || project.info_esp || '';
             const subtitle = project.subtitle || '';
             

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Imgur Format - Cora Novoa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .image-display {
+            width: 300px;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            border: 2px solid #ddd;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+        .test-case {
+            margin: 20px 0;
+            padding: 15px;
+            border-left: 4px solid #007cba;
+            background: #f8f9fa;
+        }
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        .result {
+            font-family: monospace;
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .success {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .error {
+            color: #dc3545;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test Imgur Format Support</h1>
+    
+    <div class="test-container">
+        <h2>📋 Formatos Soportados</h2>
+        <p>El sistema ahora soporta los siguientes formatos de URL de imagen:</p>
+        
+        <div class="test-case">
+            <h3>1. Formato [img]URL[/img] (Nuevo)</h3>
+            <p><strong>Input:</strong> <code>[img]https://i.imgur.com/hX8nFLp.jpeg[/img]</code></p>
+            <p><strong>Output:</strong> <code>https://i.imgur.com/hX8nFLp.jpeg</code></p>
+        </div>
+        
+        <div class="test-case">
+            <h3>2. URL directa de Imgur</h3>
+            <p><strong>Input:</strong> <code>https://imgur.com/hX8nFLp</code></p>
+            <p><strong>Output:</strong> <code>https://i.imgur.com/hX8nFLp.jpg</code></p>
+        </div>
+        
+        <div class="test-case">
+            <h3>3. URL local</h3>
+            <p><strong>Input:</strong> <code>images/obra1.webp</code></p>
+            <p><strong>Output:</strong> <code>images/obra1.webp</code></p>
+        </div>
+    </div>
+    
+    <div class="test-container">
+        <h2>🔧 Probador Interactivo</h2>
+        
+        <label for="testInput">URL de imagen a probar:</label>
+        <input type="text" id="testInput" class="input-field" 
+               placeholder="Ej: [img]https://i.imgur.com/hX8nFLp.jpeg[/img]" 
+               value="[img]https://i.imgur.com/hX8nFLp.jpeg[/img]">
+        
+        <button onclick="testImageUrl()" style="padding: 10px 20px; background: #007cba; color: white; border: none; border-radius: 4px; cursor: pointer;">
+            Probar URL
+        </button>
+        
+        <div id="testResult" class="result" style="display: none;"></div>
+        
+        <div id="imagePreview" class="image-display" style="display: none;">
+            Vista previa de la imagen
+        </div>
+    </div>
+    
+    <div class="test-container">
+        <h2>📊 Casos de Prueba Automáticos</h2>
+        <div id="autoTests"></div>
+    </div>
+
+    <script>
+        function extractImageUrl(url) {
+            if (!url) return null;
+            
+            let cleanUrl = url.trim();
+            
+            // Procesar formato [img]URL[/img] (Imgur y otros)
+            const imgTagMatch = cleanUrl.match(/\[img\](.*?)\[\/img\]/i);
+            if (imgTagMatch) {
+                cleanUrl = imgTagMatch[1].trim();
+            }
+            
+            // Procesar URLs de Imgur
+            if (cleanUrl.includes('imgur.com')) {
+                // Convertir URLs de Imgur a formato directo
+                if (cleanUrl.includes('/a/')) {
+                    // Album de Imgur - usar la primera imagen
+                    cleanUrl = cleanUrl.replace('/a/', '/').replace('imgur.com', 'i.imgur.com') + '.jpg';
+                } else if (cleanUrl.includes('imgur.com/')) {
+                    // Imagen individual de Imgur
+                    const imgurId = cleanUrl.split('/').pop().split('.')[0];
+                    cleanUrl = `https://i.imgur.com/${imgurId}.jpg`;
+                }
+            }
+            
+            return cleanUrl;
+        }
+        
+        function testImageUrl() {
+            const input = document.getElementById('testInput').value;
+            const result = extractImageUrl(input);
+            const resultDiv = document.getElementById('testResult');
+            const previewDiv = document.getElementById('imagePreview');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <strong>Input:</strong> ${input}<br>
+                <strong>Output:</strong> ${result}<br>
+                <span class="success">✅ URL procesada correctamente</span>
+            `;
+            
+            if (result) {
+                previewDiv.style.display = 'flex';
+                previewDiv.style.backgroundImage = `url('${result}')`;
+                previewDiv.textContent = '';
+            } else {
+                previewDiv.style.display = 'none';
+            }
+        }
+        
+        function runAutoTests() {
+            const testCases = [
+                {
+                    input: '[img]https://i.imgur.com/hX8nFLp.jpeg[/img]',
+                    expected: 'https://i.imgur.com/hX8nFLp.jpeg',
+                    description: 'Formato [img] con URL completa de Imgur'
+                },
+                {
+                    input: '[img]https://imgur.com/hX8nFLp[/img]',
+                    expected: 'https://i.imgur.com/hX8nFLp.jpg',
+                    description: 'Formato [img] con URL corta de Imgur'
+                },
+                {
+                    input: 'https://imgur.com/hX8nFLp',
+                    expected: 'https://i.imgur.com/hX8nFLp.jpg',
+                    description: 'URL directa de Imgur'
+                },
+                {
+                    input: 'images/obra1.webp',
+                    expected: 'images/obra1.webp',
+                    description: 'URL local'
+                },
+                {
+                    input: '[img]images/obra1.webp[/img]',
+                    expected: 'images/obra1.webp',
+                    description: 'Formato [img] con URL local'
+                }
+            ];
+            
+            const container = document.getElementById('autoTests');
+            container.innerHTML = '';
+            
+            testCases.forEach((testCase, index) => {
+                const result = extractImageUrl(testCase.input);
+                const isSuccess = result === testCase.expected;
+                
+                const testDiv = document.createElement('div');
+                testDiv.className = 'test-case';
+                testDiv.innerHTML = `
+                    <h4>Test ${index + 1}: ${testCase.description}</h4>
+                    <p><strong>Input:</strong> <code>${testCase.input}</code></p>
+                    <p><strong>Expected:</strong> <code>${testCase.expected}</code></p>
+                    <p><strong>Result:</strong> <code>${result}</code></p>
+                    <p class="${isSuccess ? 'success' : 'error'}">
+                        ${isSuccess ? '✅ PASS' : '❌ FAIL'}
+                    </p>
+                `;
+                
+                container.appendChild(testDiv);
+            });
+        }
+        
+        // Ejecutar tests automáticos al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            runAutoTests();
+            testImageUrl(); // Probar el ejemplo por defecto
+        });
+    </script>
+</body>
+</html> 

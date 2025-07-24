@@ -306,16 +306,16 @@
             const image = document.getElementById('detail-image');
             const description = document.getElementById('detail-description');
             
-            if (title) title.textContent = obraData.title || '';
-            if (year) year.textContent = obraData.year || '';
+            if (title) title.textContent = obraData.titulo || '';
+            if (year) year.textContent = obraData.año || '';
             if (image) {
-                image.src = obraData.image_url || '';
-                image.alt = obraData.title || '';
+                image.src = obraData.url_imagen || '';
+                image.alt = obraData.titulo || '';
             }
             if (description) {
                 // Usar el idioma actual para la descripción
-                const descKey = `description_${currentLanguage}`;
-                const descText = processTextWithLineBreaks(obraData[descKey] || obraData.description_esp || obraData.description_gal || obraData.description_en || '');
+                const descKey = `descripcion_${currentLanguage}`;
+                const descText = processTextWithLineBreaks(obraData[descKey] || obraData.descripcion_esp || obraData.descripcion_gal || obraData.descripcion_en || '');
                 description.innerHTML = descText;
             }
         }
@@ -363,7 +363,7 @@
                 console.log('Loaded obrasData from localStorage:', obrasData.length, 'obras');
                 console.log('First obra:', obrasData[0]);
                 
-                const obra = obrasData.find(o => o.order == obraOrder);
+                const obra = obrasData.find(o => o.orden == parseInt(obraOrder));
                 console.log('Found obra:', obra);
                 
                 if (obra) {
@@ -371,7 +371,7 @@
                     showDetailPage();
                 } else {
                     console.error('Obra not found:', obraOrder);
-                    console.log('Available orders:', obrasData.map(o => o.order));
+                    console.log('Available orders:', obrasData.map(o => o.orden));
                     // Fallback: show a message or redirect
                     document.getElementById('detail-title').textContent = 'Obra no encontrada';
                     document.getElementById('detail-description').textContent = 'La obra solicitada no está disponible.';

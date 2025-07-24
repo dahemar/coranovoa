@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Uso del Sistema Google Sheets – Cora Novoa</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #34495e;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        
+        h3 {
+            color: #2c3e50;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e74c3c;
+        }
+        
+        .highlight {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .step {
+            background-color: #e8f4fd;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .warning {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+        
+        li {
+            margin: 8px 0;
+        }
+        
+        hr {
+            border: none;
+            border-top: 2px solid #ecf0f1;
+            margin: 40px 0;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            border: none;
+            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        @media print {
+            body {
+                font-size: 12px;
+            }
+            
+            h1 {
+                font-size: 20px;
+            }
+            
+            h2 {
+                font-size: 16px;
+            }
+            
+            h3 {
+                font-size: 14px;
+            }
+            
+            table {
+                font-size: 11px;
+            }
+            
+            th, td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Guía de Uso del Sistema Google Sheets</h1>
+        <p>Cora Novoa - Sitio Web</p>
+    </div>
+
+    <h2>Descripción General</h2>
+    
+    <p>El sistema permite gestionar el contenido del sitio web directamente desde Google Sheets, sin necesidad de modificar el código. Los cambios realizados en las hojas de cálculo se reflejan automáticamente en la web.</p>
+
+    <hr>
+
+    <h2>Estructura de las Hojas de Cálculo</h2>
+
+    <h3>Hoja: <code>obras</code></h3>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Columna</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>orden</code></td>
+                <td>Número de orden</td>
+            </tr>
+            <tr>
+                <td><code>titulo</code></td>
+                <td>Título de la obra</td>
+            </tr>
+            <tr>
+                <td><code>año</code></td>
+                <td>Año de creación</td>
+            </tr>
+            <tr>
+                <td><code>url_imagen</code></td>
+                <td>Ruta o URL de la imagen</td>
+            </tr>
+            <tr>
+                <td><code>descripcion_esp</code></td>
+                <td>Descripción en español</td>
+            </tr>
+            <tr>
+                <td><code>descripcion_gal</code></td>
+                <td>Descripción en gallego</td>
+            </tr>
+            <tr>
+                <td><code>descripcion_en</code></td>
+                <td>Descripción en inglés</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Hoja: <code>bio</code></h3>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Columna</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>seccion</code></td>
+                <td>Tipo de sección</td>
+            </tr>
+            <tr>
+                <td><code>titulo_esp</code></td>
+                <td>Título en español</td>
+            </tr>
+            <tr>
+                <td><code>titulo_gal</code></td>
+                <td>Título en gallego</td>
+            </tr>
+            <tr>
+                <td><code>titulo_en</code></td>
+                <td>Título en inglés</td>
+            </tr>
+            <tr>
+                <td><code>contenido_esp</code></td>
+                <td>Contenido en español</td>
+            </tr>
+            <tr>
+                <td><code>contenido_gal</code></td>
+                <td>Contenido en gallego</td>
+            </tr>
+            <tr>
+                <td><code>contenido_en</code></td>
+                <td>Contenido en inglés</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Hoja: <code>curaduria</code></h3>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Columna</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>orden</code></td>
+                <td>Número de orden</td>
+            </tr>
+            <tr>
+                <td><code>titulo_esp</code></td>
+                <td>Título en español</td>
+            </tr>
+            <tr>
+                <td><code>titulo_gal</code></td>
+                <td>Título en gallego</td>
+            </tr>
+            <tr>
+                <td><code>titulo_en</code></td>
+                <td>Título en inglés</td>
+            </tr>
+            <tr>
+                <td><code>contenido_esp</code></td>
+                <td>Contenido en español</td>
+            </tr>
+            <tr>
+                <td><code>contenido_gal</code></td>
+                <td>Contenido en gallego</td>
+            </tr>
+            <tr>
+                <td><code>contenido_en</code></td>
+                <td>Contenido en inglés</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <h2>Edición de Contenido (ejemplo: hoja <code>obras</code>)</h2>
+
+    <h3>Añadir una nueva obra</h3>
+    
+    <div class="step">
+        <ol>
+            <li>Abre la hoja <code>obras</code>.</li>
+            <li>Añade una nueva fila al final.</li>
+            <li>Completa los siguientes campos:
+                <ul>
+                    <li><code>orden</code></li>
+                    <li><code>titulo</code></li>
+                    <li><code>año</code></li>
+                    <li><code>url_imagen</code></li>
+                    <li><code>descripcion_esp</code>, <code>descripcion_gal</code>, <code>descripcion_en</code></li>
+                </ul>
+            </li>
+            <li>Guarda la hoja. Los cambios se aplican automáticamente.</li>
+        </ol>
+    </div>
+
+    <h3>Editar una obra existente</h3>
+    
+    <div class="step">
+        <ol>
+            <li>Busca la fila correspondiente mediante el campo <code>orden</code>.</li>
+            <li>Modifica los campos necesarios.</li>
+            <li>Guarda la hoja para reflejar los cambios en la web.</li>
+        </ol>
+    </div>
+
+    <h3>Eliminar una obra</h3>
+    
+    <div class="step">
+        <ol>
+            <li>Selecciona toda la fila correspondiente.</li>
+            <li>Elimínala completamente (no borres solo el contenido).</li>
+            <li>Guarda la hoja.</li>
+        </ol>
+    </div>
+
+    <hr>
+
+    <h2>Referencia de Imágenes</h2>
+    
+    <div class="highlight">
+        <p><strong>Importante:</strong> Las imágenes deben subirse previamente a <a href="https://imgur.com" target="_blank">Imgur</a>. El sistema es compatible con distintos formatos de enlace:</p>
+        
+        <ul>
+            <li><code>[img]https://i.imgur.com/...[/img]</code></li>
+            <li><code>https://imgur.com/...</code></li>
+            <li><code>https://i.imgur.com/....jpeg</code></li>
+        </ul>
+        
+        <p>Debe usarse la URL directa de la imagen para que pueda visualizarse correctamente en la web.</p>
+    </div>
+
+    <hr>
+
+    <h2>Resolución de Problemas</h2>
+
+    <h3>El contenido no se actualiza</h3>
+    
+    <div class="warning">
+        <ol>
+            <li>Recarga la página (F5).</li>
+            <li>Si el problema persiste, vacía la caché del navegador.</li>
+        </ol>
+    </div>
+
+    <hr>
+
+    <div style="text-align: center; margin-top: 50px; color: #7f8c8d; font-size: 12px;">
+        <p>Guía de Uso del Sistema Google Sheets - Cora Novoa</p>
+        <p>Versión 1.0 - 2024</p>
+    </div>
+</body>
+</html> 

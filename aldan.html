@@ -219,6 +219,42 @@
                 }
             });
             
+            // Update navigation menu translations
+            let translations = {
+                "gal": {
+                    "obra": "obra",
+                    "bio": "bio",
+                    "curaduria": "curaduría",
+                    "aldan": "aldán",
+                    "contacto": "contacto"
+                },
+                "esp": {
+                    "obra": "obra",
+                    "bio": "bio",
+                    "curaduria": "curaduría",
+                    "aldan": "aldán",
+                    "contacto": "contacto"
+                },
+                "en": {
+                    "obra": "work",
+                    "bio": "bio",
+                    "curaduria": "curatorship",
+                    "aldan": "aldán",
+                    "contacto": "contact"
+                }
+            };
+
+            let selectedTranslations = translations[lang];
+
+            if (selectedTranslations) {
+                // Update navigation links
+                document.querySelector(".overlay-header nav a:nth-child(1)").textContent = selectedTranslations.obra;
+                document.querySelector(".overlay-header nav a:nth-child(2)").textContent = selectedTranslations.bio;
+                document.querySelector(".overlay-header nav a:nth-child(4)").textContent = selectedTranslations.curaduria;
+                document.querySelector(".overlay-header nav a:nth-child(3)").textContent = selectedTranslations.aldan;
+                document.querySelector(".overlay-header nav a:nth-child(5)").textContent = selectedTranslations.contacto;
+            }
+            
             if (contentManager) {
                 contentManager.changeLanguage(lang);
             }

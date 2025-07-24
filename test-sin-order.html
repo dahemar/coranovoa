@@ -132,27 +132,27 @@
         <div class="test-section">
             <div class="test-title">Estructuras CSV Sin Order</div>
             
-            <h4>Obras (cora_obras_sin_order.csv):</h4>
-            <div class="csv-preview">id,year,image_url,description_gal,description_esp,description_en
-obra1,2024,images/branco_sobre_branco.webp,Descrición da obra b s b en galego...
-obra2,2024,images/masa_para_empanada.webp,Descrición da obra masa para empanada...
-obra3,2025,images/moas_do_xuizo.webp,Descrición da obra moas do xuizo...</div>
+            <h4>Obras (Web Cora - Obras.csv):</h4>
+            <div class="csv-preview">id,título,año,url_imagen,thumbnail,descripción_gal,descripción_esp,descripción_en
+1,b s b,2024,images/branco_sobre_branco.webp,images/branco_sobre_branco_thumbnail.png,Descrición da obra b s b en galego...
+2,masa para empanada,2024,images/masa_para_empanada.webp,,Descrición da obra masa para empanada...
+3,moas do xuizo,2025,images/moas_do_xuizo.webp,,Descrición da obra moas do xuizo...</div>
             
-            <h4>Bio (cora_bio_final.csv):</h4>
-            <div class="csv-preview">section,content_gal,content_esp,content_en
+            <h4>Bio (Web Cora - Bio.csv):</h4>
+            <div class="csv-preview">sección,contenido_gal,contenido_esp,contenido_en
 education,Contrato predoctoral en Arte: Producción e Investigación, UPV...
 education,Máster en Artes do Espectáculo Vivo, US Sevilla, 2023...</div>
             
-            <h4>Aldán (cora_aldan_final.csv):</h4>
-            <div class="csv-preview">content_gal,content_esp,content_en
+            <h4>Aldán (Web Cora - Aldan.csv):</h4>
+            <div class="csv-preview">contenido_gal,contenido_esp,content_en
 "é un encontro anual autoxestionado, onde as únicas certezas...
 "https://www.instagram.com/algo_de_veran_","https://www.instagram.com/algo_de_veran_","https://www.instagram.com/algo_de_veran_"</div>
             
-            <h4>Contacto (cora_contacto.csv):</h4>
-            <div class="csv-preview">language,email,phone,address,social_media
-gal,acoranovoa@gmail.com,,,@intel_cora
-esp,acoranovoa@gmail.com,,,@intel_cora
-en,acoranovoa@gmail.com,,,@intel_cora</div>
+            <h4>Contacto (Web Cora - Contacto.csv):</h4>
+            <div class="csv-preview">idioma,email,ig
+gal,acoranovoa@gmail.com,@intel_cora
+esp,acoranovoa@gmail.com,@intel_cora
+en,acoranovoa@gmail.com,@intel_cora</div>
         </div>
         
         <div class="test-section">
@@ -200,13 +200,13 @@ findObraByOrder(order) {
         }
 
         function testObrasOrder() {
-            updateDebugInfo('Probando orden automático de obras...');
+            updateDebugInfo('Probando orden automático de Obras...');
             
-            // Simular datos de obras sin columna order
+            // Simular datos de Obras sin columna order y con nuevos headers
             const obrasData = [
-                { id: 'obra1', title: 'Obra 1', year: '2024' },
-                { id: 'obra2', title: 'Obra 2', year: '2024' },
-                { id: 'obra3', title: 'Obra 3', year: '2025' }
+                { id: '1', título: 'b s b', año: '2024', url_imagen: 'images/branco_sobre_branco.webp' },
+                { id: '2', título: 'masa para empanada', año: '2024', url_imagen: 'images/masa_para_empanada.webp' },
+                { id: '3', título: 'moas do xuizo', año: '2025', url_imagen: 'images/moas_do_xuizo.webp' }
             ];
             
             // Verificar que el orden se mantiene por posición
@@ -215,16 +215,17 @@ findObraByOrder(order) {
             const order3 = obrasData.indexOf(obrasData[2]) + 1; // 3
             
             updateDebugInfo(`Orden automático: Obra 1 = ${order1}, Obra 2 = ${order2}, Obra 3 = ${order3}`);
+            updateDebugInfo(`Nuevos headers: id, título, año, url_imagen, descripción_gal, descripción_esp, descripción_en`);
         }
 
         function testBioOrder() {
-            updateDebugInfo('Probando orden automático de bio...');
+            updateDebugInfo('Probando orden automático de Bio...');
             
-            // Simular datos de bio sin columna order
+            // Simular datos de Bio sin columna order y con nuevos headers
             const bioData = [
-                { section: 'education', content: 'Contrato predoctoral...' },
-                { section: 'education', content: 'Máster en Artes...' },
-                { section: 'meetings', content: 'Encontro 1...' }
+                { sección: 'education', contenido_gal: 'Contrato predoctoral...', contenido_esp: 'Contrato predoctoral...' },
+                { sección: 'education', contenido_gal: 'Máster en Artes...', contenido_esp: 'Máster en Artes...' },
+                { sección: 'meetings', contenido_gal: 'Seminario EAN...', contenido_esp: 'Seminario EAN...' }
             ];
             
             // Verificar que el orden se mantiene por posición
@@ -233,15 +234,16 @@ findObraByOrder(order) {
             const order3 = bioData.indexOf(bioData[2]) + 1; // 3
             
             updateDebugInfo(`Orden automático: Bio 1 = ${order1}, Bio 2 = ${order2}, Bio 3 = ${order3}`);
+            updateDebugInfo(`Nuevos headers: sección, contenido_gal, contenido_esp, contenido_en`);
         }
 
         function testAldanOrder() {
             updateDebugInfo('Probando orden automático de Aldán...');
             
-            // Simular datos de Aldán sin columna order
+            // Simular datos de Aldán sin columna order y con nuevos headers
             const aldanData = [
-                { content: 'é un encontro anual autoxestionado...' },
-                { content: 'https://www.instagram.com/algo_de_veran_' }
+                { contenido_gal: 'é un encontro anual autoxestionado...', contenido_esp: 'es un encuentro anual autogestionado...' },
+                { contenido_gal: 'https://www.instagram.com/algo_de_veran_', contenido_esp: 'https://www.instagram.com/algo_de_veran_' }
             ];
             
             // Verificar que el orden se mantiene por posición
@@ -249,16 +251,17 @@ findObraByOrder(order) {
             const order2 = aldanData.indexOf(aldanData[1]) + 1; // 2
             
             updateDebugInfo(`Orden automático: Aldán 1 = ${order1}, Aldán 2 = ${order2}`);
+            updateDebugInfo(`Nuevos headers: contenido_gal, contenido_esp, content_en`);
         }
 
         function testContactOrder() {
             updateDebugInfo('Probando orden automático de Contacto...');
             
-            // Simular datos de Contacto sin columna order
+            // Simular datos de Contacto sin columna order y con nuevos headers
             const contactData = [
-                { language: 'gal', email: 'acoranovoa@gmail.com' },
-                { language: 'esp', email: 'acoranovoa@gmail.com' },
-                { language: 'en', email: 'acoranovoa@gmail.com' }
+                { idioma: 'gal', email: 'acoranovoa@gmail.com', ig: '@intel_cora' },
+                { idioma: 'esp', email: 'acoranovoa@gmail.com', ig: '@intel_cora' },
+                { idioma: 'en', email: 'acoranovoa@gmail.com', ig: '@intel_cora' }
             ];
             
             // Verificar que el orden se mantiene por posición
@@ -267,6 +270,7 @@ findObraByOrder(order) {
             const order3 = contactData.indexOf(contactData[2]) + 1; // 3
             
             updateDebugInfo(`Orden automático: Contacto Gal = ${order1}, Esp = ${order2}, En = ${order3}`);
+            updateDebugInfo(`Nuevos headers: idioma, email, ig`);
         }
 
         // Initialize
