@@ -157,12 +157,15 @@
 <body>
     <div class="header">
         <h1>Guía de Uso del Sistema Google Sheets</h1>
-        <p>Cora Novoa - Sitio Web</p>
     </div>
 
     <h2>Descripción General</h2>
     
     <p>El sistema permite gestionar el contenido del sitio web directamente desde Google Sheets, sin necesidad de modificar el código. Los cambios realizados en las hojas de cálculo se reflejan automáticamente en la web.</p>
+    
+    <div class="highlight">
+        <p><strong>Enlace a Google Sheets:</strong> <a href="https://docs.google.com/spreadsheets/d/1GC8bqmQeQHD0H1QnIGAQbOPtBg19_4dkspwZEUjgi1k/edit?usp=sharing" target="_blank">https://docs.google.com/spreadsheets/d/1GC8bqmQeQHD0H1QnIGAQbOPtBg19_4dkspwZEUjgi1k/edit?usp=sharing</a></p>
+    </div>
 
     <hr>
 
@@ -188,7 +191,7 @@
             </tr>
             <tr>
                 <td><code>año</code></td>
-                <td>Año de creación</td>
+                <td>Año</td>
             </tr>
             <tr>
                 <td><code>url_imagen</code></td>
@@ -293,9 +296,9 @@
 
     <hr>
 
-    <h2>Edición de Contenido (ejemplo: hoja <code>obras</code>)</h2>
+    <h2>Edición de Contenido</h2>
 
-    <h3>Añadir una nueva obra</h3>
+    <h3>Ejemplo: Añadir una nueva obra (hoja <code>obras</code>)</h3>
     
     <div class="step">
         <ol>
@@ -313,18 +316,28 @@
             <li>Guarda la hoja. Los cambios se aplican automáticamente.</li>
         </ol>
     </div>
+    
+    <div class="highlight">
+        <p><strong>Nota:</strong> En caso de no querer rellenar algún campo, se puede dejar en blanco sin problema. El sistema funcionará correctamente con campos vacíos.</p>
+    </div>
 
-    <h3>Editar una obra existente</h3>
+    <h3>Ejemplo: Editar información biográfica (hoja <code>bio</code>)</h3>
     
     <div class="step">
         <ol>
-            <li>Busca la fila correspondiente mediante el campo <code>orden</code>.</li>
-            <li>Modifica los campos necesarios.</li>
+            <li>Abre la hoja <code>bio</code>.</li>
+            <li>Busca la sección en la que quieras añadir una línea nueva (ej: "education", "meetings", "publications", "workshops", "exhibitions").</li>
+            <li>Modifica los campos necesarios:
+                <ul>
+                    <li><code>titulo_esp</code>, <code>titulo_gal</code>, <code>titulo_en</code></li>
+                    <li><code>contenido_esp</code>, <code>contenido_gal</code>, <code>contenido_en</code></li>
+                </ul>
+            </li>
             <li>Guarda la hoja para reflejar los cambios en la web.</li>
         </ol>
     </div>
 
-    <h3>Eliminar una obra</h3>
+    <h3>Eliminar contenido</h3>
     
     <div class="step">
         <ol>
@@ -364,10 +377,5 @@
     </div>
 
     <hr>
-
-    <div style="text-align: center; margin-top: 50px; color: #7f8c8d; font-size: 12px;">
-        <p>Guía de Uso del Sistema Google Sheets - Cora Novoa</p>
-        <p>Versión 1.0 - 2024</p>
-    </div>
 </body>
 </html> 
