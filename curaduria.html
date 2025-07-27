@@ -83,6 +83,25 @@
             font-weight: normal;
             font-style: italic;
         }
+        
+        /* Asegurar que los acentos se apliquen correctamente en elementos dinámicos */
+        .atb-title .atb-a-accent,
+        .atb-title .atb-i-accent,
+        .atb-title .atb-o-accent,
+        .atb-title .atb-u-accent,
+        .atb-title .atb-e-accent {
+            font-family: inherit;
+        }
+        
+        .atb-title .atb-a-accent .base,
+        .atb-title .atb-i-accent .base,
+        .atb-title .atb-o-accent .base,
+        .atb-title .atb-u-accent .base,
+        .atb-title .atb-e-accent .base {
+            font-family: 'ATB Serif', serif;
+            font-weight: normal;
+            font-style: italic;
+        }
 
         /* ===== DESKTOP STYLES (min-width: 769px) ===== */
         @media (min-width: 769px) {
@@ -435,7 +454,10 @@
                 }
             });
             
-            loadCuraduriaData();
+            // Solo recargar datos si ya están cargados
+            if (curaduriaData && curaduriaData.length > 0) {
+                renderList();
+            }
             return false;
         }
         
@@ -457,19 +479,31 @@
                             // Usar el índice de la fila como orden automático
                             project.orden = index + 1;
                             return project;
+                        })
+                        .filter(project => {
+                            // Filtrar proyectos que tengan al menos un título
+                            return project.titulo_esp || project.titulo_gal || project.titulo_en;
                         });
                     
                     console.log('Loaded curaduria data:', curaduriaData);
-                    renderList();
+                    
+                    // Solo renderizar si tenemos datos válidos
+                    if (curaduriaData.length > 0) {
+                        renderList();
+                    } else {
+                        console.warn('No valid curaduria data found after filtering');
+                        const list = document.getElementById('curaduria-list');
+                        list.innerHTML = '<li>No hay datos disponibles</li>';
+                    }
                 } else {
                     console.error('No data found in Google Sheets');
                     const list = document.getElementById('curaduria-list');
-                    list.innerHTML = '';
+                    list.innerHTML = '<li>No hay datos disponibles</li>';
                 }
             } catch (error) {
                 console.error('Error loading curaduria data:', error);
                 const list = document.getElementById('curaduria-list');
-                list.innerHTML = '';
+                list.innerHTML = '<li>Error al cargar los datos</li>';
             }
         }
         
@@ -477,6 +511,23 @@
             if (!text) return '';
             // Convert \n to <br> tags and preserve existing HTML
             return text.replace(/\n/g, '<br>');
+        }
+        
+        function processTextWithAccents(text) {
+            if (!text) return '';
+            
+            // Aplicar acentos a las letras específicas
+            return text
+                .replace(/á/g, '<span class="atb-a-accent"><span class="base">a</span><span class="accent">´</span></span>')
+                .replace(/í/g, '<span class="atb-i-accent"><span class="base">i</span><span class="accent">´</span></span>')
+                .replace(/ó/g, '<span class="atb-o-accent"><span class="base">o</span><span class="accent">´</span></span>')
+                .replace(/ú/g, '<span class="atb-u-accent"><span class="base">u</span><span class="accent">´</span></span>')
+                .replace(/é/g, '<span class="atb-e-accent"><span class="base">e</span><span class="accent">´</span></span>')
+                .replace(/à/g, '<span class="atb-a-accent"><span class="base">a</span><span class="accent">`</span></span>')
+                .replace(/ì/g, '<span class="atb-i-accent"><span class="base">i</span><span class="accent">`</span></span>')
+                .replace(/ò/g, '<span class="atb-o-accent"><span class="base">o</span><span class="accent">`</span></span>')
+                .replace(/ù/g, '<span class="atb-u-accent"><span class="base">u</span><span class="accent">`</span></span>')
+                .replace(/è/g, '<span class="atb-e-accent"><span class="base">e</span><span class="accent">`</span></span>');
         }
         
         function extractImageUrl(url) {
@@ -511,13 +562,36 @@
             
             list.innerHTML = '';
             
+            // Validar que tenemos datos antes de renderizar
+            if (!curaduriaData || curaduriaData.length === 0) {
+                console.log('No curaduria data available for rendering');
+                return;
+            }
+            
             curaduriaData.forEach(item => {
                 const li = document.createElement('li');
                 li.id = 'curaduria-' + item.orden + '-li';
                 
-                const title = item[`titulo_${currentLanguage}`] || item.titulo_esp;
-                const description = processTextWithLineBreaks(item[`descripcion_${currentLanguage}`] || item.descripcion_esp);
+                // Validar y obtener el título con fallbacks robustos
+                let title = '';
+                if (item && item[`titulo_${currentLanguage}`] && item[`titulo_${currentLanguage}`].trim()) {
+                    title = item[`titulo_${currentLanguage}`].trim();
+                } else if (item && item.titulo_esp && item.titulo_esp.trim()) {
+                    title = item.titulo_esp.trim();
+                } else if (item && item.titulo_gal && item.titulo_gal.trim()) {
+                    title = item.titulo_gal.trim();
+                } else if (item && item.titulo_en && item.titulo_en.trim()) {
+                    title = item.titulo_en.trim();
+                } else {
+                    title = 'Título no disponible';
+                    console.warn('No valid title found for item:', item);
+                }
+                
+                const description = processTextWithLineBreaks(item[`descripcion_${currentLanguage}`] || item.descripcion_esp || '');
                 const info = item[`info_${currentLanguage}`] || item.info_esp || '';
+                
+                // Aplicar acentos al título
+                const titleWithAccents = processTextWithAccents(title);
                 
                 // Check if mobile or desktop
                 const isMobile = window.innerWidth <= 768;
@@ -525,16 +599,16 @@
                 if (isMobile) {
                     // Mobile: simple list item
                     li.innerHTML = `
-                        <span><span class="atb-title">${title}</span>${info ? ` | ${info}` : ''}</span>
+                        <span><span class="atb-title">${titleWithAccents}</span>${info ? ` | ${info}` : ''}</span>
                     `;
                 } else {
                     // Desktop: list item with expansion content
                     li.innerHTML = `
-                        <span><span class="atb-title">${title}</span>${info ? ` | ${info}` : ''}</span>
+                        <span><span class="atb-title">${titleWithAccents}</span>${info ? ` | ${info}` : ''}</span>
                         <div class="expanded-content">
                             <div class="hover-image" style="background-image: url('${extractImageUrl(item.imagen_url || item.image)}');"></div>
                             <div class="hover-text">
-                                <span class="atb-title project-title">${title}</span> ${description}
+                                <span class="atb-title project-title">${titleWithAccents}</span> ${description}
                             </div>
                         </div>
                     `;
@@ -585,6 +659,11 @@
                 
                 list.appendChild(li);
             });
+            
+            // Forzar reflow para asegurar que los estilos se apliquen correctamente
+            if (list.children.length > 0) {
+                list.offsetHeight; // Trigger reflow
+            }
         }
         
         function openMobileDetail(item) {
@@ -611,10 +690,13 @@
             console.log('Page loaded, initializing unified curaduria with Google Sheets');
             document.querySelector('.page-container').classList.add('loaded');
             
-            // Initialize translations
+            // Initialize translations first
             changeLanguage(currentLanguage);
             
-            loadCuraduriaData();
+            // Load data after a short delay to ensure proper initialization
+            setTimeout(() => {
+                loadCuraduriaData();
+            }, 100);
         });
     </script>
 </body>
