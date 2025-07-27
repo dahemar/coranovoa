@@ -91,6 +91,8 @@
         .atb-title .atb-u-accent,
         .atb-title .atb-e-accent {
             font-family: inherit;
+            display: inline-block;
+            position: relative;
         }
         
         .atb-title .atb-a-accent .base,
@@ -101,6 +103,19 @@
             font-family: 'ATB Serif', serif;
             font-weight: normal;
             font-style: italic;
+        }
+        
+        .atb-title .atb-a-accent .accent,
+        .atb-title .atb-i-accent .accent,
+        .atb-title .atb-o-accent .accent,
+        .atb-title .atb-u-accent .accent,
+        .atb-title .atb-e-accent .accent {
+            position: absolute;
+            left: 50%;
+            top: 0em;
+            transform: translateX(-50%);
+            font-family: 'Junicode', serif;
+            font-size: 0.9em;
         }
 
         /* ===== DESKTOP STYLES (min-width: 769px) ===== */
@@ -516,8 +531,14 @@
         function processTextWithAccents(text) {
             if (!text) return '';
             
+            // Debug: verificar si hay acentos en el texto
+            const hasAccents = /[áéíóúàèìòù]/i.test(text);
+            if (hasAccents) {
+                console.log('Processing text with accents:', text);
+            }
+            
             // Aplicar acentos a las letras específicas
-            return text
+            const processed = text
                 .replace(/á/g, '<span class="atb-a-accent"><span class="base">a</span><span class="accent">´</span></span>')
                 .replace(/í/g, '<span class="atb-i-accent"><span class="base">i</span><span class="accent">´</span></span>')
                 .replace(/ó/g, '<span class="atb-o-accent"><span class="base">o</span><span class="accent">´</span></span>')
@@ -528,6 +549,12 @@
                 .replace(/ò/g, '<span class="atb-o-accent"><span class="base">o</span><span class="accent">`</span></span>')
                 .replace(/ù/g, '<span class="atb-u-accent"><span class="base">u</span><span class="accent">`</span></span>')
                 .replace(/è/g, '<span class="atb-e-accent"><span class="base">e</span><span class="accent">`</span></span>');
+            
+            if (hasAccents && processed !== text) {
+                console.log('Accents processed successfully');
+            }
+            
+            return processed;
         }
         
         function extractImageUrl(url) {
@@ -663,19 +690,40 @@
             // Forzar reflow para asegurar que los estilos se apliquen correctamente
             if (list.children.length > 0) {
                 list.offsetHeight; // Trigger reflow
+                
+                // Verificar que los acentos se aplicaron correctamente
+                                        setTimeout(() => {
+                    const accentElements = list.querySelectorAll('.atb-a-accent, .atb-i-accent, .atb-o-accent, .atb-u-accent, .atb-e-accent');
+                    console.log(`Found ${accentElements.length} accent elements in the list`);
+                    
+                    accentElements.forEach((el, index) => {
+                        const base = el.querySelector('.base');
+                        const accent = el.querySelector('.accent');
+                        if (base && accent) {
+                            console.log(`Accent ${index + 1}: ${base.textContent} with accent ${accent.textContent}`);
+                        }
+                    });
+                }, 100);
             }
         }
         
         function openMobileDetail(item) {
-            // Navigate to detail page
+            // Navigate to detail page with cleanup
             const currentLang = localStorage.getItem('language') || 'esp';
             const detailUrl = `curaduria-detail.html?orden=${item.orden}&lang=${currentLang}`;
-            window.location.href = detailUrl;
+            
+            // Clean up current page before navigating
+            if (window.resizeTimeout) {
+                clearTimeout(window.resizeTimeout);
+            }
+            
+            // Use replace instead of href to avoid history buildup
+            window.location.replace(detailUrl);
         }
         
         // Handle window resize
         let resizeTimeout;
-        window.addEventListener('resize', function() {
+        let resizeHandler = function() {
             clearTimeout(resizeTimeout);
             resizeTimeout = setTimeout(function() {
                 // Re-render list when window is resized to update mobile/desktop behavior
@@ -683,6 +731,24 @@
                     renderList();
                 }
             }, 250);
+        };
+        
+        window.addEventListener('resize', resizeHandler);
+        
+        // Store timeout reference globally for cleanup
+        window.resizeTimeout = resizeTimeout;
+        
+        // Cleanup function for main page
+        function cleanupMainPage() {
+            if (resizeTimeout) {
+                clearTimeout(resizeTimeout);
+            }
+            window.removeEventListener('resize', resizeHandler);
+        }
+        
+        // Clean up when page is about to unload
+        window.addEventListener('beforeunload', function() {
+            cleanupMainPage();
         });
         
         // Initialize when page loads
